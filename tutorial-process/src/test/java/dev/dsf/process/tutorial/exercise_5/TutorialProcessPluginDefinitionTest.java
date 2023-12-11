@@ -104,25 +104,25 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(4, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://highmed.org/bpe/Process/helloCos".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/helloCos".equals(a.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://highmed.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = resources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
-				.filter(c -> "http://highmed.org/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://highmed.org/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
@@ -136,33 +136,33 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(5, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://highmed.org/bpe/Process/helloDic".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://highmed.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long t1Count = resources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://highmed.org/fhir/StructureDefinition/task-goodbye-dic".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic".equals(c.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t1Count);
 
 		long t2Count = resources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://highmed.org/fhir/StructureDefinition/task-hello-dic".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-dic".equals(c.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t2Count);
 
 		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://highmed.org/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
@@ -175,14 +175,14 @@ public class TutorialProcessPluginDefinitionTest
 		assumeNotNull(resources);
 
 		var aOpt = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://highmed.org/bpe/Process/helloDic".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
 				.findFirst();
 		assumeTrue(aOpt.isPresent());
 
 		var a = aOpt.get();
 		var pAuthExts = a
-				.getExtensionsByUrl("http://highmed.org/fhir/StructureDefinition/extension-process-authorization");
+				.getExtensionsByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
 		assertNotNull(pAuthExts);
 		assertEquals(2, pAuthExts.size());
 	}
@@ -195,25 +195,25 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(4, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://highmed.org/bpe/Process/helloHrp".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/helloHrp".equals(a.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://highmed.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = resources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
-				.filter(c -> "http://highmed.org/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://highmed.org/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& TutorialProcessPluginDefinition.VERSION.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);

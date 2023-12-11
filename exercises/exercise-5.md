@@ -25,7 +25,7 @@ In the example above the first organization is sending a "message" to the second
 If multiple message are send in a **1:n** relationship with a **n:1** return an additional _correlation-key_ needs to be configured in order to correlate every bidirectional communication between two DSF instances.
 
 ### ActivityDefinitions for the DSF
-FHIR [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources are used to announce what processes can be instantiated at a given DSF instance and contain the authorization rules for the specified process. [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) for the DSF need to comply with the [http://highmed.org/fhir/StructureDefinition/activity-definition](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-activity-definition-0.5.0.xml) profile, with authorization rules configured using the [http://highmed.org/fhir/StructureDefinition/extension-process-authorization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-0.5.0.xml) extension.
+FHIR [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources are used to announce what processes can be instantiated at a given DSF instance and contain the authorization rules for the specified process. [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) for the DSF need to comply with the [http://dsf.dev/fhir/StructureDefinition/activity-definition](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-activity-definition-0.5.0.xml) profile, with authorization rules configured using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-0.5.0.xml) extension.
 
 The authorization extension needs to be configured at least once and has four sub extensions:
 #### message-name [1..1]
@@ -35,30 +35,30 @@ String value specifying the message name of [Message Start Event](https://docs.c
 Canonical URL value specifying the [Task](http://hl7.org/fhir/R4/task.html) profile this authorization rule should match. Can only be specified once per authorization rule extension.
 
 #### requester [1..]
-Coding value matching entries from the [http://highmed.org/fhir/ValueSet/process-authorization-requester](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/highmed-process-authorization-requester-0.5.0.xml) ValueSet:
+Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-requester](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/highmed-process-authorization-requester-0.5.0.xml) ValueSet:
 * **LOCAL_ORGANIZATION** A local organization with a specific identifier.
-    The organization identifier needs to specified using the [http://highmed.org/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-organization-0.5.0.xml) extension.
+    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-organization-0.5.0.xml) extension.
     
 * **REMOTE_ORGANIZATION** A remote (non local) organization with a specific identifier.
-    The organization identifier needs to specified using the [http://highmed.org/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-organization-0.5.0.xml) extension.
+    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-organization-0.5.0.xml) extension.
     
 * **LOCAL_ROLE** A local organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-consortium-role-0.5.0.xml) extension.
+    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-consortium-role-0.5.0.xml) extension.
     
 * **REMOTE_ROLE** A remote (non local) organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-consortium-role-0.5.0.xml) extension.
+    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-consortium-role-0.5.0.xml) extension.
     
 * **LOCAL_ALL** All local organizations regardless of their identifier or role in a consortium.
 
 * **REMOTE_ALL** All remote (non local) organizations regardless of their identifier or role in a consortium.
 
 #### recipient [1..]
-Coding value matching entries from the [http://highmed.org/fhir/ValueSet/process-authorization-recipient ValueSet](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/highmed-process-authorization-recipient-0.5.0.xml).
+Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-recipient ValueSet](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/highmed-process-authorization-recipient-0.5.0.xml).
 * **LOCAL_ORGANIZATION** Organization with a specific identifier.
-    The organization identifier needs to specified using the [http://highmed.org/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-organization-0.5.0.xml) extension.
+    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-organization-0.5.0.xml) extension.
     
 * **LOCAL_ROLE** Organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-consortium-role-0.5.0.xml) extension.
+    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-extension-process-authorization-consortium-role-0.5.0.xml) extension.
     
 * **LOCAL_ALL** All organizations regardless of their identifier or role in a consortium.
 
@@ -67,7 +67,7 @@ _The local organization of a DSF instance is configured using the environment va
 #### Authorization Extension Example
 The following example specifies that process execution can only be requested by a organization with a specific identifier and only allows execution of the process in the DSF instance of an organization with a specific identifier.
 ```xml
-<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization">
+<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
 	<extension url="message-name">
 		<valueString value="some-message-name" />
 	</extension>
@@ -76,41 +76,41 @@ The following example specifies that process execution can only be requested by 
 	</extension>
 	<extension url="requester">
 		<valueCoding>
-			<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role">
+			<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role">
 				<extension url="consortium">
 					<valueIdentifier>
-						<system value="http://highmed.org/sid/organization-identifier" />
+						<system value="http://dsf.dev/sid/organization-identifier" />
 						<value value="identifier.consortium.org" />
 					</valueIdentifier>
 				</extension>
 				<extension url="role">
 					<valueCoding>
-						<system value="http://highmed.org/fhir/CodeSystem/organization-role" />
+						<system value="http://dsf.dev/fhir/CodeSystem/organization-role" />
 						<code value="SOME_ROLE" />
 					</valueCoding>
 				</extension>
 			</extension>
-			<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
+			<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
 			<code value="REMOTE_ROLE" />
 		</valueCoding>
 	</extension>
 	<extension url="recipient">
 		<valueCoding>
-			<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role">
+			<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role">
 				<extension url="consortium">
 					<valueIdentifier>
-						<system value="http://highmed.org/sid/organization-identifier" />
+						<system value="http://dsf.dev/sid/organization-identifier" />
 						<value value="identifier.consortium.org" />
 					</valueIdentifier>
 				</extension>
 				<extension url="role">
 					<valueCoding>
-						<system value="http://highmed.org/fhir/CodeSystem/organization-role" />
+						<system value="http://dsf.dev/fhir/CodeSystem/organization-role" />
 						<code value="SOME_ROLE" />
 					</valueCoding>
 				</extension>
 			</extension>
-			<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
+			<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
 			<code value="LOCAL_ROLE" />
 		</valueCoding>
 	</extension>
@@ -178,7 +178,7 @@ To verify the `highmedorg_helloDic`, `highmedorg_helloCos` and `highmedorg_hello
    ```
    docker-compose up hrp-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `highmedorg_helloHrp` process. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain a three [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://highmed.org/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](http://hl7.org/fhir/R4/task.html) profile was created.
+   Verify the DSF BPE server started successfully and deployed the `highmedorg_helloHrp` process. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain a three [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](http://hl7.org/fhir/R4/task.html) profile was created.
 
 7. Start the `highmedorg_helloDic` process by posting a specific FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization:
    Execute therefore the `main` method of the `dev.dsf.process.tutorial.TutorialExampleStarter` class to create the [Task](http://hl7.org/fhir/R4/task.html) resource needed to start the `highmedorg_helloDic` process.
@@ -188,7 +188,7 @@ To verify the `highmedorg_helloDic`, `highmedorg_helloCos` and `highmedorg_hello
    
    Based on the value of the Task.input parameter you send, the `highmedorg_helloHrp` process will either send a `goodbyDic` message to the `Test_DIC` organization or finish without sending a message.
    
-   To trigger the `goodbyDic` message, use `send-response` as the `http://highmed.org/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
+   To trigger the `goodbyDic` message, use `send-response` as the `http://dsf.dev/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
    
    Verify that the `highmedorg_helloDic` process either finishes with the arrival of the `goodbyDic` message or after waiting for two minutes.
 

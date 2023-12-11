@@ -72,7 +72,7 @@ public class ActivityDefinitionProfileTest
 				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-dic.xml"));
 
 		Extension processAuthorization = ad
-				.getExtensionByUrl("http://highmed.org/fhir/StructureDefinition/extension-process-authorization");
+				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
 		assertNotNull(processAuthorization);
 
 		Extension requester = processAuthorization.getExtensionByUrl("requester");
@@ -82,7 +82,7 @@ public class ActivityDefinitionProfileTest
 		assertTrue(value instanceof Coding);
 
 		Coding coding = (Coding) value;
-		assertEquals("http://highmed.org/fhir/CodeSystem/process-authorization", coding.getSystem());
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
 		assertEquals("LOCAL_ALL", coding.getCode());
 	}
 }

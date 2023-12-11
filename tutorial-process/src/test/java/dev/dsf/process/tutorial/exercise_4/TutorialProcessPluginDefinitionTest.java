@@ -133,9 +133,9 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testHelloDicResources() throws Exception
 	{
-		String codeSystemUrl = "http://highmed.org/fhir/CodeSystem/tutorial";
+		String codeSystemUrl = "http://dsf.dev/fhir/CodeSystem/tutorial";
 		String codeSystemCode = "tutorial-input";
-		String valueSetUrl = "http://highmed.org/fhir/ValueSet/tutorial";
+		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ResourceProvider provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
@@ -206,7 +206,7 @@ public class TutorialProcessPluginDefinitionTest
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS + "/" + TutorialProcessPluginDefinition.VERSION,
 				s -> ResourceProvider.empty()).collect(Collectors.toList());
 
-		String processUrl = "http://highmed.org/bpe/Process/helloCos";
+		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> processUrl.equals(a.getUrl()))
 				.filter(a -> VERSION.equals(a.getVersion())).collect(Collectors.toList());
@@ -218,34 +218,34 @@ public class TutorialProcessPluginDefinitionTest
 		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '" + VERSION
 				+ "' is missing expected requester extension";
 		assertEquals(errorMessageRequester, 1, activityDefinitions.get(0).getExtension().stream()
-				.filter(e -> "http://highmed.org/fhir/StructureDefinition/extension-process-authorization"
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))
 				.flatMap(e -> e.getExtension().stream()).filter(e -> "requester".equals(e.getUrl()))
 				.map(Extension::getValue).filter(v -> v instanceof Coding).map(v -> (Coding) v)
-				.filter(c -> "http://highmed.org/fhir/CodeSystem/process-authorization".equals(c.getSystem()))
+				.filter(c -> "http://dsf.dev/fhir/CodeSystem/process-authorization".equals(c.getSystem()))
 				.filter(c -> "REMOTE_ORGANIZATION".equals(c.getCode())).flatMap(c -> c.getExtension().stream())
-				.filter(e -> "http://highmed.org/fhir/StructureDefinition/extension-process-authorization-organization"
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization"
 						.equals(e.getUrl()))
 				.map(Extension::getValue).filter(v -> v instanceof Identifier).map(i -> (Identifier) i)
-				.filter(i -> "http://highmed.org/sid/organization-identifier".equals(i.getSystem()))
+				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
 				.filter(i -> "Test_DIC".equals(i.getValue())).count());
 
 		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '" + VERSION
 				+ "' is missing expected recipient extension";
 		assertEquals(errorMessageRecipient, 1, activityDefinitions.get(0).getExtension().stream()
-				.filter(e -> "http://highmed.org/fhir/StructureDefinition/extension-process-authorization"
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))
 				.flatMap(e -> e.getExtension().stream()).filter(e -> "recipient".equals(e.getUrl()))
 				.map(Extension::getValue).filter(v -> v instanceof Coding).map(v -> (Coding) v)
-				.filter(c -> "http://highmed.org/fhir/CodeSystem/process-authorization".equals(c.getSystem()))
+				.filter(c -> "http://dsf.dev/fhir/CodeSystem/process-authorization".equals(c.getSystem()))
 				.filter(c -> "LOCAL_ORGANIZATION".equals(c.getCode())).flatMap(c -> c.getExtension().stream())
-				.filter(e -> "http://highmed.org/fhir/StructureDefinition/extension-process-authorization-organization"
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization"
 						.equals(e.getUrl()))
 				.map(Extension::getValue).filter(v -> v instanceof Identifier).map(i -> (Identifier) i)
-				.filter(i -> "http://highmed.org/sid/organization-identifier".equals(i.getSystem()))
+				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
 				.filter(i -> "Test_COS".equals(i.getValue())).count());
 
-		String taskHelloCosUrl = "http://highmed.org/fhir/StructureDefinition/task-hello-cos";
+		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
 		List<StructureDefinition> structureDefinitions = helloCos.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r).filter(s -> taskHelloCosUrl.equals(s.getUrl()))
 				.filter(s -> VERSION.equals(s.getVersion())).collect(Collectors.toList());

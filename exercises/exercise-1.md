@@ -59,7 +59,7 @@ To verify the `highmedorg_helloDic` process can be executed successfully, we nee
 	```
 	docker-compose up dic-bpe
 	```
-	Verify the DSF BPE server started successfully and deployed the `highmedorg_helloDic` process. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to https://dic/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to https://dic/fhir/StructureDefinition?url=http://highmed.org/fhir/StructureDefinition/task-hello-dic to check if the expected [Task](http://hl7.org/fhir/R4/task.html) profile was created.
+	Verify the DSF BPE server started successfully and deployed the `highmedorg_helloDic` process. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to https://dic/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to https://dic/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-dic to check if the expected [Task](http://hl7.org/fhir/R4/task.html) profile was created.
 
 3. Start the `highmedorg_helloDic` process by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server:
 

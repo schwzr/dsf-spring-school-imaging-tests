@@ -84,7 +84,7 @@ public class TaskProfileTest
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME)).getType().addCoding()
 				.setSystem(CODESYSTEM_HIGHMED_BPMN).setCode(CODESYSTEM_HIGHMED_BPMN_VALUE_MESSAGE_NAME);
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
-				.setSystem("http://highmed.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://dsf.dev/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}
@@ -122,7 +122,7 @@ public class TaskProfileTest
 		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType().addCoding()
 				.setSystem(CODESYSTEM_HIGHMED_BPMN).setCode(CODESYSTEM_HIGHMED_BPMN_VALUE_BUSINESS_KEY);
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
-				.setSystem("http://highmed.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://dsf.dev/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}
@@ -160,7 +160,7 @@ public class TaskProfileTest
 		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType().addCoding()
 				.setSystem(CODESYSTEM_HIGHMED_BPMN).setCode(CODESYSTEM_HIGHMED_BPMN_VALUE_BUSINESS_KEY);
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
-				.setSystem("http://highmed.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://dsf.dev/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}

@@ -87,19 +87,19 @@ public class BundleGenerator
 
 		Organization organizationCos = (Organization) bundle.getEntry().get(0).getResource();
 		Extension organizationCosThumbprintExtension = organizationCos
-				.getExtensionByUrl("http://highmed.org/fhir/StructureDefinition/extension-certificate-thumbprint");
+				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint");
 		organizationCosThumbprintExtension.setValue(new StringType(
 				clientCertificateFilesByCommonName.get("cos-client").getCertificateSha512ThumbprintHex()));
 
 		Organization organizationDic = (Organization) bundle.getEntry().get(1).getResource();
 		Extension organizationDicThumbprintExtension = organizationDic
-				.getExtensionByUrl("http://highmed.org/fhir/StructureDefinition/extension-certificate-thumbprint");
+				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint");
 		organizationDicThumbprintExtension.setValue(new StringType(
 				clientCertificateFilesByCommonName.get("dic-client").getCertificateSha512ThumbprintHex()));
 
 		Organization organizationHrp = (Organization) bundle.getEntry().get(2).getResource();
 		Extension organizationHrpThumbprintExtension = organizationHrp
-				.getExtensionByUrl("http://highmed.org/fhir/StructureDefinition/extension-certificate-thumbprint");
+				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint");
 		organizationHrpThumbprintExtension.setValue(new StringType(
 				clientCertificateFilesByCommonName.get("hrp-client").getCertificateSha512ThumbprintHex()));
 

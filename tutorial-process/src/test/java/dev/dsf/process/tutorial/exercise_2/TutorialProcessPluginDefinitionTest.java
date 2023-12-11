@@ -50,9 +50,9 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testHelloDicResources() throws Exception
 	{
-		String codeSystemUrl = "http://highmed.org/fhir/CodeSystem/tutorial";
+		String codeSystemUrl = "http://dsf.dev/fhir/CodeSystem/tutorial";
 		String codeSystemCode = "tutorial-input";
-		String valueSetUrl = "http://highmed.org/fhir/ValueSet/tutorial";
+		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ResourceProvider provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),

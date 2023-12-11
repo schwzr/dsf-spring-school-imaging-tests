@@ -106,7 +106,7 @@ public class ActivityDefinitionProfileTest
 				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-dic.xml"));
 
 		List<Extension> extensionsByUrl = ad
-				.getExtensionsByUrl("http://highmed.org/fhir/StructureDefinition/extension-process-authorization");
+				.getExtensionsByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
 		assertNotNull(extensionsByUrl);
 		assertEquals(2, extensionsByUrl.size());
 
@@ -118,7 +118,7 @@ public class ActivityDefinitionProfileTest
 		assertTrue(value instanceof Coding);
 
 		Coding coding = (Coding) value;
-		assertEquals("http://highmed.org/fhir/CodeSystem/process-authorization", coding.getSystem());
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
 		assertEquals("LOCAL_ALL", coding.getCode());
 
 		Extension processAuthorization1 = extensionsByUrl.get(1);
@@ -131,51 +131,51 @@ public class ActivityDefinitionProfileTest
 		Extension extTaskProfile = processAuthorization1.getExtensionByUrl("task-profile");
 		assertNotNull(extTaskProfile);
 		assertTrue(extTaskProfile.getValue() instanceof CanonicalType);
-		assertEquals("http://highmed.org/fhir/StructureDefinition/task-goodbye-dic|" + VERSION,
+		assertEquals("http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|" + VERSION,
 				((CanonicalType) extTaskProfile.getValue()).getValue());
 
 		Extension extRequester = processAuthorization1.getExtensionByUrl("requester");
 		assertNotNull(extRequester);
 		assertTrue(extRequester.getValue() instanceof Coding);
-		assertEquals("http://highmed.org/fhir/CodeSystem/process-authorization",
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization",
 				((Coding) extRequester.getValue()).getSystem());
 		assertEquals("REMOTE_ROLE", ((Coding) extRequester.getValue()).getCode());
 		Extension extRequesterExtRole = ((Coding) extRequester.getValue()).getExtensionByUrl(
-				"http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role");
+				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role");
 		assertNotNull(extRequesterExtRole);
 		Extension extRequesterExtRoleConsortium = extRequesterExtRole.getExtensionByUrl("consortium");
 		assertNotNull(extRequesterExtRoleConsortium);
 		assertTrue(extRequesterExtRoleConsortium.getValue() instanceof Identifier);
-		assertEquals("http://highmed.org/sid/organization-identifier",
+		assertEquals("http://dsf.dev/sid/organization-identifier",
 				((Identifier) extRequesterExtRoleConsortium.getValue()).getSystem());
 		assertEquals("medizininformatik-initiative.de",
 				((Identifier) extRequesterExtRoleConsortium.getValue()).getValue());
 		Extension extRequesterExtRoleRole = extRequesterExtRole.getExtensionByUrl("role");
 		assertNotNull(extRequesterExtRoleRole);
 		assertTrue(extRequesterExtRoleRole.getValue() instanceof Coding);
-		assertEquals("http://highmed.org/fhir/CodeSystem/organization-role",
+		assertEquals("http://dsf.dev/fhir/CodeSystem/organization-role",
 				((Coding) extRequesterExtRoleRole.getValue()).getSystem());
 		assertEquals("HRP", ((Coding) extRequesterExtRoleRole.getValue()).getCode());
 
 		Extension extRecipient = processAuthorization1.getExtensionByUrl("recipient");
 		assertNotNull(extRecipient);
-		assertEquals("http://highmed.org/fhir/CodeSystem/process-authorization",
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization",
 				((Coding) extRecipient.getValue()).getSystem());
 		assertEquals("LOCAL_ROLE", ((Coding) extRecipient.getValue()).getCode());
 		Extension extRecipientExtRole = ((Coding) extRecipient.getValue()).getExtensionByUrl(
-				"http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role");
+				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role");
 		assertNotNull(extRecipientExtRole);
 		Extension extRecipientExtRoleConsortium = extRecipientExtRole.getExtensionByUrl("consortium");
 		assertNotNull(extRecipientExtRoleConsortium);
 		assertTrue(extRecipientExtRoleConsortium.getValue() instanceof Identifier);
-		assertEquals("http://highmed.org/sid/organization-identifier",
+		assertEquals("http://dsf.dev/sid/organization-identifier",
 				((Identifier) extRecipientExtRoleConsortium.getValue()).getSystem());
 		assertEquals("medizininformatik-initiative.de",
 				((Identifier) extRecipientExtRoleConsortium.getValue()).getValue());
 		Extension extRecipientExtRoleRole = extRecipientExtRole.getExtensionByUrl("role");
 		assertNotNull(extRecipientExtRoleRole);
 		assertTrue(extRecipientExtRoleRole.getValue() instanceof Coding);
-		assertEquals("http://highmed.org/fhir/CodeSystem/organization-role",
+		assertEquals("http://dsf.dev/fhir/CodeSystem/organization-role",
 				((Coding) extRecipientExtRoleRole.getValue()).getSystem());
 		assertEquals("MeDIC", ((Coding) extRecipientExtRoleRole.getValue()).getCode());
 	}

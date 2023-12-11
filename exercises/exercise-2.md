@@ -36,7 +36,7 @@ While writing FHIR resources on the DSF FHIR server is only allowed by the own o
 ```xml
 <meta>
    <tag>
-      <system value="http://highmed.org/fhir/CodeSystem/read-access-tag" />
+      <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
       <code value="ALL" />
    </tag>
 </meta>
@@ -53,8 +53,8 @@ The write access rules for [Task](http://hl7.org/fhir/R4/task.html) resources ar
 1. Inject the value of the environment variable in to `HelloDic` class, by modifying its constructor and using the new field of the `TutorialConfig` class.
 1. Use the value of the environment variable in the `HelloDic` class to decide whether the log message from exercise 1 should be printed.
 1. Adapt `test-setup/docker-compose.yml` by adding the new environment variable to the service `dic-bpe` and set the value to `"true"`.
-1. Create a new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) with url `http://highmed.org/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`.
-1. Create a new [ValueSet](http://hl7.org/fhir/R4/valueset.html) with url `http://highmed.org/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](http://hl7.org/fhir/R4/codesystem.html).
+1. Create a new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`.
+1. Create a new [ValueSet](http://hl7.org/fhir/R4/valueset.html) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](http://hl7.org/fhir/R4/codesystem.html).
 1. Add the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources to the `highmedorg_helloDic` process in the `TutorialProcessPluginDefinition` class.
 1. Add a new input parameter of type `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile using the concept of the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) as a fixed coding.
 1. Read the new input parameter in the `HelloDic` class from the "leading" [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.

@@ -8,8 +8,8 @@
     <bpmn:endEvent id="endGoodbyeDic">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="instantiatesUri">http://highmed.org/bpe/Process/helloDic/#{version}</camunda:inputParameter>
-          <camunda:inputParameter name="profile">http://highmed.org/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:inputParameter>
+          <camunda:inputParameter name="instantiatesUri">http://dsf.dev/bpe/Process/helloDic/#{version}</camunda:inputParameter>
+          <camunda:inputParameter name="profile">http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:inputParameter>
           <camunda:inputParameter name="messageName">goodbyeDic</camunda:inputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
