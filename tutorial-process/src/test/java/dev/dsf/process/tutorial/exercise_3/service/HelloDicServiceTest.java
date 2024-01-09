@@ -129,7 +129,7 @@ public class HelloDicServiceTest
 		assertEquals(task, captor.getValue());
 
 		ArgumentCaptor<TargetValues.TargetValue> targetArgumentCaptor = ArgumentCaptor.forClass(TargetValues.TargetValue.class);
-		Mockito.verify(execution).setVariable(eq(BpmnExecutionVariables.TARGET), targetArgumentCaptor.capture());
+		Mockito.verify(variables).setVariable(eq(BpmnExecutionVariables.TARGET), targetArgumentCaptor.capture());
 		assertEquals("Test_COS", targetArgumentCaptor.getValue().getValue().getOrganizationIdentifierValue());
 		assertEquals("Test_COS_Endpoint", targetArgumentCaptor.getValue().getValue().getEndpointIdentifierValue());
 		assertEquals("https://cos/fhir", targetArgumentCaptor.getValue().getValue().getEndpointUrl());
