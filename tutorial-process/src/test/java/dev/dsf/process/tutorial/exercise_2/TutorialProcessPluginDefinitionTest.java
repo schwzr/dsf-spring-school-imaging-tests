@@ -33,6 +33,7 @@ import dev.dsf.bpe.variables.ObjectMapperFactory;
 import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
 import dev.dsf.fhir.authorization.read.ReadAccessHelper;
 import dev.dsf.process.tutorial.ConstantsTutorial;
+import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.service.HelloDic;
 
@@ -52,22 +53,6 @@ import ca.uhn.fhir.parser.IParser;
 
 public class TutorialProcessPluginDefinitionTest
 {
-	private ProxyConfig proxyConfig = mock(ProxyConfig.class);
-	private EndpointProvider endpointProvider = mock(EndpointProvider.class);
-	private FhirContext fhirContext = FhirContext.forR4();
-	private FhirWebserviceClientProvider fhirWebserviceClientProvider = mock(FhirWebserviceClientProvider.class);
-	private MailService mailService = mock(MailService.class);
-	private ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper(fhirContext);
-	private OrganizationProvider organizationProvider = mock(OrganizationProvider.class);
-	private QuestionnaireResponseHelper questionnaireResponseHelper = mock(QuestionnaireResponseHelper.class);
-	private ProcessAuthorizationHelper processAuthorizationHelper = mock(ProcessAuthorizationHelper.class);
-	private ReadAccessHelper readAccessHelper = mock(ReadAccessHelper.class);
-	private TaskHelper taskHelper = mock(TaskHelper.class);
-
-	private ProcessPluginApi processPluginApi = new ProcessPluginApiImpl(proxyConfig, endpointProvider, fhirContext,
-			fhirWebserviceClientProvider, mailService, objectMapper, organizationProvider, processAuthorizationHelper,
-			questionnaireResponseHelper, readAccessHelper, taskHelper);
-	private ConfigurableEnvironment environment = new StandardEnvironment();
 
 	@Test
 	public void testHelloDicBpmnProcessFile() throws Exception
@@ -101,7 +86,7 @@ public class TutorialProcessPluginDefinitionTest
 
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ProcessPluginImpl processPlugin = createPlugin(definition, false);
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 
 		var fhirResources = processPlugin.getFhirResources();
 
@@ -136,11 +121,5 @@ public class TutorialProcessPluginDefinitionTest
 				.count());
 
 		assertEquals(4, helloDic.size());
-	}
-
-	private ProcessPluginImpl createPlugin(ProcessPluginDefinition processPluginDefinition, boolean draft)
-	{
-		return new ProcessPluginImpl(processPluginDefinition, processPluginApi, draft, Path.of("test.jar"),
-				getClass().getClassLoader(), fhirContext, environment);
 	}
 }
