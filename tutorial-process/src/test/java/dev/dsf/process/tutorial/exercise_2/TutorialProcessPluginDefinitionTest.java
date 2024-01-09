@@ -90,7 +90,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		var fhirResources = processPlugin.getFhirResources();
 
-		List<Resource> helloDicResources = fhirResources.get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC + "/" + definition.getVersion());
+		List<Resource> helloDicResources = fhirResources.get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION);
 
 		Map<String, List<String>> helloDic = definition.getFhirResourcesByProcessId();
 
