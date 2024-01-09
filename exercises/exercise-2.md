@@ -2,7 +2,7 @@
 ___
 
 # Exercise 2 - Input Parameters
-In order to configure processes that are packaged as process plugins, we will take a look at two possibilities on how to pass parameters to a process. The goal of this exercise is to enhance the `highmedorg_helloDic` process by trying them both.
+In order to configure processes that are packaged as process plugins, we will take a look at two possibilities on how to pass parameters to a process. The goal of this exercise is to enhance the `dsfdev_helloDic` process by trying them both.
 
 ## Introduction
 DSF process plugins can be configured with input parameters using two different approaches: 
@@ -13,19 +13,19 @@ DSF process plugins can be configured with input parameters using two different 
 ### Environment Variables
 Environment variables are the same for all running process instances and allow static configuration of processes. They can be defined by adding a member variable having the [Spring-Framework @Value](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-value-annotations) annotation to the configuration class `TutorialConfig`. The value of the annotation uses the `${..}` notation and follows the form `${some.property:defaultValue}`, where each dot in the property name corresponds to an underscore in the environment variable and environment variables are always written upper-case. The property `some.property` therefore corresponds to the environment variable `SOME_PROPERTY`.
 
-To create an automated documentation of environment variables during the Maven build process, the DSF provided [@ProcessDocumentation](https://github.com/highmed/highmed-dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/ProcessDocumentation.java) annotation from the package `dev.dsf.tools.generator` can be used. The `pom.xml` of the `tutorial-process` submodule calls the DSF provided [DocumentGenerator](https://github.com/highmed/highmed-dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/DocumentationGenerator.java) class from the same package during the `prepare-package` phase of the build process. The generator searches for all [@ProcessDocumentation](https://github.com/highmed/highmed-dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/ProcessDocumentation.java) annotations and generates a Markdown documentation based on the annotation's values in the target folder.
+To create an automated documentation of environment variables during the Maven build process, the DSF provided [@ProcessDocumentation](https://github.com/datasharingframework/dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/ProcessDocumentation.java) annotation from the package `dev.dsf.tools.generator` can be used. The `pom.xml` of the `tutorial-process` submodule calls the DSF provided [DocumentGenerator](https://github.com/datasharingframework/dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/DocumentationGenerator.java) class from the same package during the `prepare-package` phase of the build process. The generator searches for all [@ProcessDocumentation](https://github.com/datasharingframework/dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/ProcessDocumentation.java) annotations and generates a Markdown documentation based on the annotation's values in the target folder.
 
 ### Task Input Parameters
-Providing input parameters to a specific process instance allows for dynamic configuration of process instances. It can be done by sending additional values as part of the [Task](http://hl7.org/fhir/R4/task.html) resource that starts or continues a process instance. It should be noted that a FHIR profile must be created for each [Task](http://hl7.org/fhir/R4/task.html) resource, i.e. for each message event in a process model, which inherits from the [DSF Task Base Profile](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-task-base-0.5.0.xml). This base profile defines three default input parameters:
+Providing input parameters to a specific process instance allows for dynamic configuration of process instances. It can be done by sending additional values as part of the [Task](http://hl7.org/fhir/R4/task.html) resource that starts or continues a process instance. It should be noted that a FHIR profile must be created for each [Task](http://hl7.org/fhir/R4/task.html) resource, i.e. for each message event in a process model, which inherits from the [DSF Task Base Profile](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml). This base profile defines three default input parameters:
 
-* [`message-name`](https://github.com/highmed/highmed-dsf/blob/f372b757b22d59b3594a220f7f380c60aa6f00b8/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-task-base-0.5.0.xml#L106-L145) (**mandatory 1..1**): the name of the BPMN message event, same as in the BPMN model
-* [`business-key`](https://github.com/highmed/highmed-dsf/blob/f372b757b22d59b3594a220f7f380c60aa6f00b8/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-task-base-0.5.0.xml#L146-L184) (optional 0..1): used to identify process instances
-* [`correlation-key`](https://github.com/highmed/highmed-dsf/blob/f372b757b22d59b3594a220f7f380c60aa6f00b8/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-task-base-0.5.0.xml#L185-L223) (optional 0..1): used to identify multi-instance process instances used for messaging multiple targets
+* [`message-name`](https://github.com/datasharingframework/dsf/blob/f372b757b22d59b3594a220f7f380c60aa6f00b8/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml#L106-L145) (**mandatory 1..1**): the name of the BPMN message event, same as in the BPMN model
+* [`business-key`](https://github.com/datasharingframework/dsf/blob/f372b757b22d59b3594a220f7f380c60aa6f00b8/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml#L146-L184) (optional 0..1): used to identify process instances
+* [`correlation-key`](https://github.com/datasharingframework/dsf/blob/f372b757b22d59b3594a220f7f380c60aa6f00b8/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml#L185-L223) (optional 0..1): used to identify multi-instance process instances used for messaging multiple targets
 
 A later exercise will examine these input parameters and their meaning in more detail. 
 
-Since input parameters of [Task](http://hl7.org/fhir/R4/task.html) resources are identified by predefined codes, they are defined via FHIR [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources. The [BPMN-Message CodeSystem](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/highmed-bpmn-message-0.5.0.xml) and the [BPMN-Message ValueSet](
-https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/highmed-bpmn-message-0.5.0.xml) are used in the [DSF Task Base Profile](https://github.com/highmed/highmed-dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/highmed-task-base-0.5.0.xml) to define the three default input parameters of [Task](http://hl7.org/fhir/R4/task.html) resources.
+Since input parameters of [Task](http://hl7.org/fhir/R4/task.html) resources are identified by predefined codes, they are defined via FHIR [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources. The [BPMN-Message CodeSystem](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-bpmn-message-1.0.0.xml) and the [BPMN-Message ValueSet](
+https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-bpmn-message-1.0.0.xml) are used in the [DSF Task Base Profile](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml) to define the three default input parameters of [Task](http://hl7.org/fhir/R4/task.html) resources.
 
 ### Version and Release-Date Placeholders
 To avoid the need to specify the version and release date for each [CodeSystem](http://hl7.org/fhir/R4/codesystem.html), [StructureDefinition (Task profile)](http://hl7.org/fhir/R4/structuredefinition.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resource, the placeholders `#{version}` and `#{date}` can be used. They are replaced with the values returned by the methods `ProcessPluginDefinition#getVersion()` and `ProcessPluginDefinition#getReleaseDate()` respectively during deployment of a process plugin by the DSF BPE server.
@@ -55,7 +55,7 @@ The write access rules for [Task](http://hl7.org/fhir/R4/task.html) resources ar
 1. Adapt `test-setup/docker-compose.yml` by adding the new environment variable to the service `dic-bpe` and set the value to `"true"`.
 1. Create a new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`.
 1. Create a new [ValueSet](http://hl7.org/fhir/R4/valueset.html) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](http://hl7.org/fhir/R4/codesystem.html).
-1. Add the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources to the `highmedorg_helloDic` process in the `TutorialProcessPluginDefinition` class.
+1. Add the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources to the `dsfdev_helloDic` process in the `TutorialProcessPluginDefinition` class.
 1. Add a new input parameter of type `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile using the concept of the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) as a fixed coding.
 1. Read the new input parameter in the `HelloDic` class from the "leading" [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
 1. Adapt the starter class `TutorialExampleStarter` by adding the new input parameter with an arbitrary string.
@@ -71,7 +71,7 @@ mvn clean install -Pexercise-2
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `highmedorg_helloDic` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker test setup.
+To verify the `dsfdev_helloDic` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker test setup.
 
 1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/test-setup`:
    ```
@@ -83,12 +83,12 @@ To verify the `highmedorg_helloDic` process can be executed successfully, we nee
    ```
    docker-compose up dic-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `highmedorg_helloDic` process.
+   Verify the DSF BPE server started successfully and deployed the `dsfdev_helloDic` process.
 
-3. Start the `highmedorg_helloDic` process by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization:
-   Execute the `main` method of the `dev.dsf.process.tutorial.TutorialExampleStarter` class as in [exercise 1](exercise-1.md) to create the [Task](http://hl7.org/fhir/R4/task.html) resource needed to start the `highmedorg_helloDic` process.
+3. Start the `dsfdev_helloDic` process by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization:
+   Execute the `main` method of the `dev.dsf.process.tutorial.TutorialExampleStarter` class as in [exercise 1](exercise-1.md) to create the [Task](http://hl7.org/fhir/R4/task.html) resource needed to start the `dsfdev_helloDic` process.
 
-   Verify that the `highmedorg_helloDic` process was executed by the DSF BPE server. The BPE server should:
+   Verify that the `dsfdev_helloDic` process was executed by the DSF BPE server. The BPE server should:
     * Print a message showing that the process was started.
     * If logging is enabled - print the log message and the value of the input parameter you added to the `HelloDic`
       implementation.

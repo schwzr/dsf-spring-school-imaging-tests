@@ -62,7 +62,7 @@
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- highmed-dsf -->
+			<!-- dsf-dev -->
 			<dependency>
 				<groupId>dev.dsf</groupId>
 				<artifactId>dsf-bpe-process-api-v1</artifactId>
@@ -217,13 +217,11 @@
 	</build>
 
 	<distributionManagement>
-		<!-- for deployment to GitHub Packages the id must be 'github', if not 
-			the deployment fails with a 401 error; repository also used for snapshots 
-			if no snapshotRepository defined -->
+		<!-- for deployment to GitHub Packages the id must be 'github', if not the deployment fails with a 401 error -->
 		<repository>
 			<id>github</id>
 			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/highmed/dsf-process-tutorial</url>
+			<url>https://maven.pkg.github.com/datasharingframework/dsf</url>
 		</repository>
 	</distributionManagement>
 
@@ -231,7 +229,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub HiGHmed Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/highmed/highmed-dsf</url>
+			<url>https://maven.pkg.github.com/datasharingframework/dsf</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0">
-  <bpmn:process id="highmedorg_helloDic" isExecutable="true" camunda:versionTag="#{version}">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0">
+  <bpmn:process id="dsfdev_helloDic" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:extensionElements />
     <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startHelloDic" targetRef="helloDic" />
     <bpmn:endEvent id="EndEvent_0xd0x8k">
       <bpmn:incoming>SequenceFlow_0oyvmcd</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0oyvmcd" sourceRef="helloDic" targetRef="EndEvent_0xd0x8k" />
-    <bpmn:serviceTask id="helloDic" name="Hello Dic">
+    <bpmn:serviceTask id="helloDic" name="Hello Dic" camunda:class="org.highmed.dsf.process.tutorial.service.HelloDic">
       <bpmn:incoming>SequenceFlow_0bbhq2r</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0oyvmcd</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -18,15 +18,7 @@
   </bpmn:process>
   <bpmn:message id="Message_1nn2wdw" name="helloDic" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="highmedorg_helloDic">
-      <bpmndi:BPMNEdge id="SequenceFlow_0oyvmcd_di" bpmnElement="SequenceFlow_0oyvmcd">
-        <di:waypoint x="380" y="121" />
-        <di:waypoint x="462" y="121" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0bbhq2r_di" bpmnElement="SequenceFlow_0bbhq2r">
-        <di:waypoint x="215" y="121" />
-        <di:waypoint x="280" y="121" />
-      </bpmndi:BPMNEdge>
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_helloDic">
       <bpmndi:BPMNShape id="EndEvent_0xd0x8k_di" bpmnElement="EndEvent_0xd0x8k">
         <dc:Bounds x="462" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -36,6 +28,14 @@
       <bpmndi:BPMNShape id="StartEvent_0x5gijn_di" bpmnElement="startHelloDic">
         <dc:Bounds x="179" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0bbhq2r_di" bpmnElement="SequenceFlow_0bbhq2r">
+        <di:waypoint x="215" y="121" />
+        <di:waypoint x="280" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0oyvmcd_di" bpmnElement="SequenceFlow_0oyvmcd">
+        <di:waypoint x="380" y="121" />
+        <di:waypoint x="462" y="121" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
