@@ -26,14 +26,17 @@ import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.TimerEventDefinition;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
-import dev.dsf.fhir.resources.ResourceProvider;
+
+import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
+import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
 import dev.dsf.process.tutorial.service.HelloCos;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.MetadataResource;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.Test;
@@ -48,52 +51,41 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetBpmnFiles() throws Exception
 	{
-		var bpmnFiles = definition.getBpmnFiles();
+		var bpmnFiles = definition.getProcessModels();
 		assertNotNull(bpmnFiles);
-		assertEquals(3, bpmnFiles.count());
+		assertEquals(3, bpmnFiles.size());
 	}
 
 	@Test
 	public void testGetBpmnFilesCos() throws Exception
 	{
-		var bpmnFiles = definition.getBpmnFiles();
+		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.anyMatch("bpe/hello-cos.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-cos.bpmn"::equals));
 	}
 
 	@Test
 	public void testGetBpmnFilesDic() throws Exception
 	{
-		var bpmnFiles = definition.getBpmnFiles();
+		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.anyMatch("bpe/hello-dic.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-dic.bpmn"::equals));
 	}
 
 	@Test
 	public void testGetBpmnFilesHrp() throws Exception
 	{
-		var bpmnFiles = definition.getBpmnFiles();
+		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.anyMatch("bpe/hello-hrp.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-hrp.bpmn"::equals));
 	}
 
-	@Test
-	public void testGetResourceProvider() throws Exception
+	private List<Resource> getResources(String processKey)
 	{
-		var provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
-				new StandardEnvironment());
-		assertNotNull(provider);
-	}
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		assumeNotNull(processPlugin);
 
-	private List<MetadataResource> getResources(String processKey)
-	{
-		var provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
-				new StandardEnvironment());
-		assumeNotNull(provider);
-
-		return provider
-				.getResources(processKey + "/" + TutorialProcessPluginDefinition.VERSION, s -> ResourceProvider.empty())
-				.collect(Collectors.toList());
+		return processPlugin.getFhirResources().get(processKey + "/" + TutorialProcessPluginDefinition.VERSION);
 	}
 
 	@Test
@@ -223,7 +215,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloDicBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-dic.bpmn";
-		String processId = "highmedorg_helloDic";
+		String processId = "dsfdev_helloDic";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -288,7 +280,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloCosBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-cos.bpmn";
-		String processId = "highmedorg_helloCos";
+		String processId = "dsfdev_helloCos";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -353,7 +345,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloHrpBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-hrp.bpmn";
-		String processId = "highmedorg_helloHrp";
+		String processId = "dsfdev_helloHrp";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
