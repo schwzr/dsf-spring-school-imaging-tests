@@ -5,15 +5,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
-import dev.dsf.bpe.ProcessPluginDefinition;
-import dev.dsf.fhir.resources.ResourceProvider;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.service.HelloDic;
@@ -28,7 +29,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloDicBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-dic.bpmn";
-		String processId = "highmedorg_helloDic";
+		String processId = "dsfdev_helloDic";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -48,14 +49,18 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloDicResources() throws Exception
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ResourceProvider provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
+		/*ResourceProvider provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
 				new StandardEnvironment());
-		assertNotNull(provider);
 
-		var helloDic = provider.getResources(
+		assertNotNull(provider);*/
+
+		Map<String, List<String>> resources = definition.getFhirResourcesByProcessId();
+		assertEquals(2, resources.size());
+
+		/*var helloDic = provider.getResources(
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION,
 				s -> ResourceProvider.empty());
 		assertNotNull(helloDic);
-		assertEquals(2, helloDic.count());
+		assertEquals(2, helloDic.count());*/
 	}
 }
