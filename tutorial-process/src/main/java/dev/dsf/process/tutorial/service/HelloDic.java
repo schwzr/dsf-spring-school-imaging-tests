@@ -1,22 +1,21 @@
 package dev.dsf.process.tutorial.service;
 
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
+import dev.dsf.bpe.v1.variables.Variables;
+import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import dev.dsf.bpe.delegate.AbstractServiceDelegate;
 import dev.dsf.fhir.authorization.read.ReadAccessHelper;
-import dev.dsf.fhir.client.FhirWebserviceClientProvider;
-import dev.dsf.fhir.task.TaskHelper;
 
 public class HelloDic extends AbstractServiceDelegate
 {
-	public HelloDic(FhirWebserviceClientProvider clientProvider, TaskHelper taskHelper,
-			ReadAccessHelper readAccessHelper)
+	public HelloDic(ProcessPluginApi api)
 	{
-		super(clientProvider, taskHelper, readAccessHelper);
+		super(api);
 	}
 
 	@Override
-	protected void doExecute(DelegateExecution execution)
-	{
+	protected void doExecute(DelegateExecution execution, Variables variables) {
 
 	}
 }

@@ -24,11 +24,11 @@ public class HelloHrpMessage extends AbstractTaskMessageSend
 	protected Stream<Task.ParameterComponent> getAdditionalInputParameters(DelegateExecution execution, Variables variables)
 	{
 		Optional<Task.ParameterComponent> tutorialInputParameter = api.getTaskHelper().getFirstInputParameter(
-				api.getVariables((DelegateExecution) this).getStartTask(), "http://highmed.org/fhir/CodeSystem/tutorial",
+				variables.getStartTask(), "http://dsf.dev/fhir/CodeSystem/tutorial",
 				"tutorial-input", Type.class);
 
 		return tutorialInputParameter.map(
-						 i -> api.getTaskHelper().createInput(i.getValue() , "http://highmed.org/fhir/CodeSystem/tutorial", "tutorial-input"))
+						 i -> api.getTaskHelper().createInput(i.getValue() , "http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input"))
 				.stream();
 	}
 }

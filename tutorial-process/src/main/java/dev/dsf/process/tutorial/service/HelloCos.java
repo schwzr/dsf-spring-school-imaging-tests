@@ -1,27 +1,26 @@
 package dev.dsf.process.tutorial.service;
 
-import static dev.dsf.bpe.ConstantsBase.BPMN_EXECUTION_VARIABLE_TARGET;
+import static dev.dsf.bpe.v1.constants.BpmnExecutionVariables.TARGET;
 
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.variables.Target;
+import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.variables.TargetImpl;
+import dev.dsf.bpe.variables.TargetValues;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import dev.dsf.bpe.delegate.AbstractServiceDelegate;
-import dev.dsf.fhir.authorization.read.ReadAccessHelper;
-import dev.dsf.fhir.client.FhirWebserviceClientProvider;
-import dev.dsf.fhir.task.TaskHelper;
-import dev.dsf.fhir.variables.Target;
-import dev.dsf.fhir.variables.TargetValues;
+import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
 
 public class HelloCos extends AbstractServiceDelegate
 {
-	public HelloCos(FhirWebserviceClientProvider clientProvider, TaskHelper taskHelper,
-			ReadAccessHelper readAccessHelper)
+	public HelloCos(ProcessPluginApi api)
 	{
-		super(clientProvider, taskHelper, readAccessHelper);
+		super(api);
 	}
 
 	@Override
-	protected void doExecute(DelegateExecution execution)
+	protected void doExecute(DelegateExecution execution, Variables variables)
 	{
-		Target target = Target.createUniDirectionalTarget("Test_HRP", "Test_HRP_Endpoint", "https://hrp/fhir");
-		execution.setVariable(BPMN_EXECUTION_VARIABLE_TARGET, TargetValues.create(target));
+		TargetImpl target = new TargetImpl("Test_HRP", "Test_HRP_Endpoint", "https://hrp/fhir", null);
+		execution.setVariable(TARGET, TargetValues.create(target));
 	}
 }

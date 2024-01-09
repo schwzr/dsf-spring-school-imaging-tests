@@ -1,20 +1,15 @@
 package dev.dsf.process.tutorial;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import dev.dsf.bpe.ProcessPluginDefinition;
-import dev.dsf.fhir.resources.AbstractResource;
-import dev.dsf.fhir.resources.ActivityDefinitionResource;
-import dev.dsf.fhir.resources.ResourceProvider;
-import dev.dsf.fhir.resources.StructureDefinitionResource;
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
+import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;
-import org.springframework.core.env.PropertyResolver;
-
-import ca.uhn.fhir.context.FhirContext;
 
 public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 {
@@ -40,29 +35,25 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	}
 
 	@Override
-	public Stream<String> getBpmnFiles()
-	{
-		return Stream.of("bpe/hello-dic.bpmn");
+	public List<String> getProcessModels() {
+
+		return List.of("bpe/hello-dic.bpmn");
 	}
 
 	@Override
-	public Stream<Class<?>> getSpringConfigClasses()
-	{
-		return Stream.of(TutorialConfig.class);
+	public Map<String, List<String>> getFhirResourcesByProcessId() {
+
+		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";		// 'a' in the beginning of 'aHelloDic' stands for ActivityDefinition
+
+		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";  // 's' in the beginning of 'sTaskHelloDic' stands for StructureDefinition
+
+		return Map.of(
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic)
+		);
 	}
 
 	@Override
-	public ResourceProvider getResourceProvider(FhirContext fhirContext, ClassLoader classLoader,
-			PropertyResolver resolver)
-	{
-		var aHelloDic = ActivityDefinitionResource.file("fhir/ActivityDefinition/hello-dic.xml");
-		var sTaskHelloDic = StructureDefinitionResource.file("fhir/StructureDefinition/task-hello-dic.xml");
-
-		Map<String, List<AbstractResource>> resourcesByProcessKeyAndVersion = Map.of(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + VERSION, Arrays.asList(aHelloDic, sTaskHelloDic));
-
-		return ResourceProvider.read(VERSION, RELEASE_DATE,
-				() -> fhirContext.newXmlParser().setStripVersionsFromReferences(false), classLoader, resolver,
-				resourcesByProcessKeyAndVersion);
+	public List<Class<?>> getSpringConfigurations() {
+		return List.of(TutorialConfig.class);
 	}
 }
