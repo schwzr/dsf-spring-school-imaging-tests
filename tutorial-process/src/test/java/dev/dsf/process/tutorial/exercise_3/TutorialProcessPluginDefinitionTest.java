@@ -23,8 +23,9 @@ import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
-import dev.dsf.fhir.resources.ResourceProvider;
+import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
+import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 import dev.dsf.process.tutorial.service.HelloDic;
@@ -34,6 +35,7 @@ import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.MetadataResource;
+import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.Test;
@@ -47,7 +49,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloDicBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-dic.bpmn";
-		String processId = "highmedorg_helloDic";
+		String processId = "dsfdev_helloDic";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -116,13 +118,8 @@ public class TutorialProcessPluginDefinitionTest
 		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ResourceProvider provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
-				new StandardEnvironment());
-		assertNotNull(provider);
-
-		List<MetadataResource> helloDic = provider.getResources(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION,
-				s -> ResourceProvider.empty()).collect(Collectors.toList());
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		List<Resource> helloDic = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC);
 
 		String errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
@@ -143,10 +140,10 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloCosBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-cos.bpmn";
-		String processId = "highmedorg_helloCos";
+		String processId = "dsfdev_helloCos";
 
-		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getBpmnFiles()
-				.anyMatch(f -> filename.equals(f));
+		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getProcessModels()
+				.stream().anyMatch(f -> filename.equals(f));
 		assertTrue("Process '" + processId + "' from file '" + filename + "' not configured in "
 				+ TutorialProcessPluginDefinition.class.getSimpleName(), cosProcessConfigured);
 
@@ -176,13 +173,9 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloCosResources() throws Exception
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ResourceProvider provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
-				new StandardEnvironment());
-		assertNotNull(provider);
 
-		List<MetadataResource> helloCos = provider.getResources(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS + "/" + TutorialProcessPluginDefinition.VERSION,
-				s -> ResourceProvider.empty()).collect(Collectors.toList());
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		List<Resource> helloCos = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC);
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
