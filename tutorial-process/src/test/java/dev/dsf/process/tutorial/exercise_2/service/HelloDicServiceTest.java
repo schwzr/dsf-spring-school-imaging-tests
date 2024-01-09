@@ -71,25 +71,12 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicConstructorWithAdditionalBooleanParameterExists() throws Exception
 	{
-		// not testing all parameter permutations
-		Optional<Constructor<HelloDic>> constructor = getConstructor(FhirWebserviceClientProvider.class,
-				TaskHelper.class, ReadAccessHelper.class, boolean.class);
-		if (constructor.isEmpty())
-			constructor = getConstructor(boolean.class, FhirWebserviceClientProvider.class, TaskHelper.class,
-					ReadAccessHelper.class);
-		if (constructor.isEmpty())
-			constructor = getConstructor(FhirWebserviceClientProvider.class, boolean.class, TaskHelper.class,
-					ReadAccessHelper.class);
-		if (constructor.isEmpty())
-			constructor = getConstructor(FhirWebserviceClientProvider.class, TaskHelper.class, boolean.class,
-					ReadAccessHelper.class);
+		Optional<Constructor<HelloDic>> constructor = getConstructor(ProcessPluginApi.class);
 
 		if (constructor.isEmpty())
 		{
 			String errorMessage = "One public constructor in class " + HelloDic.class.getSimpleName()
-					+ " with parameters (" + FhirWebserviceClientProvider.class.getSimpleName() + ", "
-					+ TaskHelper.class.getSimpleName() + ", " + ReadAccessHelper.class.getSimpleName()
-					+ ", boolean) expected";
+					+ " with parameters (" + ProcessPluginApi.class.getSimpleName() + ") expected";
 			fail(errorMessage);
 		}
 	}
@@ -124,18 +111,7 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicServiceDoExecute() throws Exception
 	{
-		// not trying all parameter permutations
-		Optional<HelloDic> optService = getInstance(Arrays.asList(FhirWebserviceClientProvider.class, TaskHelper.class,
-				ReadAccessHelper.class, boolean.class), clientProvider, taskHelper, readAccessHelper, true);
-		if (optService.isEmpty())
-			optService = getInstance(Arrays.asList(boolean.class, FhirWebserviceClientProvider.class, TaskHelper.class,
-					ReadAccessHelper.class), true, clientProvider, taskHelper, readAccessHelper);
-		if (optService.isEmpty())
-			optService = getInstance(Arrays.asList(FhirWebserviceClientProvider.class, boolean.class, TaskHelper.class,
-					ReadAccessHelper.class), clientProvider, true, taskHelper, readAccessHelper);
-		if (optService.isEmpty())
-			optService = getInstance(Arrays.asList(FhirWebserviceClientProvider.class, TaskHelper.class, boolean.class,
-					ReadAccessHelper.class), clientProvider, taskHelper, true, readAccessHelper);
+		Optional<HelloDic> optService = getInstance(Arrays.asList(ProcessPluginApi.class));
 
 		assumeTrue(optService.isPresent());
 
