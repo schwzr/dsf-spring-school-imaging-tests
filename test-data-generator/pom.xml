@@ -4,7 +4,7 @@
 	<artifactId>test-data-generator</artifactId>
 
 	<parent>
-		<groupId>org.highmed.dsf</groupId>
+		<groupId>dev.dsf</groupId>
 		<artifactId>dsf-process-tutorial</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
@@ -27,11 +27,11 @@
 			<artifactId>crypto-utils</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.highmed.dsf</groupId>
+			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-fhir-rest-adapter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.highmed.dsf</groupId>
+			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-fhir-server</artifactId>
 			<exclusions>
 				<exclusion>
@@ -64,7 +64,7 @@
 					<arguments>
 						<argument>-classpath</argument>
 						<classpath />
-						<argument>org.highmed.dsf.process.tutorial.tools.generator.TestDataGenerator</argument>
+						<argument>dev.dsf.process.tutorial.tools.generator.TestDataGenerator</argument>
 					</arguments>
 					<workingDirectory>${project.basedir}</workingDirectory>
 				</configuration>

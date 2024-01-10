@@ -65,7 +65,7 @@ services:
         read_only: true
 
   cos-fhir:
-    image: ghcr.io/highmed/fhir:0.7.0
+    image: ghcr.io/datasharingframework/fhir:0.7.0
     restart: "no"
     ports:
       - 127.0.0.1:5002:5002
@@ -165,7 +165,7 @@ services:
       - cos-fhir
 
   dic-fhir:
-    image: ghcr.io/highmed/fhir:0.7.0
+    image: ghcr.io/datasharingframework/fhir:0.7.0
     restart: "no"
     ports:
       - 127.0.0.1:5000:5000
@@ -265,7 +265,7 @@ services:
       - dic-fhir
 
   hrp-fhir:
-    image: ghcr.io/highmed/fhir:0.7.0
+    image: ghcr.io/datasharingframework/fhir:0.7.0
     restart: "no"
     ports:
       - 127.0.0.1:5001:5001
