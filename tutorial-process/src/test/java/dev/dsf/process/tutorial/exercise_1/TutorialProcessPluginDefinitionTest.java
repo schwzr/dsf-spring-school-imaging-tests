@@ -15,9 +15,14 @@ import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
+
+import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
+import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.service.HelloDic;
+
+import org.hl7.fhir.r4.model.Resource;
 import org.junit.Test;
 import org.springframework.core.env.StandardEnvironment;
 
@@ -49,19 +54,9 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHelloDicResources() throws Exception
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		/*ResourceProvider provider = definition.getResourceProvider(FhirContext.forR4(), getClass().getClassLoader(),
-				new StandardEnvironment());
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		List<Resource> resources = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION);
 
-		assertNotNull(provider);*/
-
-		Map<String, List<String>> resources = definition.getFhirResourcesByProcessId();
-		assertEquals(1, resources.size());
-		assertEquals(2, resources.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).size());
-
-		/*var helloDic = provider.getResources(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION,
-				s -> ResourceProvider.empty());
-		assertNotNull(helloDic);
-		assertEquals(2, helloDic.count());*/
+		assertEquals(2, resources.size());
 	}
 }
