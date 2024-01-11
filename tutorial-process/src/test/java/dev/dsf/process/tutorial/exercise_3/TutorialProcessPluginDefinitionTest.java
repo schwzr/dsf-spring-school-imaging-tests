@@ -119,6 +119,10 @@ public class TutorialProcessPluginDefinitionTest
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+
+		assertEquals(true, initialized);
+
 		List<Resource> helloDic = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC + "/" + VERSION);
 
 		String errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
@@ -176,6 +180,9 @@ public class TutorialProcessPluginDefinitionTest
 
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 		List<Resource> helloCos = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_HELLO_COS + "/" + VERSION);
+		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
+
+		assertEquals(true, initialized);
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)

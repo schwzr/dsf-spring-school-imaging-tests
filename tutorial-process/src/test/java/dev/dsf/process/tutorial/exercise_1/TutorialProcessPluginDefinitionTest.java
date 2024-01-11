@@ -55,6 +55,10 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+
+		assertEquals(true, initialized);
+
 		List<Resource> resources = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION);
 
 		assertEquals(2, resources.size());
