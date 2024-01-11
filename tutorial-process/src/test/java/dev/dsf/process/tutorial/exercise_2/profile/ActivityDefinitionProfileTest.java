@@ -33,15 +33,19 @@ public class ActivityDefinitionProfileTest
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(VERSION, RELEASE_DATE,
 			Arrays.asList("dsf-activity-definition-1.0.0.xml", "dsf-extension-process-authorization-1.0.0.xml",
-					"dsf-extension-process-authorization-consortium-role-1.0.0.xml",
+					"dsf-extension-process-authorization-parent-organization-role-1.0.0.xml",
+					"dsf-extension-process-authorization-parent-organization-role-practitioner-1.0.0.xml",
 					"dsf-extension-process-authorization-organization-1.0.0.xml",
+					"dsf-extension-process-authorization-organization-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-local-all-1.0.0.xml",
-					"dsf-coding-process-authorization-local-consortium-role-1.0.0.xml",
+					"dsf-coding-process-authorization-local-all-practitioner-1.0.0.xml",
+					"dsf-coding-process-authorization-local-parent-organization-role-1.0.0.xml",
+					"dsf-coding-process-authorization-local-parent-organization-role-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-local-organization-1.0.0.xml",
+					"dsf-coding-process-authorization-local-organization-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-remote-all-1.0.0.xml",
-					"dsf-coding-process-authorization-remote-consortium-role-1.0.0.xml",
-					"dsf-coding-process-authorization-remote-organization-1.0.0.xml"
-					),
+					"dsf-coding-process-authorization-remote-parent-organization-role-1.0.0.xml",
+					"dsf-coding-process-authorization-remote-organization-1.0.0.xml"),
 			Arrays.asList(
 					"dsf-process-authorization-1.0.0.xml",
 					"dsf-read-access-tag-1.0.0.xml"
