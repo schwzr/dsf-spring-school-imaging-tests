@@ -55,7 +55,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertNotNull(provider);*/
 
 		Map<String, List<String>> resources = definition.getFhirResourcesByProcessId();
-		assertEquals(2, resources.size());
+		assertEquals(1, resources.size());
+		assertEquals(2, resources.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC));
 
 		/*var helloDic = provider.getResources(
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION,
