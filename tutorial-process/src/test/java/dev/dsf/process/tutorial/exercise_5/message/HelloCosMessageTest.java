@@ -63,27 +63,53 @@ public class HelloCosMessageTest
 	@Mock
 	private Variables variables;
 
+	private class MockableHelloCosMessage extends HelloCosMessage{
+
+		public MockableHelloCosMessage(ProcessPluginApi api)
+		{
+			super(api);
+		}
+
+		@Override
+		public void doExecute(DelegateExecution execution, Variables variables) throws Exception
+		{
+			super.doExecute(execution, variables);
+		}
+
+		@Override
+		public String getProfile(DelegateExecution execution, Variables variables)
+		{
+			return getProfile(execution, variables);
+		}
+
+		@Override
+		public String getInstantiatesCanonical(DelegateExecution execution, Variables variables)
+		{
+			return getInstantiatesCanonical(execution, variables);
+		}
+	}
+
 	@Test
 	public void testGetAdditionalInputParameters() throws Exception
 	{
-		HelloCosMessage messageDelegate = new HelloCosMessage(api);
+		MockableHelloCosMessage messageDelegate = new MockableHelloCosMessage(api);
 
 		Mockito.when(variables.getTarget())
 				.thenReturn(new TargetImpl("Test_COS", "Test_COS_Endpoint", "https://cos/fhir", null));
-
-		/*Mockito.when(variables.getVariable(BPMN_EXECUTION_VARIABLE_INSTANTIATES_URI))
-				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION);*/ //TODO: Figure out why this needs to be mocked in the first place
+		Mockito.when(messageDelegate.getInstantiatesCanonical(execution, variables))
+				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION); //TODO: Figure out why this needs to be mocked in the first place
 		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME))
 				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME);
-		/*Mockito.when(variables.getVariable(BPMN_EXECUTION_VARIABLE_PROFILE))
-				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION);*/ // TODO: Figure out why this needs to be mocked in the first place
+		Mockito.when(messageDelegate.getProfile(execution, variables))
+				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION); // TODO: Figure out why this needs to be mocked in the first place
 		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.BUSINESS_KEY)).thenReturn(UUID.randomUUID().toString());
-
 		/*Mockito.when(clientProvider.getWebserviceClient(anyString())).thenReturn(client);
 		Mockito.when(client.getBaseUrl()).thenReturn("https://cos/fhir");
 		Mockito.when(client.withMinimalReturn()).thenReturn(clientWithMinimalReturn);*/
 
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
+
+		Mockito.when(api.getVariables(execution)).thenReturn(variables);
 
 		Mockito.when(variables.getStartTask()).thenReturn(getTask());
 

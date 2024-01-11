@@ -1,5 +1,6 @@
 package dev.dsf.process.tutorial.exercise_1.service;
 
+import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.constants.NamingSystems;
 import dev.dsf.bpe.v1.variables.Variables;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -21,6 +22,9 @@ public class HelloDicServiceTest
 	@Mock
 	private Variables variables;
 
+	@Mock
+	private ProcessPluginApi api;
+
 	@InjectMocks
 	private HelloDic service;
 
@@ -30,6 +34,8 @@ public class HelloDicServiceTest
 	{
 		//Mockito.when(execution.getVariable(BPMN_EXECUTION_VARIABLE_LEADING_TASK)).thenReturn(getTask());
 		Mockito.when(variables.getStartTask()).thenReturn(getTask());
+
+		Mockito.when(api.getVariables(execution)).thenReturn(variables);
 
 		service.execute(execution);
 

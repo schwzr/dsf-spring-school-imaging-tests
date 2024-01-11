@@ -30,7 +30,7 @@ public class TutorialExampleStarter
 	{
 		Task task = new Task();
 		task.getMeta().addProfile(PROFILE_TUTORIAL_TASK_HELLO_DIC_AND_LATEST_VERSION);
-		task.setInstantiatesUri(PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI_AND_LATEST_VERSION);
+		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI_AND_LATEST_VERSION);
 		task.setStatus(Task.TaskStatus.REQUESTED);
 		task.setIntent(Task.TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
