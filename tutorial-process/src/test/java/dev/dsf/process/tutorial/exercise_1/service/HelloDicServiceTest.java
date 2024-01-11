@@ -32,14 +32,12 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicServiceValid() throws Exception
 	{
-		//Mockito.when(execution.getVariable(BPMN_EXECUTION_VARIABLE_LEADING_TASK)).thenReturn(getTask());
 		Mockito.when(variables.getStartTask()).thenReturn(getTask());
 
 		Mockito.when(api.getVariables(execution)).thenReturn(variables);
 
 		service.execute(execution);
 
-		//Mockito.verify(execution).getVariable(BPMN_EXECUTION_VARIABLE_LEADING_TASK);
 		Mockito.verify(variables).getStartTask();
 	}
 
