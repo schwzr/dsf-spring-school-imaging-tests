@@ -80,9 +80,10 @@ public class TutorialProcessPluginDefinitionTest
 		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-hrp.bpmn"::equals));
 	}
 
-	private List<Resource> getResources(String processKey)
+	private List<Resource> getResources(String processKey, String processOrgIdentifier)
 	{
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		processPlugin.initializeAndValidateResources(processOrgIdentifier);
 		assumeNotNull(processPlugin);
 
 		return processPlugin.getFhirResources().get(processKey + "/" + TutorialProcessPluginDefinition.VERSION);
@@ -91,7 +92,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderCos() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(4, resources.size());
 
@@ -123,7 +124,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDic() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(5, resources.size());
 
@@ -163,7 +164,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDicActivityDefinitionHelloDic() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assumeNotNull(resources);
 
 		var aOpt = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
@@ -182,7 +183,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderHrp() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_HRP);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_HRP, ConstantsTutorial.TUTORIAL_HRP_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(4, resources.size());
 
