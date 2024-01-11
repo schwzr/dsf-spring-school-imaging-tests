@@ -37,13 +37,18 @@ public class ActivityDefinitionProfileTest
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(VERSION, RELEASE_DATE,
 			Arrays.asList("dsf-activity-definition-1.0.0.xml", "dsf-extension-process-authorization-1.0.0.xml",
-					"dsf-extension-process-authorization-consortium-role-1.0.0.xml",
+					"dsf-extension-process-authorization-parent-organization-role-1.0.0.xml",
+					"dsf-extension-process-authorization-parent-organization-role-practitioner-1.0.0.xml",
 					"dsf-extension-process-authorization-organization-1.0.0.xml",
+					"dsf-extension-process-authorization-organization-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-local-all-1.0.0.xml",
-					"dsf-coding-process-authorization-local-consortium-role-1.0.0.xml",
+					"dsf-coding-process-authorization-local-all-practitioner-1.0.0.xml",
+					"dsf-coding-process-authorization-local-parent-organization-role-1.0.0.xml",
+					"dsf-coding-process-authorization-local-parent-organization-role-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-local-organization-1.0.0.xml",
+					"dsf-coding-process-authorization-local-organization-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-remote-all-1.0.0.xml",
-					"dsf-coding-process-authorization-remote-consortium-role-1.0.0.xml",
+					"dsf-coding-process-authorization-remote-parent-organization-role-1.0.0.xml",
 					"dsf-coding-process-authorization-remote-organization-1.0.0.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-process-authorization-1.0.0.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-process-authorization-recipient-1.0.0.xml",
@@ -141,7 +146,7 @@ public class ActivityDefinitionProfileTest
 				((Coding) extRequester.getValue()).getSystem());
 		assertEquals("REMOTE_ROLE", ((Coding) extRequester.getValue()).getCode());
 		Extension extRequesterExtRole = ((Coding) extRequester.getValue()).getExtensionByUrl(
-				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role");
+				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role");
 		assertNotNull(extRequesterExtRole);
 		Extension extRequesterExtRoleConsortium = extRequesterExtRole.getExtensionByUrl("consortium");
 		assertNotNull(extRequesterExtRoleConsortium);
@@ -163,7 +168,7 @@ public class ActivityDefinitionProfileTest
 				((Coding) extRecipient.getValue()).getSystem());
 		assertEquals("LOCAL_ROLE", ((Coding) extRecipient.getValue()).getCode());
 		Extension extRecipientExtRole = ((Coding) extRecipient.getValue()).getExtensionByUrl(
-				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role");
+				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role");
 		assertNotNull(extRecipientExtRole);
 		Extension extRecipientExtRoleConsortium = extRecipientExtRole.getExtensionByUrl("consortium");
 		assertNotNull(extRecipientExtRoleConsortium);

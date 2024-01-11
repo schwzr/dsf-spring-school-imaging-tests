@@ -89,10 +89,10 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorMessageEndEventInputs, 3, inputParameters.size());
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'instantiatesUri' and value '"
+				+ "' is missing a MessageEndEvent input parameter with name 'instantiatesCanonical' and value '"
 				+ PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "#{version}'";
 		assertTrue(errorMessageEndEventInputUri,
-				inputParameters.stream().anyMatch(i -> "instantiatesUri".equals(i.getCamundaName())
+				inputParameters.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
 						&& (PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "#{version}").equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
