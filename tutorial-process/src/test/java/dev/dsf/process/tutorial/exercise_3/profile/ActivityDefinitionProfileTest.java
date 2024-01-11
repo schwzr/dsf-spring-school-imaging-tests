@@ -37,6 +37,7 @@ public class ActivityDefinitionProfileTest
 					"dsf-extension-process-authorization-parent-organization-role-practitioner-1.0.0.xml",
 					"dsf-extension-process-authorization-organization-1.0.0.xml",
 					"dsf-extension-process-authorization-organization-practitioner-1.0.0.xml",
+					"dsf-extension-process-authorization-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-local-all-1.0.0.xml",
 					"dsf-coding-process-authorization-local-all-practitioner-1.0.0.xml",
 					"dsf-coding-process-authorization-local-parent-organization-role-1.0.0.xml",
