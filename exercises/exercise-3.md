@@ -58,10 +58,10 @@ Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-aut
     The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
     
 * **LOCAL_ROLE** A local organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-consortium-role-1.0.0.xml) extension.
+    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
     
 * **REMOTE_ROLE** A remote (non local) organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-consortium-role-1.0.0.xml) extension.
+    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
     
 * **LOCAL_ALL** All local organizations regardless of their identifier or role in a consortium.
 
@@ -73,11 +73,11 @@ Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-aut
     The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
     
 * **LOCAL_ROLE** Organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-consortium-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-consortium-role-1.0.0.xml) extension.
+    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
     
 * **LOCAL_ALL** All organizations regardless of their identifier or role in a consortium.
 
-_The local organization of a DSF instance is configured using the environment variables [ORG_HIGHMED_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://dsf.dev/stable/maintain/fhir/configuration.html#dev-dsf-fhir-server-organization-identifier-value) for the DSF FHIR server and [ORG_HIGHMED_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://github.com/highmed/dsf-dsf/wiki/DSF-0.7.0-Configuration-Parameters-BPE#org_highmed_dsf_bpe_fhir_server_organization_identifier_value) for the DSF BPE server._
+_The local organization of a DSF instance is configured using the environment variables [DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://dsf.dev/stable/maintain/fhir/configuration.html#dev-dsf-fhir-server-organization-identifier-value) for the DSF FHIR server and [DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://github.com/highmed/dsf-dsf/wiki/DSF-0.7.0-Configuration-Parameters-BPE#org_dev_dsf_bpe_fhir_server_organization_identifier_value) for the DSF BPE server._
 
 #### Authorization Extension Example
 The following example specifies that process execution can only be requested by a organization with a specific identifier and only allows execution of the process in the DSF instance of an organization with a specific identifier.
