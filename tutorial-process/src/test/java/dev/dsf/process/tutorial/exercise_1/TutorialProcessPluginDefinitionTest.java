@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import org.camunda.bpm.model.bpmn.Bpmn;
@@ -56,10 +57,10 @@ public class TutorialProcessPluginDefinitionTest
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
-
 		assertEquals(true, initialized);
 
-		List<Resource> resources = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION);
+		List<Resource> resources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+				definition.getResourceVersion()));
 
 		assertEquals(2, resources.size());
 	}
