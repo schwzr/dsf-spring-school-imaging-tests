@@ -18,6 +18,7 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 
 import camundajar.impl.scala.collection.immutable.Stream;
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.ProcessPluginApiImpl;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
@@ -93,7 +94,8 @@ public class TutorialProcessPluginDefinitionTest
 
 		var fhirResources = processPlugin.getFhirResources();
 
-		List<Resource> helloDicResources = fhirResources.get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC + "/" + TutorialProcessPluginDefinition.VERSION);
+		List<Resource> helloDicResources = fhirResources.get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+				definition.getResourceVersion()));
 
 		Map<String, List<String>> helloDic = definition.getFhirResourcesByProcessId();
 

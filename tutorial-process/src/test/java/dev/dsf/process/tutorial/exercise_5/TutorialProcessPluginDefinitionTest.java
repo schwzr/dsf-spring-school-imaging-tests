@@ -86,7 +86,7 @@ public class TutorialProcessPluginDefinitionTest
 		processPlugin.initializeAndValidateResources(processOrgIdentifier);
 		assumeNotNull(processPlugin);
 
-		return processPlugin.getFhirResources().get(processKey + "/" + TutorialProcessPluginDefinition.VERSION);
+		return processPlugin.getFhirResources().get(processKey + "/" + TutorialProcessPluginDefinition.VERSION.substring(0,2));
 	}
 
 	@Test
