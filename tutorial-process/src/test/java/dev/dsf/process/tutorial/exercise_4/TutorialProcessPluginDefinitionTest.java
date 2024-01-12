@@ -27,6 +27,7 @@ import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
 
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
@@ -144,7 +145,8 @@ public class TutorialProcessPluginDefinitionTest
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 
-		List<Resource> helloDic = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC + "/" + VERSION);
+		List<Resource> helloDic = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+				definition.getResourceVersion()));
 		String errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
 		assertEquals(errorCodeSystem, 1, helloDic.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
@@ -199,7 +201,8 @@ public class TutorialProcessPluginDefinitionTest
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		List<Resource> helloCos = processPlugin.getFhirResources().get(ConstantsTutorial.PROCESS_NAME_HELLO_COS + "/" + VERSION);
+		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+				definition.getResourceVersion()));
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
