@@ -70,7 +70,7 @@ public class HelloDicServiceTest
 	public void testHelloDicConstructorWithAdditionalBooleanParameterExists() throws Exception
 	{
 
-		Optional<Constructor<HelloDic>> constructor = getConstructor(ProcessPluginApi.class);
+		Optional<Constructor<HelloDic>> constructor = getConstructor(ProcessPluginApi.class, boolean.class);
 
 		if (constructor.isEmpty())
 		{
