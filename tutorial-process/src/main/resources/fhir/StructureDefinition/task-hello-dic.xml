@@ -23,7 +23,7 @@
   <differential>
     <element id="Task.instantiatesCanonical">
       <path value="Task.instantiatesCanonical" />
-      <fixedUri value="http://dsf.dev/bpe/Process/helloDic/#{version}" />
+      <fixedCanonical value="http://dsf.dev/bpe/Process/helloDic/#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">

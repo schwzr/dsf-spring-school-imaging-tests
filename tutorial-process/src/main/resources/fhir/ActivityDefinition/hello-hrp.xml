@@ -48,9 +48,9 @@
 	<experimental value="false" />
 	<!-- date managed by bpe -->
 	<date value="#{date}" />
-	<publisher value="HiGHmed" />
+	<publisher value="DSF" />
 	<contact>
-		<name value="HiGHmed" />
+		<name value="DSF" />
 		<telecom>
 			<system value="email" />
 			<value value="pmo@dsf.dev" />
