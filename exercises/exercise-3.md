@@ -27,14 +27,14 @@ In order to link the FHIR and BPMN worlds the BPMN process definition key needs 
 ```
 domainorg_processKey
 ```
-In addition the BPM process needs to specify a process version with the pattern `^\d+.\d+.\d+$` for example:
+In addition the BPM process needs to specify a process version with the pattern `^\d+.\d+$` for example:
 ```
 1.0.0
 ```
 
 This results in a canonical URL used to identify the process, for example:
 ```
-http://domain.org/bpe/Process/processKey/1.0.0
+http://domain.org/bpe/Process/processKey|1.0
 ```
 
 The canonical URL is used for [Task.instantiatesCanonical](http://hl7.org/fhir/R4/task.html) and [ActivityDefinition.url / version](http://hl7.org/fhir/R4/activitydefinition.html).
