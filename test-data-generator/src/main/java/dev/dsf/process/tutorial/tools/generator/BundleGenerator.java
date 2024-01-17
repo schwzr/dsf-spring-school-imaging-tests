@@ -10,11 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import dev.dsf.fhir.service.ReferenceCleaner;
-import dev.dsf.fhir.service.ReferenceCleanerImpl;
-import dev.dsf.fhir.service.ReferenceExtractor;
-import dev.dsf.fhir.service.ReferenceExtractorImpl;
-import dev.dsf.process.tutorial.tools.generator.CertificateGenerator.CertificateFiles;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Organization;
@@ -24,6 +19,11 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
+import dev.dsf.fhir.service.ReferenceCleaner;
+import dev.dsf.fhir.service.ReferenceCleanerImpl;
+import dev.dsf.fhir.service.ReferenceExtractor;
+import dev.dsf.fhir.service.ReferenceExtractorImpl;
+import dev.dsf.process.tutorial.tools.generator.CertificateGenerator.CertificateFiles;
 
 public class BundleGenerator
 {
