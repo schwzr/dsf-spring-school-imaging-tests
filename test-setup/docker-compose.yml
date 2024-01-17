@@ -34,7 +34,7 @@ services:
       TZ: Europe/Berlin
 
   db:
-    image: postgres:13
+    image: postgres:15
     restart: "no"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U liquibase_user -d postgres"]
@@ -65,7 +65,7 @@ services:
         read_only: true
 
   cos-fhir:
-    image: ghcr.io/datasharingframework/fhir:0.7.0
+    image: ghcr.io/datasharingframework/fhir:1.4.0
     restart: "no"
     ports:
       - 127.0.0.1:5002:5002
@@ -73,6 +73,7 @@ services:
       - db_liquibase.password
       - db_cos_fhir_user.password
       - db_cos_fhir_user_permanent_delete.password
+      - app_server_trust_certificates.pem
       - app_client_trust_certificates.pem
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
@@ -87,10 +88,11 @@ services:
     environment:
       TZ: Europe/Berlin
       EXTRA_JVM_ARGS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5002
+      JETTY_CLIENT_TRUSTSTORE_PEM: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_FHIR_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_FHIR_DB_USER_PASSWORD_FILE: /run/secrets/db_cos_fhir_user.password
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_PASSWORD_FILE: /run/secrets/db_cos_fhir_user_permanent_delete.password
-      DEV_DSF_FHIR_CLIENT_TRUST_CERTIFICATES: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_cos_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_cos_client_certificate_private_key.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
@@ -101,8 +103,22 @@ services:
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_USERNAME: cos_fhir_server_permanent_delete_user
       DEV_DSF_FHIR_SERVER_BASE_URL: https://cos/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_COS
-      DEV_DSF_FHIR_SERVER_USER_THUMBPRINTS: ${COS_USER_THUMBPRINTS}
-      DEV_DSF_FHIR_SERVER_USER_THUMBPRINTS_PERMANENT_DELETE: ${COS_USER_THUMBPRINTS_PERMANENT_DELETE}
+      DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${COS_BUNDLE_USER_THUMBPRINT}
+      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+              - PERMANENT_DELETE
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       cos-fhir-frontend:
         ipv4_address: 172.20.0.99
@@ -120,6 +136,7 @@ services:
       - db_liquibase.password
       - db_cos_bpe_user.password
       - db_cos_bpe_user_camunda.password
+      - app_server_trust_certificates.pem
       - app_client_trust_certificates.pem
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
@@ -165,7 +182,7 @@ services:
       - cos-fhir
 
   dic-fhir:
-    image: ghcr.io/datasharingframework/fhir:0.7.0
+    image: ghcr.io/datasharingframework/fhir:1.4.0
     restart: "no"
     ports:
       - 127.0.0.1:5000:5000
@@ -173,6 +190,7 @@ services:
       - db_liquibase.password
       - db_dic_fhir_user.password
       - db_dic_fhir_user_permanent_delete.password
+      - app_server_trust_certificates.pem
       - app_client_trust_certificates.pem
       - app_dic_client_certificate.pem
       - app_dic_client_certificate_private_key.pem
@@ -190,7 +208,7 @@ services:
       DEV_DSF_FHIR_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_FHIR_DB_USER_PASSWORD_FILE: /run/secrets/db_dic_fhir_user.password
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_PASSWORD_FILE: /run/secrets/db_dic_fhir_user_permanent_delete.password
-      DEV_DSF_FHIR_CLIENT_TRUST_CERTIFICATES: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_dic_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_dic_client_certificate_private_key.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
@@ -201,8 +219,22 @@ services:
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_USERNAME: dic_fhir_server_permanent_delete_user
       DEV_DSF_FHIR_SERVER_BASE_URL: https://dic/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_DIC
-      DEV_DSF_FHIR_SERVER_USER_THUMBPRINTS: ${DIC_USER_THUMBPRINTS}
-      DEV_DSF_FHIR_SERVER_USER_THUMBPRINTS_PERMANENT_DELETE: ${DIC_USER_THUMBPRINTS_PERMANENT_DELETE}
+      DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${DIC_BUNDLE_USER_THUMBPRINT}
+      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+              - PERMANENT_DELETE
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.67
@@ -220,6 +252,7 @@ services:
       - db_liquibase.password
       - db_dic_bpe_user.password
       - db_dic_bpe_user_camunda.password
+      - app_server_trust_certificates.pem
       - app_client_trust_certificates.pem
       - app_dic_client_certificate.pem
       - app_dic_client_certificate_private_key.pem
@@ -245,7 +278,7 @@ services:
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_dic_bpe_user.password
       DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_dic_bpe_user_camunda.password
-      DEV_DSF_BPE_FHIR_CLIENT_TRUST_CERTIFICATES: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_dic_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_dic_client_certificate_private_key.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
@@ -267,7 +300,7 @@ services:
       - dic-fhir
 
   hrp-fhir:
-    image: ghcr.io/datasharingframework/fhir:0.7.0
+    image: ghcr.io/datasharingframework/fhir:1.4.0
     restart: "no"
     ports:
       - 127.0.0.1:5001:5001
@@ -275,6 +308,7 @@ services:
       - db_liquibase.password
       - db_hrp_fhir_user.password
       - db_hrp_fhir_user_permanent_delete.password
+      - app_server_trust_certificates.pem
       - app_client_trust_certificates.pem
       - app_hrp_client_certificate.pem
       - app_hrp_client_certificate_private_key.pem
@@ -292,7 +326,7 @@ services:
       DEV_DSF_FHIR_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_FHIR_DB_USER_PASSWORD_FILE: /run/secrets/db_hrp_fhir_user.password
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_PASSWORD_FILE: /run/secrets/db_hrp_fhir_user_permanent_delete.password
-      DEV_DSF_FHIR_CLIENT_TRUST_CERTIFICATES: /run/secrets/app_client_trust_certificates.pem
+      DEV_DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_hrp_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_hrp_client_certificate_private_key.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
@@ -302,9 +336,23 @@ services:
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_GROUP: hrp_fhir_permanent_delete_users
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_USERNAME: hrp_fhir_server_permanent_delete_user
       DEV_DSF_FHIR_SERVER_BASE_URL: https://hrp/fhir
-      DEV_DSF_FHIR_SERVER_USER_THUMBPRINTS: ${HRP_USER_THUMBPRINTS}
-      DEV_DSF_FHIR_SERVER_USER_THUMBPRINTS_PERMANENT_DELETE: ${HRP_USER_THUMBPRINTS_PERMANENT_DELETE}
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_HRP
+      DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${HRP_BUNDLE_USER_THUMBPRINT}
+      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+              - PERMANENT_DELETE
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       hrp-fhir-frontend:
         ipv4_address: 172.20.0.83
@@ -313,6 +361,7 @@ services:
     depends_on:
       - db
       - proxy
+
   hrp-bpe:
     image: ghcr.io/datasharingframework/bpe:1.4.0
     restart: "no"
@@ -322,6 +371,7 @@ services:
       - db_liquibase.password
       - db_hrp_bpe_user.password
       - db_hrp_bpe_user_camunda.password
+      - app_server_trust_certificates.pem
       - app_client_trust_certificates.pem
       - app_hrp_client_certificate.pem
       - app_hrp_client_certificate_private_key.pem
@@ -347,7 +397,7 @@ services:
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_hrp_bpe_user.password
       DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_hrp_bpe_user_camunda.password
-      DEV_DSF_BPE_FHIR_CLIENT_TRUST_CERTIFICATES: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_hrp_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_hrp_client_certificate_private_key.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password

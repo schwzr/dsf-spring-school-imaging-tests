@@ -105,13 +105,13 @@ public class TutorialProcessPluginDefinitionTest
 
 		String firstKey = helloDic.keySet().stream().findFirst().get();
 		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '" + ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + firstKey + "'";
-		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_HELLO_DIC, firstKey);
+		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, firstKey);
 
 		String errorCodeSystem = "Process is missing CodeSystem with file name '" + codeSystemFile + "'";
-		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC).stream().filter(r -> codeSystemUrl.equals(r)).count());
+		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream().filter(r -> codeSystemUrl.equals(r)).count());
 
 		String errorValueSet = "Process is missing ValueSet with file name '" + valueSetFile + "'";
-		assertEquals(errorValueSet, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_HELLO_DIC).stream().filter(r -> valueSetFile.equals(r)).count());
+		assertEquals(errorValueSet, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream().filter(r -> valueSetFile.equals(r)).count());
 
 		errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
