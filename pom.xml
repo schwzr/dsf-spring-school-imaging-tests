@@ -20,6 +20,8 @@
 		<main.basedir>${project.basedir}</main.basedir>
 		<hapi.version>5.1.0</hapi.version>
 		<dsf.version>1.4.0</dsf.version>
+		<slf4j.version>2.0.9</slf4j.version>
+		<log4j.version>2.22.0</log4j.version>
 	</properties>
 
 	<description>TODO</description>
@@ -98,21 +100,20 @@
 			<!-- hhn rwh -->
 			<dependency>
 				<groupId>de.hs-heilbronn.mi</groupId>
-				<artifactId>log4j2-utils</artifactId>
-				<version>0.13.0</version>
-			</dependency>
-			<dependency>
-				<groupId>de.hs-heilbronn.mi</groupId>
 				<artifactId>crypto-utils</artifactId>
-				<version>3.3.0</version>
+				<version>3.8.0</version>
 			</dependency>
 
 			<!-- logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>2.0.7</version>
-				<scope>provided</scope>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j.version}</version>
 			</dependency>
 
 			<!-- testing -->
@@ -132,6 +133,13 @@
 			    <artifactId>mockito-core</artifactId>
 			    <version>4.5.1</version>
 			</dependency>
+
+			<!-- maven plugin -->
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-core</artifactId>
+				<version>3.9.6</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -141,7 +149,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.10.1</version>
+					<version>3.11.0</version>
 					<configuration>
 						<source>${compileSource}</source>
 						<target>${compileTarget}</target>
@@ -150,12 +158,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.0.0-M6</version>
+					<version>3.1.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.2.2</version>
+					<version>3.3.0</version>
 					<configuration>
 						<archive>
 							<manifest>
@@ -172,22 +180,22 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.3.0</version>
+					<version>3.6.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.2.0</version>
+					<version>3.3.1</version>
 				</plugin>
 				<plugin>
 					<groupId>net.revelc.code.formatter</groupId>
 					<artifactId>formatter-maven-plugin</artifactId>
-					<version>2.19.0</version>
+					<version>2.23.0</version>
 				</plugin>
 				<plugin>
 					<groupId>net.revelc.code</groupId>
 					<artifactId>impsort-maven-plugin</artifactId>
-					<version>1.7.0</version>
+					<version>1.9.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>

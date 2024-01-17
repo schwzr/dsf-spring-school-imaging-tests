@@ -11,6 +11,7 @@
 
 	<properties>
 		<main.basedir>${project.basedir}/..</main.basedir>
+		<dsf.version>1.4.0</dsf.version>
 	</properties>
 
 	<dependencies>
@@ -18,7 +19,7 @@
 		<dependency>
 			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-bpe-process-api-v1</artifactId>
-			<version>1.4.0</version>
+			<version>${dsf.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -30,7 +31,7 @@
 		<dependency>
 			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-bpe-process-api-v1</artifactId>
-			<version>1.4.0</version>
+			<version>${dsf.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
@@ -38,7 +39,7 @@
 		<dependency>
 			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-bpe-server</artifactId>
-			<version>1.4.0</version>
+			<version>${dsf.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -240,32 +241,20 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>dev.dsf</groupId>
+				<artifactId>dsf-tools-documentation-generator</artifactId>
+				<version>${dsf.version}</version>
 				<executions>
 					<execution>
 						<goals>
-							<goal>exec</goal>
+							<goal>generate</goal>
 						</goals>
-						<phase>prepare-package</phase>
 					</execution>
 				</executions>
 				<configuration>
-					<executable>java</executable>
-					<arguments>
-						<argument>-classpath</argument>
-						<classpath />
-						<argument>
-							dev.dsf.tools.generator.DocumentationGenerator
-						</argument>
-						<argument>
-							dev.dsf.process.tutorial.spring.config
-						</argument>
-					</arguments>
-					<includeProjectDependencies>true</includeProjectDependencies>
-					<addResourcesToClasspath>true</addResourcesToClasspath>
-					<classpathScope>compile</classpathScope>
-					<workingDirectory>${project.basedir}</workingDirectory>
+					<workingPackages>
+						<workingPackage>dev.dsf.bpe</workingPackage>
+					</workingPackages>
 				</configuration>
 			</plugin>
 		</plugins>
