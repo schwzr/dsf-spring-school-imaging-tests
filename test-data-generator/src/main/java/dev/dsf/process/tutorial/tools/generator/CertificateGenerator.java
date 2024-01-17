@@ -58,6 +58,8 @@ public class CertificateGenerator
 	private static final String[] SERVER_COMMON_NAMES = { "localhost", "cos", "dic", "hrp" };
 	private static final String[] CLIENT_COMMON_NAMES = { "Webbrowser Test User", "cos-client", "dic-client",
 			"hrp-client" };
+	private static final Map<String, List<String>> DNS_NAMES = Map.of("localhost",
+			Arrays.asList("localhost", "host.docker.internal", "cos", "dic", "hrp"));
 
 	private static final BouncyCastleProvider PROVIDER = new BouncyCastleProvider();
 
@@ -101,13 +103,16 @@ public class CertificateGenerator
 	}
 
 	private CertificateAuthority ca;
-	private CertificateFiles serverCertificateFiles;
+	private Map<String, CertificateFiles> serverCertificateFilesByCommonName;
 	private Map<String, CertificateFiles> clientCertificateFilesByCommonName;
 
 	public void generateCertificates()
 	{
 		ca = initCA();
-		serverCertificateFiles = createCert(CertificateType.SERVER, "localhost", List.of(SERVER_COMMON_NAMES));
+		serverCertificateFilesByCommonName = Arrays.stream(SERVER_COMMON_NAMES)
+				.map(commonName -> createCert(CertificateType.SERVER, commonName,
+						DNS_NAMES.getOrDefault(commonName, Collections.singletonList(commonName))))
+				.collect(Collectors.toMap(CertificateFiles::getCommonName, Function.identity()));
 		clientCertificateFilesByCommonName = Arrays.stream(CLIENT_COMMON_NAMES)
 				.map(commonName -> createCert(CertificateType.CLIENT, commonName, Collections.emptyList()))
 				.collect(Collectors.toMap(CertificateFiles::getCommonName, Function.identity()));
@@ -222,7 +227,7 @@ public class CertificateGenerator
 		Path thumbprintsFile = Paths.get("cert", "thumbprints.txt");
 
 		Stream<String> certificates = Streams
-				.concat(Stream.of(serverCertificateFiles), clientCertificateFilesByCommonName.values().stream())
+				.concat(serverCertificateFilesByCommonName.values().stream(), clientCertificateFilesByCommonName.values().stream())
 				.sorted(Comparator.comparing(CertificateFiles::getCommonName))
 				.map(c -> c.getCommonName() + "\n\t" + c.getCertificateSha512ThumbprintHex() + " (SHA-512)\n");
 
@@ -529,13 +534,15 @@ public class CertificateGenerator
 	{
 		X509Certificate testCaCertificate = ca.getCertificate();
 
+		CertificateFiles localhost = serverCertificateFilesByCommonName.get("localhost");
+
 		Path serverCertificateAndCa = Paths.get(folder, "proxy_certificate_and_int_cas.pem");
 		logger.info("Writing server certificate and CA certificate to {}", serverCertificateAndCa.toString());
-		writeCertificates(serverCertificateAndCa, serverCertificateFiles.getCertificate(), testCaCertificate);
+		writeCertificates(serverCertificateAndCa, localhost.getCertificate(), testCaCertificate);
 
 		Path serverCertificatePrivateKey = Paths.get(folder, "proxy_certificate_private_key.pem");
 		logger.info("Copying server private-key file to {}", serverCertificatePrivateKey.toString());
-		writePrivateKeyNotEncrypted(serverCertificatePrivateKey, serverCertificateFiles.keyPair.getPrivate());
+		writePrivateKeyNotEncrypted(serverCertificatePrivateKey, localhost.keyPair.getPrivate());
 	}
 
 	private void writeCertificates(Path certificateFile, X509Certificate... certificates)
