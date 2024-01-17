@@ -23,7 +23,7 @@
   <differential>
     <element id="Task.instantiatesCanonical">
       <path value="Task.instantiatesCanonical" />
-      <fixedUri value="http://dsf.dev/bpe/Process/helloHrp/#{version}" />
+      <fixedCanonical value="http://dsf.dev/bpe/Process/helloHrp/#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
@@ -73,7 +73,7 @@
     <element id="Task.input:tutorial-input.type.coding.system">
       <path value="Task.input.type.coding.system" />
       <min value="1" />
-      <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+      <fixedCanonical value="http://dsf.dev/fhir/CodeSystem/tutorial" />
     </element>
     <element id="Task.input:tutorial-input.type.coding.code">
       <path value="Task.input.type.coding.code" />
