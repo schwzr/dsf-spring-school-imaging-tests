@@ -77,7 +77,7 @@ services:
       - app_client_trust_certificates.pem
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
-      - app_client_certificate_private_key.pem.password
+      - app_cos_client_certificate_private_key.pem.password
     volumes:
       - type: bind
         source: ./cos/fhir/conf/bundle.xml
@@ -95,7 +95,7 @@ services:
       DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_cos_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_cos_client_certificate_private_key.pem
-      DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
+      DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_cos_client_certificate_private_key.pem.password
       DEV_DSF_FHIR_DB_URL: jdbc:postgresql://db/cos_fhir
       DEV_DSF_FHIR_DB_USER_GROUP: cos_fhir_users
       DEV_DSF_FHIR_DB_USER_USERNAME: cos_fhir_server_user
@@ -106,7 +106,7 @@ services:
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${COS_BUNDLE_USER_THUMBPRINT}
       DEV_DSF_FHIR_SERVER_ROLECONFIG: |
         - webbrowser_test_user:
-            thumbprint: ${WEBBROSER_TEST_USER_THUMBPRINT}
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
             token-role: admin
             dsf-role:
               - CREATE
@@ -140,7 +140,7 @@ services:
       - app_client_trust_certificates.pem
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
-      - app_client_certificate_private_key.pem.password
+      - app_cos_client_certificate_private_key.pem.password
     volumes:
       - type: bind
         source: ./cos/bpe/plugin
@@ -162,10 +162,10 @@ services:
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_cos_bpe_user.password
       DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_cos_bpe_user_camunda.password
-      DEV_DSF_BPE_FHIR_CLIENT_TRUST_CERTIFICATES: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_cos_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_cos_client_certificate_private_key.pem
-      DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
+      DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_cos_client_certificate_private_key.pem.password
       DEV_DSF_BPE_DB_URL: jdbc:postgresql://db/cos_bpe
       DEV_DSF_BPE_DB_USER_GROUP: cos_bpe_users
       DEV_DSF_BPE_DB_USER_USERNAME: cos_bpe_server_user
@@ -173,6 +173,7 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: cos_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_COS
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://cos/fhir
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       cos-bpe-frontend:
       cos-bpe-backend:
@@ -194,7 +195,7 @@ services:
       - app_client_trust_certificates.pem
       - app_dic_client_certificate.pem
       - app_dic_client_certificate_private_key.pem
-      - app_client_certificate_private_key.pem.password
+      - app_dic_client_certificate_private_key.pem.password
     volumes:
       - type: bind
         source: ./dic/fhir/conf/bundle.xml
@@ -211,7 +212,7 @@ services:
       DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_dic_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_dic_client_certificate_private_key.pem
-      DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
+      DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_dic_client_certificate_private_key.pem.password
       DEV_DSF_FHIR_DB_URL: jdbc:postgresql://db/dic_fhir
       DEV_DSF_FHIR_DB_USER_GROUP: dic_fhir_users
       DEV_DSF_FHIR_DB_USER_USERNAME: dic_fhir_server_user
@@ -222,7 +223,7 @@ services:
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${DIC_BUNDLE_USER_THUMBPRINT}
       DEV_DSF_FHIR_SERVER_ROLECONFIG: |
         - webbrowser_test_user:
-            thumbprint: ${WEBBROSER_TEST_USER_THUMBPRINT}
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
             token-role: admin
             dsf-role:
               - CREATE
@@ -256,7 +257,7 @@ services:
       - app_client_trust_certificates.pem
       - app_dic_client_certificate.pem
       - app_dic_client_certificate_private_key.pem
-      - app_client_certificate_private_key.pem.password
+      - app_dic_client_certificate_private_key.pem.password
     volumes:
       - type: bind
         source: ./dic/bpe/plugin
@@ -281,7 +282,7 @@ services:
       DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_dic_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_dic_client_certificate_private_key.pem
-      DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
+      DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_dic_client_certificate_private_key.pem.password
       DEV_DSF_BPE_DB_URL: jdbc:postgresql://db/dic_bpe
       DEV_DSF_BPE_DB_USER_GROUP: dic_bpe_users
       DEV_DSF_BPE_DB_USER_USERNAME: dic_bpe_server_user
@@ -289,6 +290,7 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: dic_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_DIC
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://dic/fhir
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       dic-bpe-frontend:
       dic-bpe-backend:
@@ -310,7 +312,7 @@ services:
       - app_client_trust_certificates.pem
       - app_hrp_client_certificate.pem
       - app_hrp_client_certificate_private_key.pem
-      - app_client_certificate_private_key.pem.password
+      - app_hrp_client_certificate_private_key.pem.password
     volumes:
       - type: bind
         source: ./hrp/fhir/conf/bundle.xml
@@ -324,10 +326,10 @@ services:
       DEV_DSF_FHIR_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_FHIR_DB_USER_PASSWORD_FILE: /run/secrets/db_hrp_fhir_user.password
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_PASSWORD_FILE: /run/secrets/db_hrp_fhir_user_permanent_delete.password
-      DEV_DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_hrp_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_hrp_client_certificate_private_key.pem
-      DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
+      DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_hrp_client_certificate_private_key.pem.password
       DEV_DSF_FHIR_DB_URL: jdbc:postgresql://db/hrp_fhir
       DEV_DSF_FHIR_DB_USER_GROUP: hrp_fhir_users
       DEV_DSF_FHIR_DB_USER_USERNAME: hrp_fhir_server_user
@@ -338,7 +340,7 @@ services:
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${HRP_BUNDLE_USER_THUMBPRINT}
       DEV_DSF_FHIR_SERVER_ROLECONFIG: |
         - webbrowser_test_user:
-            thumbprint: ${WEBBROSER_TEST_USER_THUMBPRINT}
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
             token-role: admin
             dsf-role:
               - CREATE
@@ -373,7 +375,7 @@ services:
       - app_client_trust_certificates.pem
       - app_hrp_client_certificate.pem
       - app_hrp_client_certificate_private_key.pem
-      - app_client_certificate_private_key.pem.password
+      - app_hrp_client_certificate_private_key.pem.password
     volumes:
       - type: bind
         source: ./hrp/bpe/plugin
@@ -398,7 +400,7 @@ services:
       DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_hrp_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_hrp_client_certificate_private_key.pem
-      DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_client_certificate_private_key.pem.password
+      DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_hrp_client_certificate_private_key.pem.password
       DEV_DSF_BPE_DB_URL: jdbc:postgresql://db/hrp_bpe
       DEV_DSF_BPE_DB_USER_GROUP: hrp_bpe_users
       DEV_DSF_BPE_DB_USER_USERNAME: hrp_bpe_server_user
@@ -406,6 +408,7 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: hrp_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_HRP
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://hrp/fhir
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       hrp-bpe-frontend:
       hrp-bpe-backend:
@@ -452,25 +455,31 @@ secrets:
   db_cos_bpe_user_camunda.password:
     file: ./secrets/db_cos_bpe_user_camunda.password
 
+  app_server_trust_certificates.pem:
+    file: ./secrets/app_client_trust_certificates.pem
   app_client_trust_certificates.pem:
     file: ./secrets/app_client_trust_certificates.pem
-  app_client_certificate_private_key.pem.password:
-    file: ./secrets/app_client_certificate_private_key.pem.password
 
   app_dic_client_certificate.pem:
     file: ./secrets/app_dic_client_certificate.pem
   app_dic_client_certificate_private_key.pem:
     file: ./secrets/app_dic_client_certificate_private_key.pem
+  app_dic_client_certificate_private_key.pem.password:
+    file: ./secrets/app_client_certificate_private_key.pem.password
 
   app_hrp_client_certificate.pem:
     file: ./secrets/app_hrp_client_certificate.pem
   app_hrp_client_certificate_private_key.pem:
     file: ./secrets/app_hrp_client_certificate_private_key.pem
+  app_hrp_client_certificate_private_key.pem.password:
+    file: ./secrets/app_client_certificate_private_key.pem.password
 
   app_cos_client_certificate.pem:
     file: ./secrets/app_cos_client_certificate.pem
   app_cos_client_certificate_private_key.pem:
     file: ./secrets/app_cos_client_certificate_private_key.pem
+  app_cos_client_certificate_private_key.pem.password:
+    file: ./secrets/app_client_certificate_private_key.pem.password
 
 networks:
   internet:
