@@ -1,11 +1,11 @@
 <CodeSystem xmlns="http://hl7.org/fhir">
 	<meta>
 		<tag>
-			<system value="http://highmed.org/fhir/CodeSystem/read-access-tag" />
+			<system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
 			<code value="ALL" />
 		</tag>
 	</meta>
-	<url value="http://highmed.org/fhir/CodeSystem/tutorial" />
+	<url value="http://dsf.dev/fhir/CodeSystem/tutorial" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
 	<name value="Tutorial" />
