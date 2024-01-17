@@ -21,8 +21,8 @@
   <baseDefinition value="http://dsf.dev/fhir/StructureDefinition/task-base" />
   <derivation value="constraint" />
   <differential>
-    <element id="Task.instantiatesUri">
-      <path value="Task.instantiatesUri" />
+    <element id="Task.instantiatesCanonical">
+      <path value="Task.instantiatesCanonical" />
       <fixedUri value="http://dsf.dev/bpe/Process/helloDic/#{version}" />
     </element>
     <element id="Task.input">
