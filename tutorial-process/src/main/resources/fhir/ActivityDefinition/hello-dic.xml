@@ -1,31 +1,31 @@
 <ActivityDefinition xmlns="http://hl7.org/fhir">
 	<meta>
 		<tag>
-			<system value="http://highmed.org/fhir/CodeSystem/read-access-tag" />
+			<system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
 			<code value="ALL" />
 		</tag>
 	</meta>
-	<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization">
+	<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
 		<extension url="message-name">
 			<valueString value="helloDic" />
 		</extension>
 		<extension url="task-profile">
-			<valueCanonical value="http://highmed.org/fhir/StructureDefinition/task-hello-dic|#{version}" />
+			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|#{version}" />
 		</extension>
 		<extension url="requester">
 			<valueCoding>
-				<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
 				<code value="LOCAL_ALL" />
 			</valueCoding>
 		</extension>
 		<extension url="recipient">
 			<valueCoding>
-				<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
 				<code value="LOCAL_ALL" />
 			</valueCoding>
 		</extension>
 	</extension>
-	<url value="http://highmed.org/bpe/Process/helloDic" />
+	<url value="http://dsf.dev/bpe/Process/helloDic" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
 	<name value="HelloDic" />
@@ -41,7 +41,7 @@
 		<name value="HiGHmed" />
 		<telecom>
 			<system value="email" />
-			<value value="pmo@highmed.org" />
+			<value value="pmo@dsf.dev" />
 		</telecom>
 	</contact>
 	<description value="This implementation contains the basic elements that a minimal process must contain in order to be executable." />

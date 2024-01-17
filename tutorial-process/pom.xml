@@ -4,9 +4,9 @@
 	<artifactId>tutorial-process</artifactId>
 
 	<parent>
-		<groupId>org.highmed.dsf</groupId>
+		<groupId>dev.dsf</groupId>
 		<artifactId>dsf-process-tutorial</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>1.0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -16,22 +16,32 @@
 	<dependencies>
 		<!-- provided by DSF -->
 		<dependency>
-			<groupId>org.highmed.dsf</groupId>
-			<artifactId>dsf-bpe-process-base</artifactId>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-bpe-process-api-v1</artifactId>
+			<version>1.4.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.highmed.dsf</groupId>
+			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-tools-documentation-generator</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.highmed.dsf</groupId>
-			<artifactId>dsf-bpe-process-base</artifactId>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-bpe-process-api-v1</artifactId>
+			<version>1.4.0</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-bpe-server</artifactId>
+			<version>1.4.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -246,10 +256,10 @@
 						<argument>-classpath</argument>
 						<classpath />
 						<argument>
-							org.highmed.dsf.tools.generator.DocumentationGenerator
+							dev.dsf.tools.generator.DocumentationGenerator
 						</argument>
 						<argument>
-							org.highmed.dsf.process.tutorial.spring.config
+							dev.dsf.process.tutorial.spring.config
 						</argument>
 					</arguments>
 					<includeProjectDependencies>true</includeProjectDependencies>
