@@ -14,9 +14,12 @@ public class HelloDic extends AbstractServiceDelegate
 {
 
 	private static final Logger logger = LoggerFactory.getLogger(HelloDic.class);
-	public HelloDic(ProcessPluginApi api)
+
+	private final boolean loggingEnabled;
+	public HelloDic(ProcessPluginApi api, boolean loggingEnabled)
 	{
 		super(api);
+		this.loggingEnabled = loggingEnabled;
 	}
 
 	@Override

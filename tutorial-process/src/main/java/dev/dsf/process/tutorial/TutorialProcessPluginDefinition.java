@@ -47,8 +47,12 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 
 		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";  // 's' in the beginning of 'sTaskHelloDic' stands for StructureDefinition
 
+		String cTutorial = "fhir/CodeSystem/tutorial.xml";
+
+		String vTutorial = "fhir/ValueSet/tutorial.xml";
+
 		return Map.of(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic)
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic, cTutorial, vTutorial)
 		);
 	}
 
