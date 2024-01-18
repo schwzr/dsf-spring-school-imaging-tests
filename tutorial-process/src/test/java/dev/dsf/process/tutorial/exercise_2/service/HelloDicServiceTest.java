@@ -111,11 +111,15 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicServiceDoExecute() throws Exception
 	{
-		Optional<HelloDic> optService = getInstance(Arrays.asList(ProcessPluginApi.class));
+		Optional<HelloDic> optService = getInstance(Arrays.asList(ProcessPluginApi.class, boolean.class), api, true);
+		if (optService.isEmpty())
+			optService = getInstance(Arrays.asList(boolean.class, ProcessPluginApi.class), true, api);
 
 		assumeTrue(optService.isPresent());
 
 		Task task = getTask();
+		Mockito.when(api.getVariables(execution)).thenReturn(variables);
+		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 		Mockito.when(variables.getStartTask()).thenReturn(task);
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
 				eq("http://dsf.dev/fhir/CodeSystem/tutorial"), eq("tutorial-input")))

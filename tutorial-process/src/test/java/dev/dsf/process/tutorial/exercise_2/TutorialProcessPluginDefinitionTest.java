@@ -82,8 +82,8 @@ public class TutorialProcessPluginDefinitionTest
 		String codeSystemCode = "tutorial-input";
 		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
 
-		String codeSystemFile = "fhir/CodeSystems/tutorial.xml";
-		String valueSetFile = "fhir/CodeSystems/tutorial.xml";
+		String codeSystemFile = "fhir/CodeSystem/tutorial.xml";
+		String valueSetFile = "fhir/CodeSystem/tutorial.xml";
 
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
@@ -108,7 +108,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, firstKey);
 
 		String errorCodeSystem = "Process is missing CodeSystem with file name '" + codeSystemFile + "'";
-		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream().filter(r -> codeSystemUrl.equals(r)).count());
+		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream().filter(r -> codeSystemFile.equals(r)).count());
 
 		String errorValueSet = "Process is missing ValueSet with file name '" + valueSetFile + "'";
 		assertEquals(errorValueSet, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream().filter(r -> valueSetFile.equals(r)).count());
@@ -125,6 +125,6 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(v -> v.getCompose().getInclude().stream().anyMatch(i -> codeSystemUrl.equals(i.getSystem())))
 				.count());
 
-		assertEquals(4, helloDic.size());
+		assertEquals(4, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).size());
 	}
 }
