@@ -4,7 +4,7 @@ import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 
 public interface ConstantsTutorial
 {
-	String PROCESS_VERSION = VERSION.substring(4,6);
+	String PROCESS_VERSION = VERSION.substring(4,7);
 	String PROCESS_NAME_HELLO_DIC = "helloDic";
 	String PROCESS_NAME_FULL_HELLO_DIC = "dsfdev_" + PROCESS_NAME_HELLO_DIC;
 
