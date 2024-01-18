@@ -5,6 +5,7 @@ import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 public interface ConstantsTutorial
 {
 	String PROCESS_VERSION = VERSION.substring(4,7);
+	String RESOURCE_VERSION = VERSION.substring(0, 3);
 	String PROCESS_NAME_HELLO_DIC = "helloDic";
 	String PROCESS_NAME_FULL_HELLO_DIC = "dsfdev_" + PROCESS_NAME_HELLO_DIC;
 
@@ -12,7 +13,7 @@ public interface ConstantsTutorial
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_DIC + "|" + VERSION;
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HELLO_DIC;
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI
-			+ "|" + PROCESS_VERSION;
+			+ "|" + RESOURCE_VERSION;
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME = "helloDic";
 
 	String PROFILE_TUTORIAL_TASK_GOODBYE_DIC = "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic";
