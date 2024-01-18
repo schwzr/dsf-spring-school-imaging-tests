@@ -4,13 +4,14 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_G
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_GOODBYE_DIC_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI_AND_LATEST_VERSION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_INSTANTIATES_CANONICAL;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI_AND_LATEST_VERSION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP_INSTANTIATES_CANONICAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
@@ -44,7 +45,7 @@ public class TaskProfileTest
 	private static final Logger logger = LoggerFactory.getLogger(TaskProfileTest.class);
 
 	@ClassRule
-	public static final ValidationSupportRule validationRule = new ValidationSupportRule(VERSION, RELEASE_DATE,
+	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
 			Arrays.asList("dsf-task-base-1.0.0.xml", "task-hello-dic.xml", "task-hello-cos.xml",
 					"task-hello-hrp.xml", "task-goodbye-dic.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml", "tutorial.xml"),
@@ -72,7 +73,7 @@ public class TaskProfileTest
 	{
 		Task task = new Task();
 		task.getMeta().addProfile(PROFILE_TUTORIAL_TASK_HELLO_DIC);
-		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI_AND_LATEST_VERSION);
+		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_DIC_INSTANTIATES_CANONICAL);
 		task.setStatus(TaskStatus.REQUESTED);
 		task.setIntent(TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
@@ -108,7 +109,7 @@ public class TaskProfileTest
 	{
 		Task task = new Task();
 		task.getMeta().addProfile(PROFILE_TUTORIAL_TASK_HELLO_COS);
-		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION);
+		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL);
 		task.setStatus(TaskStatus.REQUESTED);
 		task.setIntent(TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
@@ -146,7 +147,7 @@ public class TaskProfileTest
 	{
 		Task task = new Task();
 		task.getMeta().addProfile(PROFILE_TUTORIAL_TASK_HELLO_HRP);
-		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI_AND_LATEST_VERSION);
+		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_HRP_INSTANTIATES_CANONICAL);
 		task.setStatus(TaskStatus.REQUESTED);
 		task.setIntent(TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
@@ -184,7 +185,7 @@ public class TaskProfileTest
 	{
 		Task task = new Task();
 		task.getMeta().addProfile(PROFILE_TUTORIAL_TASK_GOODBYE_DIC);
-		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI_AND_LATEST_VERSION);
+		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_DIC_INSTANTIATES_CANONICAL);
 		task.setStatus(TaskStatus.REQUESTED);
 		task.setIntent(TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
