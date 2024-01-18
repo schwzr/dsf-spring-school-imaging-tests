@@ -30,7 +30,7 @@
         <valueString value="Parameter" />
       </extension>
       <path value="Task.input" />
-      <max value="1" />
+      <max value="2" />
     </element>
     <element id="Task.input:message-name">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
@@ -49,7 +49,7 @@
       </extension>
       <path value="Task.input" />
       <sliceName value="business-key" />
-      <max value="0" />
+      <max value="1" />
     </element>
     <element id="Task.input:correlation-key">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
