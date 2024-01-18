@@ -9,10 +9,9 @@ public interface ConstantsTutorial
 
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC = "http://dsf.dev/fhir/StructureDefinition/task-hello-dic";
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_DIC + "|" + VERSION;
-	String PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HELLO_DIC
-			+ "/";
+	String PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HELLO_DIC;
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI
-			+ VERSION;
+			+ "|" + VERSION;
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME = "helloDic";
 
 	String PROFILE_TUTORIAL_TASK_GOODBYE_DIC = "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic";
