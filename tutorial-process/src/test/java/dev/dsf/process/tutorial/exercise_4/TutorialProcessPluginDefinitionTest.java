@@ -3,7 +3,7 @@ package dev.dsf.process.tutorial.exercise_4;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_HELLO_DIC;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -96,10 +96,10 @@ public class TutorialProcessPluginDefinitionTest
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent input parameter with name 'instantiatesCanonical' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION + "'";
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL + "'";
 		assertTrue(errorMessageEndEventInputUri,
 				inputParameters.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
-						&& PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION.equals(i.getTextContent())));
+						&& PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL.equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent input parameter with name 'messageName' and value '"

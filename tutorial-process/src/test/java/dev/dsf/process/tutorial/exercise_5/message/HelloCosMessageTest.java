@@ -3,7 +3,7 @@ package dev.dsf.process.tutorial.exercise_5.message;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -97,7 +97,7 @@ public class HelloCosMessageTest
 		Mockito.when(variables.getTarget())
 				.thenReturn(new TargetImpl("Test_COS", "Test_COS_Endpoint", "https://cos/fhir", null));
 		Mockito.when(messageDelegate.getInstantiatesCanonical(execution, variables))
-				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI_AND_LATEST_VERSION); //TODO: Figure out why this needs to be mocked in the first place
+				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL); //TODO: Figure out why this needs to be mocked in the first place
 		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME))
 				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME);
 		Mockito.when(messageDelegate.getProfile(execution, variables))
