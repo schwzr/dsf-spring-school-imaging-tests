@@ -19,7 +19,7 @@ public class TutorialConfig
 	@Autowired
 	private ProcessPluginApi api;
 
-	@Value("${org.highmed.dsf.process.tutorial.loggingEnabled:false}")
+	@Value("${dev.dsf.process.tutorial.loggingEnabled:false}")
 	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_HELLO_DIC)
 	private boolean loggingEnabled;
 
