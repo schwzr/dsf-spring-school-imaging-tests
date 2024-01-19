@@ -1,5 +1,7 @@
 package dev.dsf.process.tutorial;
 
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_AND_LATEST_VERSION;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_INSTANTIATES_CANONICAL;
@@ -41,6 +43,8 @@ public class TutorialExampleStarter
 
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME)).getType().addCoding()
 				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME);
+		task.addInput().setValue(new StringType("Test message")).getType().addCoding().setSystem(CODESYSTEM_TUTORIAL)
+				.setCode(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
 
 		return task;
 	}
