@@ -15,7 +15,7 @@
 	<experimental value="false"/>
 	<!-- date managed by bpe -->
   	<date value="#{date}"/>
-	<publisher value="HiGHmed"/>
+	<publisher value="DSF"/>
 	<description value="ValueSet with standard values for the DSF tutorial processes"/>
 	<immutable value="true"/>
 	<compose>

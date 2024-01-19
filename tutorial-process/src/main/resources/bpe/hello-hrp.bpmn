@@ -8,7 +8,7 @@
     <bpmn:endEvent id="endGoodbyeDic">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="instantiatesCanonical">http://dsf.dev/bpe/Process/helloDic/#{version}</camunda:inputParameter>
+          <camunda:inputParameter name="instantiatesUri">http://dsf.dev/bpe/Process/helloDic/#{version}</camunda:inputParameter>
           <camunda:inputParameter name="profile">http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:inputParameter>
           <camunda:inputParameter name="messageName">goodbyeDic</camunda:inputParameter>
         </camunda:inputOutput>
