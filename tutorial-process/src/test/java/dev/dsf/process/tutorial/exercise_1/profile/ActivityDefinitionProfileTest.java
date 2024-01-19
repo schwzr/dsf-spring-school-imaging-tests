@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
 import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
@@ -15,9 +17,12 @@ import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
 import org.hl7.fhir.r4.model.ActivityDefinition;
+import org.hl7.fhir.r4.model.CodeType;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Type;
+import org.hl7.fhir.r5.model.Base;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -81,14 +86,30 @@ public class ActivityDefinitionProfileTest
 				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
 		assertNotNull(processAuthorization);
 
-		Extension requester = processAuthorization.getExtensionByUrl("requester");
-		assertNotNull(requester);
+		List<Extension> requesters = processAuthorization.getExtensionsByUrl("requester");
+		assertNotNull(requesters);
 
-		Type value = requester.getValue();
-		assertTrue(value instanceof Coding);
+		List<Type> values = requesters.stream().map(extension -> extension.getValue()).toList();
+		values.stream().forEach(value -> assertTrue(value instanceof Coding));
 
-		Coding coding = (Coding) value;
-		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
-		assertEquals("LOCAL_ALL", coding.getCode());
+		List<Coding> codings = values.stream().map(value -> (Coding)value).toList();
+
+		assertEquals(2, matchesForCodings(codings));
+	}
+
+	private int matchesForCodings(List<Coding> codings){
+		int matches = 0;
+
+		for(Coding coding: codings){
+			if(coding.getSystem().equals("http://dsf.dev/fhir/CodeSystem/process-authorization")){
+				if(coding.getCode().equals("LOCAL_ALL")) matches++;
+				if(coding.getCode().equals("LOCAL_ALL_PRACTITIONER")
+					&& ((Coding)coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner").getValue())
+						.getCode().equals("DSF_ADMIN"))
+					matches++;
+			}
+		}
+
+		return matches;
 	}
 }
