@@ -37,22 +37,25 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	@Override
 	public List<String> getProcessModels() {
 
-		return List.of("bpe/hello-dic.bpmn");
+		return List.of("bpe/hello-dic.bpmn", "bpe/hello-cos.bpmn");
 	}
 
 	@Override
 	public Map<String, List<String>> getFhirResourcesByProcessId() {
 
 		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";		// 'a' in the beginning of 'aHelloDic' stands for ActivityDefinition
-
 		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";  // 's' in the beginning of 'sTaskHelloDic' stands for StructureDefinition
 
 		String cTutorial = "fhir/CodeSystem/tutorial.xml";
 
 		String vTutorial = "fhir/ValueSet/tutorial.xml";
 
+		String aHelloCos = "fhir/ActivityDefinition/hello-cos.xml";
+		String sTaskHelloCos = "fhir/StructureDefinition/task-hello-cos.xml";
+
 		return Map.of(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic, cTutorial, vTutorial)
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic, cTutorial, vTutorial),
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, List.of(aHelloCos, sTaskHelloCos)
 		);
 	}
 

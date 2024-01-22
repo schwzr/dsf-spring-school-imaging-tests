@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
+import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -40,5 +41,8 @@ public class HelloDic extends AbstractServiceDelegate
 							.getRestriction().getRecipientFirstRep().getIdentifier().getValue(),
 					tutorialInputParameter.orElse("<no message>"));
 		}
+
+		Target target = variables.createTarget("Test_COS", "Test_COS_Endpoint", "https://cos/fhir");
+		variables.setTarget(target);
 	}
 }
