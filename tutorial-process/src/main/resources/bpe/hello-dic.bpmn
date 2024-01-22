@@ -14,13 +14,25 @@
     <bpmn:endEvent id="endHelloDic">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="instantiatesCanonical">http://dsf.dev/bpe/Process/helloCos/#{version}</camunda:inputParameter>
+          <camunda:inputParameter name="instantiatesCanonical">http://dsf.dev/bpe/Process/helloCos|#{version}</camunda:inputParameter>
           <camunda:inputParameter name="profile">http://dsf.dev/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:inputParameter>
           <camunda:inputParameter name="messageName">helloCos</camunda:inputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0m5mslr</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1u9uh7y" messageRef="Message_33na25b" camunda:class="dev.dsf.process.tutorial.message.HelloCosMessage" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1u9uh7y" messageRef="Message_33na25b" camunda:class="dev.dsf.process.tutorial.message.HelloCosMessage">
+        <bpmn:extensionElements>
+          <camunda:field name="instantiatesCanonical">
+            <camunda:string>http://dsf.dev/bpe/Process/helloCos|#{version}</camunda:string>
+          </camunda:field>
+          <camunda:field name="profile">
+            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:string>
+          </camunda:field>
+          <camunda:field name="messageName">
+            <camunda:string>helloCos</camunda:string>
+          </camunda:field>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0m5mslr" sourceRef="helloDic" targetRef="endHelloDic" />
   </bpmn:process>
@@ -35,7 +47,7 @@
         <dc:Bounds x="179" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xvd8i6_di" bpmnElement="endHelloDic">
-        <dc:Bounds x="462" y="103" width="36" height="36" />
+        <dc:Bounds x="463" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0bbhq2r_di" bpmnElement="SequenceFlow_0bbhq2r">
         <di:waypoint x="215" y="121" />
@@ -43,7 +55,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0m5mslr_di" bpmnElement="Flow_0m5mslr">
         <di:waypoint x="380" y="121" />
-        <di:waypoint x="462" y="121" />
+        <di:waypoint x="463" y="121" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

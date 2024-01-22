@@ -3,6 +3,7 @@ package dev.dsf.process.tutorial.exercise_3;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI;
+import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -47,6 +48,8 @@ import ca.uhn.fhir.context.FhirContext;
 
 public class TutorialProcessPluginDefinitionTest
 {
+
+	//TODO: check for field injections instead of input parameters
 	@Test
 	public void testHelloDicBpmnProcessFile() throws Exception
 	{
@@ -92,10 +95,10 @@ public class TutorialProcessPluginDefinitionTest
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent input parameter with name 'instantiatesCanonical' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "#{version}'";
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}'";
 		assertTrue(errorMessageEndEventInputUri,
 				inputParameters.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
-						&& (PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "#{version}").equals(i.getTextContent())));
+						&& (PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent input parameter with name 'messageName' and value '"
@@ -186,19 +189,19 @@ public class TutorialProcessPluginDefinitionTest
 
 		assertEquals(true, initialized);
 
-		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
 				definition.getResourceVersion()));
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> processUrl.equals(a.getUrl()))
-				.filter(a -> VERSION.equals(a.getVersion())).collect(Collectors.toList());
+				.filter(a -> RESOURCE_VERSION.equals(a.getVersion())).collect(Collectors.toList());
 
 		String errorActivityDefinition = "Process is missing ActivityDefinition with url '" + processUrl
-				+ "' and version '" + VERSION + "'";
+				+ "' and version '" + RESOURCE_VERSION + "'";
 		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
 
-		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '" + VERSION
+		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '" + RESOURCE_VERSION
 				+ "' is missing expected requester extension";
 		assertEquals(errorMessageRequester, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
@@ -213,7 +216,7 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
 				.filter(i -> "Test_DIC".equals(i.getValue())).count());
 
-		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '" + VERSION
+		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '" + RESOURCE_VERSION
 				+ "' is missing expected recipient extension";
 		assertEquals(errorMessageRecipient, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
@@ -231,10 +234,10 @@ public class TutorialProcessPluginDefinitionTest
 		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
 		List<StructureDefinition> structureDefinitions = helloCos.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r).filter(s -> taskHelloCosUrl.equals(s.getUrl()))
-				.filter(s -> VERSION.equals(s.getVersion())).collect(Collectors.toList());
+				.filter(s -> RESOURCE_VERSION.equals(s.getVersion())).collect(Collectors.toList());
 
 		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + taskHelloCosUrl
-				+ "' and version '" + VERSION + "'";
+				+ "' and version '" + RESOURCE_VERSION + "'";
 		assertEquals(errorStructureDefinition, 1, structureDefinitions.size());
 
 		assertEquals(2, helloCos.size());
