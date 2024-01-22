@@ -182,11 +182,12 @@ public class TutorialProcessPluginDefinitionTest
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
-				definition.getResourceVersion()));
 		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
 
 		assertEquals(true, initialized);
+
+		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+				definition.getResourceVersion()));
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
