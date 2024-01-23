@@ -21,6 +21,7 @@ import org.camunda.bpm.model.bpmn.instance.MessageEventDefinition;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
+import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
 
@@ -49,7 +50,7 @@ import ca.uhn.fhir.context.FhirContext;
 public class TutorialProcessPluginDefinitionTest
 {
 
-	//TODO: check for field injections instead of input parameters
+	//TODO: check for field injections instead of field injections
 	@Test
 	public void testHelloDicBpmnProcessFile() throws Exception
 	{
@@ -83,35 +84,35 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorMessageEndEventImplementation, HelloCosMessage.class.getName(),
 				messageEndEvent.get(0).getCamundaClass());
 
-		List<CamundaInputParameter> inputParameters = processes.get(0).getChildElementsByType(EndEvent.class).stream()
-				.findAny().stream().flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
-				.flatMap(e -> e.getChildElementsByType(CamundaInputOutput.class).stream().filter(Objects::nonNull))
-				.flatMap(in -> in.getChildElementsByType(CamundaInputParameter.class).stream().filter(Objects::nonNull))
+		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream()
+				.findAny().stream().flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream())
+				.flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
+				.flatMap(e -> e.getChildElementsByType(CamundaField.class).stream().filter(Objects::nonNull))
 				.collect(Collectors.toList());
 
 		String errorMessageEndEventInputs = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent with 3 input parameters";
-		assertEquals(errorMessageEndEventInputs, 3, inputParameters.size());
+				+ "' is missing a MessageEndEvent with 3 field injections";
+		assertEquals(errorMessageEndEventInputs, 3, camundaFields.size());
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'instantiatesCanonical' and value '"
+				+ "' is missing a MessageEndEvent field injection with name 'instantiatesCanonical' and value '"
 				+ PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}'";
 		assertTrue(errorMessageEndEventInputUri,
-				inputParameters.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
+				camundaFields.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
 						&& (PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'messageName' and value '"
+				+ "' is missing a MessageEndEvent field injection with name 'messageName' and value '"
 				+ PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME + "'";
 		assertTrue(errorMessageEndEventMessageName,
-				inputParameters.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
+				camundaFields.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
 						&& PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME.equals(i.getTextContent())));
 
 		String errorMessageEndEventProfile = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'profile' and value '"
+				+ "' is missing a MessageEndEvent field injection with name 'profile' and value '"
 				+ PROFILE_TUTORIAL_TASK_HELLO_COS + "|#{version}'";
 		assertTrue(errorMessageEndEventProfile,
-				inputParameters.stream().anyMatch(i -> "profile".equals(i.getCamundaName())
+				camundaFields.stream().anyMatch(i -> "profile".equals(i.getCamundaName())
 						&& (PROFILE_TUTORIAL_TASK_HELLO_COS + "|#{version}").equals(i.getTextContent())));
 	}
 
