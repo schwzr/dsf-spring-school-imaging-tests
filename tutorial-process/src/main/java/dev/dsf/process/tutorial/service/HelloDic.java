@@ -11,6 +11,7 @@ import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.variable.value.BooleanValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,12 +31,11 @@ public class HelloDic extends AbstractServiceDelegate
 
 	@Override
 	protected void doExecute(DelegateExecution execution, Variables variables) {
+		Optional<String> tutorialInputParameter = api.getTaskHelper().getFirstInputParameterStringValue(
+				variables.getStartTask(), CODESYSTEM_TUTORIAL,
+				CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
 		if (loggingEnabled)
 		{
-			Optional<String> tutorialInputParameter = api.getTaskHelper().getFirstInputParameterStringValue(
-					variables.getStartTask(), CODESYSTEM_TUTORIAL,
-					CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
-
 			logger.info(
 					"Hello Dic from organization '{}' with message '{}'", variables.getStartTask()
 							.getRestriction().getRecipientFirstRep().getIdentifier().getValue(),
@@ -44,5 +44,8 @@ public class HelloDic extends AbstractServiceDelegate
 
 		Target target = variables.createTarget("Test_COS", "Test_COS_Endpoint", "https://cos/fhir");
 		variables.setTarget(target);
+
+		boolean stop = tutorialInputParameter.map("not-cos"::equals).get();
+		variables.setBoolean("stop", stop);
 	}
 }
