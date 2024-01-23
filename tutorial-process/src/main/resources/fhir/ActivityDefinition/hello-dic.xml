@@ -1,79 +1,43 @@
 <ActivityDefinition xmlns="http://hl7.org/fhir">
 	<meta>
 		<tag>
-			<system value="http://highmed.org/fhir/CodeSystem/read-access-tag" />
+			<system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
 			<code value="ALL" />
 		</tag>
 	</meta>
-	<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization">
+	<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
 		<extension url="message-name">
 			<valueString value="helloDic" />
 		</extension>
 		<extension url="task-profile">
-			<valueCanonical value="http://highmed.org/fhir/StructureDefinition/task-hello-dic|#{version}" />
+			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|#{version}" />
 		</extension>
 		<extension url="requester">
 			<valueCoding>
-				<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
 				<code value="LOCAL_ALL" />
+			</valueCoding>
+		</extension>
+		<extension url="requester">
+			<valueCoding>
+				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner">
+					<valueCoding>
+						<system value="http://dsf.dev/fhir/CodeSystem/practitioner-role" />
+						<code value="DSF_ADMIN" />
+					</valueCoding>
+				</extension>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+				<code value="LOCAL_ALL_PRACTITIONER" />
 			</valueCoding>
 		</extension>
 		<extension url="recipient">
 			<valueCoding>
-				<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
 				<code value="LOCAL_ALL" />
 			</valueCoding>
 		</extension>
 	</extension>
-	<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization">
-		<extension url="message-name">
-			<valueString value="goodbyeDic" />
-		</extension>
-		<extension url="task-profile">
-			<valueCanonical value="http://highmed.org/fhir/StructureDefinition/task-goodbye-dic|#{version}" />
-		</extension>
-		<extension url="requester">
-			<valueCoding>
-				<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role">
-					<extension url="consortium">
-						<valueIdentifier>
-							<system value="http://highmed.org/sid/organization-identifier" />
-							<value value="medizininformatik-initiative.de" />
-						</valueIdentifier>
-					</extension>
-					<extension url="role">
-						<valueCoding>
-							<system value="http://highmed.org/fhir/CodeSystem/organization-role" />
-							<code value="HRP" />
-						</valueCoding>
-					</extension>
-				</extension>
-				<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
-				<code value="REMOTE_ROLE" />
-			</valueCoding>
-		</extension>
-		<extension url="recipient">
-			<valueCoding>
-				<extension url="http://highmed.org/fhir/StructureDefinition/extension-process-authorization-consortium-role">
-					<extension url="consortium">
-						<valueIdentifier>
-							<system value="http://highmed.org/sid/organization-identifier" />
-							<value value="medizininformatik-initiative.de" />
-						</valueIdentifier>
-					</extension>
-					<extension url="role">
-						<valueCoding>
-							<system value="http://highmed.org/fhir/CodeSystem/organization-role" />
-							<code value="MeDIC" />
-						</valueCoding>
-					</extension>
-				</extension>
-				<system value="http://highmed.org/fhir/CodeSystem/process-authorization" />
-				<code value="LOCAL_ROLE" />
-			</valueCoding>
-		</extension>
-	</extension>
-	<url value="http://highmed.org/bpe/Process/helloDic" />
+	<url value="http://dsf.dev/bpe/Process/helloDic" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
 	<name value="HelloDic" />
@@ -84,12 +48,12 @@
 	<experimental value="false" />
 	<!-- date managed by bpe -->
 	<date value="#{date}" />
-	<publisher value="HiGHmed" />
+	<publisher value="DSF" />
 	<contact>
-		<name value="HiGHmed" />
+		<name value="DSF" />
 		<telecom>
 			<system value="email" />
-			<value value="pmo@highmed.org" />
+			<value value="pmo@dsf.dev" />
 		</telecom>
 	</contact>
 	<description value="This implementation contains the basic elements that a minimal process must contain in order to be executable." />
