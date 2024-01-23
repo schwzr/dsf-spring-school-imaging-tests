@@ -12,13 +12,6 @@
       <bpmn:messageEventDefinition messageRef="Message_1nn2wdw" />
     </bpmn:startEvent>
     <bpmn:endEvent id="endHelloDic">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="instantiatesCanonical">http://dsf.dev/bpe/Process/helloCos|#{version}</camunda:inputParameter>
-          <camunda:inputParameter name="profile">http://dsf.dev/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:inputParameter>
-          <camunda:inputParameter name="messageName">helloCos</camunda:inputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0m5mslr</bpmn:incoming>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1u9uh7y" messageRef="Message_33na25b" camunda:class="dev.dsf.process.tutorial.message.HelloCosMessage">
         <bpmn:extensionElements>
