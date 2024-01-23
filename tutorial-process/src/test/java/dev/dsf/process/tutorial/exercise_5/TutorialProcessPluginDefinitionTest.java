@@ -24,9 +24,11 @@ import org.camunda.bpm.model.bpmn.instance.MessageEventDefinition;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.TimerEventDefinition;
+import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
 
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
@@ -86,7 +88,7 @@ public class TutorialProcessPluginDefinitionTest
 		processPlugin.initializeAndValidateResources(processOrgIdentifier);
 		assumeNotNull(processPlugin);
 
-		return processPlugin.getFhirResources().get(processKey + "/" + TutorialProcessPluginDefinition.VERSION.substring(0,2));
+		return processPlugin.getFhirResources().get(new ProcessIdAndVersion(processKey, ConstantsTutorial.RESOURCE_VERSION));
 	}
 
 	@Test
@@ -98,25 +100,25 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
 				.filter(a -> "http://dsf.dev/bpe/Process/helloCos".equals(a.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
 				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = resources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(v.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
 	}
@@ -130,33 +132,33 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
 				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
 				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long t1Count = resources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic".equals(c.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t1Count);
 
 		long t2Count = resources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-dic".equals(c.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t2Count);
 
 		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(v.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
 	}
@@ -169,7 +171,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		var aOpt = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
 				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.findFirst();
 		assumeTrue(aOpt.isPresent());
 
@@ -189,25 +191,25 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
 				.filter(a -> "http://dsf.dev/bpe/Process/helloHrp".equals(a.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(a.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
 				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = resources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(c.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& TutorialProcessPluginDefinition.VERSION.equals(v.getVersion()))
+						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
 	}
@@ -310,35 +312,35 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorMessageEndEventImplementation, HelloHrpMessage.class.getName(),
 				messageEndEvent.get(0).getCamundaClass());
 
-		List<CamundaInputParameter> inputParameters = processes.get(0).getChildElementsByType(EndEvent.class).stream()
-				.findAny().stream().flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
-				.flatMap(e -> e.getChildElementsByType(CamundaInputOutput.class).stream().filter(Objects::nonNull))
-				.flatMap(in -> in.getChildElementsByType(CamundaInputParameter.class).stream().filter(Objects::nonNull))
+		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream()
+				.findAny().stream().flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream())
+				.flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
+				.flatMap(e -> e.getChildElementsByType(CamundaField.class).stream().filter(Objects::nonNull))
 				.collect(Collectors.toList());
 
 		String errorMessageEndEventInputs = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent with 3 input parameters";
-		assertEquals(errorMessageEndEventInputs, 3, inputParameters.size());
+				+ "' is missing a MessageEndEvent with 3 field injections";
+		assertEquals(errorMessageEndEventInputs, 3, camundaFields.size());
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'instantiatesCanonical' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "#{version}'";
+				+ "' is missing a MessageEndEvent field injection with name 'instantiatesCanonical' and value '"
+				+ PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "|#{version}'";
 		assertTrue(errorMessageEndEventInputUri,
-				inputParameters.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
-						&& (PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "#{version}").equals(i.getTextContent())));
+				camundaFields.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
+						&& (PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'messageName' and value '"
+				+ "' is missing a MessageEndEvent field injection with name 'messageName' and value '"
 				+ PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME + "'";
 		assertTrue(errorMessageEndEventMessageName,
-				inputParameters.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
+				camundaFields.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
 						&& PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME.equals(i.getTextContent())));
 
 		String errorMessageEndEventProfile = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'profile' and value '"
+				+ "' is missing a MessageEndEvent field injection with name 'profile' and value '"
 				+ PROFILE_TUTORIAL_TASK_HELLO_HRP + "|#{version}'";
 		assertTrue(errorMessageEndEventProfile,
-				inputParameters.stream().anyMatch(i -> "profile".equals(i.getCamundaName())
+				camundaFields.stream().anyMatch(i -> "profile".equals(i.getCamundaName())
 						&& (PROFILE_TUTORIAL_TASK_HELLO_HRP + "|#{version}").equals(i.getTextContent())));
 	}
 
