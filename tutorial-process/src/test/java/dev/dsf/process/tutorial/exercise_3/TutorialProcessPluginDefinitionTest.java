@@ -49,8 +49,6 @@ import ca.uhn.fhir.context.FhirContext;
 
 public class TutorialProcessPluginDefinitionTest
 {
-
-	//TODO: check for field injections instead of field injections
 	@Test
 	public void testHelloDicBpmnProcessFile() throws Exception
 	{
