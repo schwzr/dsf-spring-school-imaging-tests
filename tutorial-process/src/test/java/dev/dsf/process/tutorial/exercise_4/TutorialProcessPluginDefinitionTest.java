@@ -1,9 +1,14 @@
 package dev.dsf.process.tutorial.exercise_4;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_HELLO_DIC;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI;
+import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER;
+import static dev.dsf.process.tutorial.ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -24,6 +29,7 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
+import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
 
@@ -84,55 +90,36 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorMessageEndEventImplementation, HelloCosMessage.class.getName(),
 				messageEndEvent.get(0).getCamundaClass());
 
-		List<CamundaInputParameter> inputParameters = processes.get(0).getChildElementsByType(EndEvent.class).stream()
-				.findAny().stream().flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
-				.flatMap(e -> e.getChildElementsByType(CamundaInputOutput.class).stream().filter(Objects::nonNull))
-				.flatMap(in -> in.getChildElementsByType(CamundaInputParameter.class).stream().filter(Objects::nonNull))
+		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream()
+				.findAny().stream().flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream())
+				.flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
+				.flatMap(e -> e.getChildElementsByType(CamundaField.class).stream().filter(Objects::nonNull))
 				.collect(Collectors.toList());
 
 		String errorMessageEndEventInputs = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent with 3 input parameters";
-		assertEquals(errorMessageEndEventInputs, 3, inputParameters.size());
+				+ "' is missing a MessageEndEvent with 3 field injections";
+		assertEquals(errorMessageEndEventInputs, 3, camundaFields.size());
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'instantiatesCanonical' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL + "'";
+				+ "' is missing a MessageEndEvent field injection with name 'instantiatesCanonical' and value '"
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}'";
 		assertTrue(errorMessageEndEventInputUri,
-				inputParameters.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
-						&& PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL.equals(i.getTextContent())));
+				camundaFields.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
+						&& (PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'messageName' and value '"
+				+ "' is missing a MessageEndEvent field injection with name 'messageName' and value '"
 				+ PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME + "'";
 		assertTrue(errorMessageEndEventMessageName,
-				inputParameters.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
+				camundaFields.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
 						&& PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME.equals(i.getTextContent())));
 
 		String errorMessageEndEventProfile = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent input parameter with name 'profile' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION + "'";
+				+ "' is missing a MessageEndEvent field injection with name 'profile' and value '"
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS + "|#{version}'";
 		assertTrue(errorMessageEndEventProfile,
-				inputParameters.stream().anyMatch(i -> "profile".equals(i.getCamundaName())
-						&& PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION.equals(i.getTextContent())));
-
-		List<SequenceFlow> gatewayOutgoingFlows = processes.get(0).getChildElementsByType(ExclusiveGateway.class)
-				.stream().filter(Objects::nonNull).flatMap(g -> g.getOutgoing().stream()).collect(Collectors.toList());
-
-		String errorGatewayOutgoingFlow = "Process '" + processId + "' in file '" + filename
-				+ "' is missing an ExclusiveGateway with two outgoing sequence flows";
-		assertEquals(errorGatewayOutgoingFlow, 2, gatewayOutgoingFlows.size());
-
-		List<String> expressions = gatewayOutgoingFlows.stream().map(f -> f.getConditionExpression())
-				.filter(Objects::nonNull).filter(e -> "bpmn:tFormalExpression".equals(e.getType()))
-				.map(e -> e.getTextContent()).collect(Collectors.toList());
-		String errorGatewayOutgoingFlowExpressions = "Process '" + processId + "' in file '" + filename
-				+ "' is missing an ExclusiveGateway with two outgoing sequence flows having defined expression";
-		assertEquals(errorGatewayOutgoingFlowExpressions, 2, expressions.size());
-
-		String errorGatewayOutgoingFlowExpressionsSame = "Process '" + processId + "' in file '" + filename
-				+ "' has ExclusiveGateway with two outgoing sequence flows having identical defined expression: '"
-				+ expressions.get(0) + "'";
-		assertNotEquals(errorGatewayOutgoingFlowExpressionsSame, expressions.get(0), expressions.get(1));
+				camundaFields.stream().anyMatch(i -> "profile".equals(i.getCamundaName())
+						&& (PROFILE_TUTORIAL_TASK_HELLO_COS + "|#{version}").equals(i.getTextContent())));
 	}
 
 	@Test
@@ -144,6 +131,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		processPlugin.initializeAndValidateResources(TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 
 		List<Resource> helloDic = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
 				definition.getResourceVersion()));
@@ -201,19 +189,20 @@ public class TutorialProcessPluginDefinitionTest
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+		processPlugin.initializeAndValidateResources(TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
+		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
 				definition.getResourceVersion()));
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> processUrl.equals(a.getUrl()))
-				.filter(a -> VERSION.equals(a.getVersion())).collect(Collectors.toList());
+				.filter(a -> RESOURCE_VERSION.equals(a.getVersion())).collect(Collectors.toList());
 
 		String errorActivityDefinition = "Process is missing ActivityDefinition with url '" + processUrl
 				+ "' and version '" + VERSION + "'";
 		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
 
-		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '" + VERSION
+		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '" + RESOURCE_VERSION
 				+ "' is missing expected requester extension";
 		assertEquals(errorMessageRequester, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
@@ -228,7 +217,7 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
 				.filter(i -> "Test_DIC".equals(i.getValue())).count());
 
-		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '" + VERSION
+		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '" + RESOURCE_VERSION
 				+ "' is missing expected recipient extension";
 		assertEquals(errorMessageRecipient, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
@@ -246,10 +235,10 @@ public class TutorialProcessPluginDefinitionTest
 		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
 		List<StructureDefinition> structureDefinitions = helloCos.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r).filter(s -> taskHelloCosUrl.equals(s.getUrl()))
-				.filter(s -> VERSION.equals(s.getVersion())).collect(Collectors.toList());
+				.filter(s -> RESOURCE_VERSION.equals(s.getVersion())).collect(Collectors.toList());
 
 		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + taskHelloCosUrl
-				+ "' and version '" + VERSION + "'";
+				+ "' and version '" + RESOURCE_VERSION + "'";
 		assertEquals(errorStructureDefinition, 1, structureDefinitions.size());
 
 		assertEquals(2, helloCos.size());
