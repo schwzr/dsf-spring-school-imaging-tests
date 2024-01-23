@@ -19,7 +19,9 @@ import org.camunda.bpm.engine.variable.value.BooleanValue;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.service.TaskHelper;
+import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.variables.TargetImpl;
 import dev.dsf.bpe.variables.TargetValues;
 import dev.dsf.bpe.v1.constants.*;
 import dev.dsf.process.tutorial.service.HelloDic;
@@ -107,6 +109,10 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicServiceDoExecute() throws Exception
 	{
+		final String orgIdValue = "Test_COS";
+		final String endpointIdValue = "Test_COS_Endpoint";
+		final String endpointAddress = "https://cos/fhir";
+
 		Optional<HelloDic> optService = getInstance(Arrays.asList(ProcessPluginApi.class, boolean.class), api, true);
 		if (optService.isEmpty())
 			optService = getInstance(Arrays.asList(boolean.class, ProcessPluginApi.class), true, api);
@@ -120,6 +126,7 @@ public class HelloDicServiceTest
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
 				eq("http://dsf.dev/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
 				.thenReturn(Optional.of("Test"));
+		Mockito.when(variables.createTarget(orgIdValue, endpointIdValue, endpointAddress)).thenReturn(new TargetImpl(orgIdValue, endpointIdValue, endpointAddress, null));
 
 		optService.get().execute(execution);
 
@@ -129,13 +136,21 @@ public class HelloDicServiceTest
 		Mockito.verify(variables, atLeastOnce()).getStartTask();
 		assertEquals(task, captor.getValue());
 
-		ArgumentCaptor<TargetValues.TargetValue> targetArgumentCaptor = ArgumentCaptor.forClass(TargetValues.TargetValue.class);
-		Mockito.verify(variables).setVariable(eq(BpmnExecutionVariables.TARGET),targetArgumentCaptor.capture());
-		assertEquals("Test_COS", targetArgumentCaptor.getValue().getValue().getOrganizationIdentifierValue());
-		assertEquals("Test_COS_Endpoint", targetArgumentCaptor.getValue().getValue().getEndpointIdentifierValue());
-		assertEquals("https://cos/fhir", targetArgumentCaptor.getValue().getValue().getEndpointUrl());
+		ArgumentCaptor<String> orgIdValueCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<String> endpointIdValueCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<String> endpointAddressCaptor = ArgumentCaptor.forClass(String.class);
+		Mockito.verify(variables).createTarget(orgIdValueCaptor.capture(), endpointIdValueCaptor.capture(), endpointAddressCaptor.capture());
+		assertEquals(orgIdValue, orgIdValueCaptor.getValue());
+		assertEquals(endpointIdValue, endpointIdValueCaptor.getValue());
+		assertEquals(endpointAddress, endpointAddressCaptor.getValue());
 
-		Mockito.verify(variables).setVariable(anyString(), any(BooleanValue.class));
+		ArgumentCaptor<Target> targetArgumentCaptor = ArgumentCaptor.forClass(Target.class);
+		Mockito.verify(variables).setTarget(targetArgumentCaptor.capture());
+		assertEquals(orgIdValue, targetArgumentCaptor.getValue().getOrganizationIdentifierValue());
+		assertEquals(endpointIdValue, targetArgumentCaptor.getValue().getEndpointIdentifierValue());
+		assertEquals(endpointAddress, targetArgumentCaptor.getValue().getEndpointUrl());
+
+		Mockito.verify(variables).setBoolean(anyString(), any());
 	}
 
 	private Task getTask()
