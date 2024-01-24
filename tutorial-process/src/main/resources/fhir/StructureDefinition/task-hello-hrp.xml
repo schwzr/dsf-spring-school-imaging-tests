@@ -73,7 +73,7 @@
     <element id="Task.input:tutorial-input.type.coding.system">
       <path value="Task.input.type.coding.system" />
       <min value="1" />
-      <fixedCanonical value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+      <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial" />
     </element>
     <element id="Task.input:tutorial-input.type.coding.code">
       <path value="Task.input.type.coding.code" />
