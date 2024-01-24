@@ -22,8 +22,6 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
-import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
-import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
 
 import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
