@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
+import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
 import dev.dsf.bpe.variables.TargetImpl;
 import dev.dsf.bpe.variables.TargetValues;
@@ -29,12 +30,12 @@ public class HelloHrp extends AbstractServiceDelegate
 				variables.getStartTask(), "http://dsf.dev/fhir/CodeSystem/tutorial",
 				"tutorial-input");
 		boolean sendResponse = tutorialInputParameter.map("send-response"::equals).orElse(false);
-		execution.setVariable("sendResponse", org.camunda.bpm.engine.variable.Variables.booleanValue(sendResponse));
+		variables.setBoolean("sendResponse", sendResponse);
 
 		if (sendResponse)
 		{
-			TargetImpl target = new TargetImpl("Test_DIC", "Test_DIC_Endpoint", "https://dic/fhir", null);
-			execution.setVariable(TARGET, TargetValues.create(target));
+			Target target = variables.createTarget("Test_DIC", "Test_DIC_Endpoint", "https://dic/fhir");
+			variables.setTarget(target);
 		}
 		else
 		{

@@ -7,6 +7,7 @@ import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
 import dev.dsf.bpe.v1.variables.Variables;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 
 import org.hl7.fhir.r4.model.Type;
@@ -18,14 +19,12 @@ public class HelloHrpMessage extends AbstractTaskMessageSend
 	{
 		super(api);
 	}
-
-	//TODO: change HiGHmed URLs to dev.dsf URLs after finding out where the coding resource is
 	@Override
 	protected Stream<Task.ParameterComponent> getAdditionalInputParameters(DelegateExecution execution, Variables variables)
 	{
 		Optional<Task.ParameterComponent> tutorialInputParameter = api.getTaskHelper().getFirstInputParameter(
 				variables.getStartTask(), "http://dsf.dev/fhir/CodeSystem/tutorial",
-				"tutorial-input", Type.class);
+				"tutorial-input", StringType.class);
 
 		return tutorialInputParameter.map(
 						 i -> api.getTaskHelper().createInput(i.getValue() , "http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input"))
