@@ -43,8 +43,9 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	@Override
 	public Map<String, List<String>> getFhirResourcesByProcessId() {
 
-		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";		// 'a' in the beginning of 'aHelloDic' stands for ActivityDefinition
-		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";  // 's' in the beginning of 'sTaskHelloDic' stands for StructureDefinition
+		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";
+		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";
+		String sTaskGoodbyeDic = "fhir/StructureDefinition/task-goodbye-dic.xml";
 
 		String cTutorial = "fhir/CodeSystem/tutorial.xml";
 
@@ -53,9 +54,13 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 		String aHelloCos = "fhir/ActivityDefinition/hello-cos.xml";
 		String sTaskHelloCos = "fhir/StructureDefinition/task-hello-cos.xml";
 
+		String aHelloHrp = "fhir/ActivityDefinition/hello-hrp.xml";
+		String sTaskHelloHrp = "fhir/StructureDefinition/task-hello-hrp.xml";
+
 		return Map.of(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic, cTutorial, vTutorial),
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, List.of(aHelloCos, sTaskHelloCos)
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic, sTaskGoodbyeDic, cTutorial, vTutorial),
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, List.of(aHelloCos, sTaskHelloCos, cTutorial, vTutorial),
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_HRP, List.of(aHelloHrp, sTaskHelloHrp, cTutorial, vTutorial)
 		);
 	}
 

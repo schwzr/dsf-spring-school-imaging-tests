@@ -43,7 +43,7 @@ public class TutorialExampleStarter
 
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME)).getType().addCoding()
 				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME);
-		task.addInput().setValue(new StringType("Test message")).getType().addCoding().setSystem(CODESYSTEM_TUTORIAL)
+		task.addInput().setValue(new StringType("send-response")).getType().addCoding().setSystem(CODESYSTEM_TUTORIAL)
 				.setCode(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
 
 		return task;

@@ -4,9 +4,12 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_HELLO
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
+import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
+import dev.dsf.process.tutorial.message.HelloHrpMessage;
 import dev.dsf.process.tutorial.service.HelloCos;
 import dev.dsf.process.tutorial.service.HelloDic;
+import dev.dsf.process.tutorial.service.HelloHrp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,5 +47,23 @@ public class TutorialConfig
 	public HelloCos helloCos()
 	{
 		return new HelloCos(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public HelloHrpMessage helloHrpMessage(){
+		return new HelloHrpMessage(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public HelloHrp helloHrp(){
+		return new HelloHrp(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public GoodbyeDicMessage goodbyeDicMessage(){
+		return new GoodbyeDicMessage(api);
 	}
 }
