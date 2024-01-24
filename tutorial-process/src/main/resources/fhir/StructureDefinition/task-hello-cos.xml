@@ -8,7 +8,7 @@
   <url value="http://dsf.dev/fhir/StructureDefinition/task-hello-cos" />
   <!-- version managed by bpe -->
   <version value="#{version}" />
-  <name value="helloCosProcess" />
+  <name value="HelloCosProcess" />
   <!-- status managed by bpe -->
   <status value="unknown" />
   <experimental value="false" />
@@ -21,9 +21,9 @@
   <baseDefinition value="http://dsf.dev/fhir/StructureDefinition/task-base" />
   <derivation value="constraint" />
   <differential>
-    <element id="Task.instantiatesUri">
-      <path value="Task.instantiatesUri" />
-      <fixedUri value="http://dsf.dev/bpe/Process/helloCos/#{version}" />
+    <element id="Task.instantiatesCanonical">
+      <path value="Task.instantiatesCanonical" />
+      <fixedCanonical value="http://dsf.dev/bpe/Process/helloCos|#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
@@ -59,6 +59,40 @@
       <path value="Task.input" />
       <sliceName value="correlation-key" />
       <max value="0" />
+    </element>
+    <element id="Task.input:tutorial-input">
+      <path value="Task.input" />
+      <sliceName value="tutorial-input" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Task.input:tutorial-input.type">
+      <path value="Task.input.type" />
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://dsf.dev/fhir/ValueSet/tutorial" />
+      </binding>
+    </element>
+    <element id="Task.input:tutorial-input.type.coding">
+      <path value="Task.input.type.coding" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Task.input:tutorial-input.type.coding.system">
+      <path value="Task.input.type.coding.system" />
+      <min value="1" />
+      <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+    </element>
+    <element id="Task.input:tutorial-input.type.coding.code">
+      <path value="Task.input.type.coding.code" />
+      <min value="1" />
+      <fixedCode value="tutorial-input" />
+    </element>
+    <element id="Task.input:tutorial-input.value[x]">
+      <path value="Task.input.value[x]" />
+      <type>
+        <code value="string" />
+      </type>
     </element>
   </differential>
 </StructureDefinition>

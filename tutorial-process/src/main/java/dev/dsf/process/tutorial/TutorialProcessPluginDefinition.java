@@ -37,7 +37,7 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	@Override
 	public List<String> getProcessModels() {
 
-		return List.of("bpe/hello-dic.bpmn", "bpe/hello-cos.bpmn");
+		return List.of("bpe/hello-dic.bpmn", "bpe/hello-cos.bpmn", "bpe/hello-hrp.bpmn");
 	}
 
 	@Override

@@ -14,7 +14,7 @@
     </bpmn:serviceTask>
     <bpmn:endEvent id="endHelloCos">
       <bpmn:incoming>SequenceFlow_0oyvmcd</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1xuxohn" messageRef="Message_1jciunk">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xuxohn" messageRef="Message_1jciunk" camunda:class="dev.dsf.process.tutorial.message.HelloHrpMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
             <camunda:string>http://dsf.dev/bpe/Process/helloHrp|#{version}</camunda:string>
