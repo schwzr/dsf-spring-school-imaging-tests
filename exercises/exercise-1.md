@@ -43,7 +43,7 @@ located in `spring/config` is expected to provide the Spring Beans. For this plu
 The business process engine used by the DSF BPE server is based on the OpenSource Camunda Process Engine 7. 
 In order to specify what Java code should be executed for a BPMN [ServiceTask](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/) you need to specify the fully-qualified 
 Java class name (e.g. `com.package.myClass`) in the ServiceTask inside the BPMN model. If you are using [Camunda Modeler](https://camunda.com/de/download/modeler/), you can find this option after you select a BPMN Service Task:  
-![Camunda Implementation Field](figures/camunda_implementation_java_class.png){width=300px, height=300px}
+![Camunda Implementation Field](figures/camunda_implementation_java_class.png){width=500px, height=500px}  
 The Java class you specified here also needs to 
 extend the `dev.dsf.bpe.delegate.AbstractServiceDelegate` from the DSF [dsf-bpe-process-api-v1](https://github.com/datasharingframework/dsf/packages/1878918) module and by extension has to be 
 available as a Spring Bean.
