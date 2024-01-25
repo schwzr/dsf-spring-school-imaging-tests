@@ -81,17 +81,20 @@ utility for DSF use cases than `DelegateExecution#getVeriables`.
 
 <details>
     <summary>Don't know where to get a logger?</summary>
-This project uses slf4j. So use <em>LoggerFactory</em> to get yourself a logger instance.
+
+This project uses slf4j. So use `LoggerFactory` to get yourself a logger instance.
 </details>
 
 <details>
     <summary>Can't find a way to get the start task?</summary>
-The <em>doExecute</em> method provides a <em>Variables</em> instance. Try it through this one.
+
+The `doExecute` method provides a <em>Variables</em> instance. Try it through this one.
 </details>
 
 <details>
     <summary>Don't know where to look for the identifier?</summary>
-    Take a look at the official <a href="https://www.hl7.org/fhir/R4/task.html">FHIR Task</a> resource, find elements that have a recipient and manoeuvre your way to those elements using the right getters. Then test which of them has the correct value.
+
+Take a look at the official [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource, find elements that have a recipient and manoeuvre your way to those elements using the right getters. Then test which of them has the correct value.
 </details>
 
 2. Register the `HelloDic` class as a prototype bean in the `TutorialConfig` class.
@@ -100,7 +103,8 @@ The <em>doExecute</em> method provides a <em>Variables</em> instance. Try it thr
 
 <details>
     <summary>Can't find the right code?</summary>
-Take a look at the <a href="https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-process-authorization-1.0.0.xml">dsf-process-authorization</a> CodeSystem.
+
+Take a look at the [dsf-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-process-authorization-1.0.0.xml) CodeSystem.
 </details>
 
 ## Solution Verification
