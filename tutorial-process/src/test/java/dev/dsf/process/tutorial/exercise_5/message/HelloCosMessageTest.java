@@ -85,7 +85,7 @@ public class HelloCosMessageTest
 
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 
-		Mockito.when(variables.getLatestTask()).thenReturn(getTask());
+		Mockito.when(variables.getStartTask()).thenReturn(getTask());
 
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
 				eq("http://dsf.dev/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
@@ -99,7 +99,7 @@ public class HelloCosMessageTest
 
 		Stream<ParameterComponent> testParameterComponents = messageDelegate.getAdditionalInputParameters(execution, variables);
 
-		Mockito.verify(variables).getLatestTask();
+		Mockito.verify(variables).getStartTask();
 		Mockito.verify(taskHelper).createInput(any(Type.class), anyString(), anyString());
 
 		ParameterComponent tutorialInput = testParameterComponents

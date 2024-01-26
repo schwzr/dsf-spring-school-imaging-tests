@@ -29,7 +29,7 @@ public class HelloCosMessage extends AbstractTaskMessageSend
 			Variables variables)
 	{
 		Optional<String> tutorialInputParameter = api.getTaskHelper().getFirstInputParameterStringValue(
-				variables.getLatestTask(), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
+				variables.getStartTask(), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
 
 
 		return tutorialInputParameter
