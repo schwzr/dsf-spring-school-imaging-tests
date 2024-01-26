@@ -6,9 +6,11 @@ The first exercise focuses on setting up the testing environment used in this tu
 BPMN process.
 
 With this exercise we will take a look at the general setup of the tutorial code base, modify a service class and execute 
-the service within a simple demo process.
+the service within a simple demo process.  
 
-#### Word of caution: Unfortunately `Task` exists in both the FHIR and BPMN domains. We try to make it clear which kind of `Task` we are currently talking about. Still, if something sounds confusing it might be because you are considering the wrong kind of `Task` at that moment.
+#### Word of caution: Unfortunately, the word `Task` exists in both the FHIR and BPMN domains. We try to make it clear which kind of `Task` we are currently talking about. Please let us know if we missed a spot!
+
+#### Also, make sure you read the [prerequisites](prerequisites.md)!
 
 ## Introduction
 ### Tutorial Code Base Structure and Docker Test Setup
@@ -28,12 +30,13 @@ BPMN process models at `src/main/resources` as well as prepared JUnit tests to v
 
 The most important Java class used to specify the process plugin for the DSF BPE server is a class 
 that implements the `dev.dsf.bpe.ProcessPluginDefinition` interface from the 
-DSF [dsf-bpe-process-api-v1](https://mvnrepository.com/artifact/dev.dsf/dsf-bpe-process-api-v1) module. The DSF BPE server searches 
-for classes implementing this interface using the 
+DSF [dsf-bpe-process-api-v1](https://mvnrepository.com/artifact/dev.dsf/dsf-bpe-process-api-v1) module.
+For this tutorial the `TutorialProcessPluginDefinition` class implements this interface.
+The DSF BPE server searches for classes implementing this interface using the 
 Java [ServiceLoader](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html) mechanism. 
-For this tutorial the `TutorialProcessPluginDefinition` class implements this interface. It is appropriately specified 
-in the `src/main/resources/META-INF/services/dev.dsf.bpe.ProcessPluginDefinition` file. The `TutorialProcessPluginDefinition` class 
-is used to specify name and version of the process plugin, what BPMN processes are to be deployed and what FHIR resources 
+It is appropriately specified in the `src/main/resources/META-INF/services/dev.dsf.bpe.ProcessPluginDefinition` file. 
+When creating your own process plugin later, you need to make sure you register your `dev.dsf.bpe.ProcessPluginDefinition` implementation in the same way.
+The `TutorialProcessPluginDefinition` class is used to specify name and version of the process plugin, what BPMN processes are to be deployed and what FHIR resources 
 are required by the BPMN processes. When deployed, every process plugin exists in its own [Spring context](https://docs.spring.io/spring-framework/reference/core/beans/introduction.html). To make the process plugin work, you
 have to provide Spring Beans with `prototype` scope for all classes which either extend or implement the following classes/interfaces (as of version 1.4.0): `AbstractTaskMessageSend`, `AbstractServiceDelegate`, 
 `DefaultUserTaskListener` and `ProcessPluginDeploymentStateListener`. We will explore some of these classes later. A 
@@ -43,7 +46,7 @@ located in `spring/config` is expected to provide the Spring Beans. For this plu
 The business process engine used by the DSF BPE server is based on the OpenSource Camunda Process Engine 7. 
 In order to specify what Java code should be executed for a BPMN [ServiceTask](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/) you need to specify the fully-qualified 
 Java class name (e.g. `com.package.myClass`) in the ServiceTask inside the BPMN model. If you are using [Camunda Modeler](https://camunda.com/de/download/modeler/), you can find this option after you select a BPMN Service Task:  
-![Camunda Implementation Field](figures/camunda_implementation_java_class.png){width=500px, height=500px}  
+![Camunda Implementation Field](figures/camunda_implementation_java_class.png)
 The Java class you specified here also needs to 
 extend the `dev.dsf.bpe.delegate.AbstractServiceDelegate` from the DSF [dsf-bpe-process-api-v1](https://github.com/datasharingframework/dsf/packages/1878918) module and by extension has to be 
 available as a Spring Bean.
@@ -52,10 +55,18 @@ available as a Spring Bean.
 
 Business process instances are started or the execution continued via FHIR [Task](http://hl7.org/fhir/R4/task.html) resources. The [Task](http://hl7.org/fhir/R4/task.html) resource 
 specifies what process to instantiate or continue, what organization is requesting this action and what organization 
-is the target for the request. When a [Task](http://hl7.org/fhir/R4/task.html) resource starts a process we call it "start task", when it continues a 
-process it's called "current task". This differentiation is important for multi-instance use cases not covered by this tutorial. 
-Each Java class extending the abstract class `dev.dsf.bpe.delegate.AbstractServiceDelegate` has methods to access both types 
-of [Task](http://hl7.org/fhir/R4/task.html) resources via a `Variables` instance. 
+is the target for the request. When a BPE instance receives a Task resource, it finds a fitting BPMN model by parsing the `instantiatesCanonical` element
+from the Task resource and matching it to the BPMN process id and version. It then adds that Task resource to the BPMN process execution instance.
+The BPMN process execution instance is the in-memory representation of the BPMN diagram you are currently running.
+You will have access to all information (Task resources included) inside this execution instance through something called Execution Variables. 
+This construct holds all information accessible to that BPMN process execution. You can see that in `HelloDic#doExecute` you have access
+to an object called `execution` and an object called `variables`. These two objects provide you with full access to the 
+BPMN process execution and Execution Variables. The `variables` object provides you with utility functions for common DSF use cases that
+do the heavy lifting of searching your way through the very abstract `execution` fields and casting to the correct classes.
+We only recommend you use the `execution` object if the `variables` object isn't sufficient to solve your problem. In that case we would also like 
+to learn how the current API is limiting you. Contact us, and we might turn it into a feature request.  
+When a [Task](http://hl7.org/fhir/R4/task.html) resource starts a process we call it "start task", when it continues a process it's called "latest task".
+This differentiation is important for multi-instance use cases not covered in this tutorial.
 
 ### Process Access Control
 
@@ -67,14 +78,6 @@ The [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) also de
 organization is allowed to fulfill the request.
 
 We will take a closer look at [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources in [exercise 3](exercise-3.md) and [exercise 5](exercise-5.md).
-
-### BPMN Process and FHIR Task interaction through Camunda
-
-When a BPE instance receives a Task resource, it finds a fitting BPMN model by parsing the `instantiatesCanonical` element
-from the Task resource and matching it to the BPMN process id and version. It then adds that Task resource to the Camunda process variables which represent all data accessible to that BPMN process instance. 
-Camunda then provides access to these variables through a `DelegateExecution` instance. In `HelloDic`, and for that matter, any class that extends `AbstractServiceDelegate` or `AbstractTaskMessageSend`,
-you have access to the execution instance in `doExecute`. For convenience, we also provide a `Variables` instance to the `doExecute` method which already comes with a lot more
-utility for DSF use cases than `DelegateExecution#getVeriables`.
 
 ## Exercise Tasks
 1. Add a log message to the `HelloDic#doExecute` method that logs the recipient organization identifier from the start [Task](http://hl7.org/fhir/R4/task.html) resource.
