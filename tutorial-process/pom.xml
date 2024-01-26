@@ -258,7 +258,7 @@
 				</executions>
 				<configuration>
 					<workingPackages>
-						<workingPackage>dev.dsf.bpe</workingPackage>
+						<workingPackage>dev.dsf.process.tutorial</workingPackage>
 					</workingPackages>
 				</configuration>
 			</plugin>
