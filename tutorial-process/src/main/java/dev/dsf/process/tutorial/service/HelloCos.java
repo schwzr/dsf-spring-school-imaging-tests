@@ -18,7 +18,7 @@ public class HelloCos extends AbstractServiceDelegate
 	@Override
 	protected void doExecute(DelegateExecution execution, Variables variables)
 	{
-		Target target = variables.createTarget("Test_HRP", "Test_HRP_Endpoint", "https://hrp/fhir", null);
+		Target target = variables.createTarget("Test_HRP", "Test_HRP_Endpoint", "https://hrp/fhir");
 		variables.setTarget(target);
 	}
 }
