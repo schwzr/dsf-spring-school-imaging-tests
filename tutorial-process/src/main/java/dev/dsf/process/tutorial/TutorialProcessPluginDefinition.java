@@ -1,13 +1,8 @@
 package dev.dsf.process.tutorial;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
-
-import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;
 
