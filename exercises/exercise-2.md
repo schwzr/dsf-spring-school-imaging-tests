@@ -1,19 +1,22 @@
 [Prerequisites](prerequisites.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • **Exercise 2** • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
 ___
 
-# Exercise 2 - Input Parameters
-In order to configure processes that are packaged as process plugins, we will take a look at two possibilities on how to pass parameters to a process. The goal of this exercise is to enhance the `dsfdev_helloDic` process by trying them both.
+# Exercise 2 - Environment Variables and Input Parameters
+BPMN processes might require additional information during execution, e.g. for configuration purposes. We will take a look at two possibilities on how to pass additional information to a BPMN process. The goal of this exercise is to enhance the `dsfdev_helloDic` process by trying them both. 
+In both cases the information will be available in the `doExecute` method of your service class.
 
 ## Introduction
-DSF process plugins can be configured with input parameters using two different approaches: 
+DSF process plugins can be given additional information using two different approaches: 
 
 * Static configuration using environment variables during the deployment of a process plugin.
-* Dynamic configuration by sending values as part of the [Task](http://hl7.org/fhir/R4/task.html) resource to start or continue a process instance.
+* Dynamic input by sending values as part of the [Task](http://hl7.org/fhir/R4/task.html) resource to start or continue a process instance.
 
 ### Environment Variables
 Environment variables are the same for all running process instances and allow static configuration of processes. They can be defined by adding a member variable having the [Spring-Framework @Value](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-value-annotations) annotation to the configuration class `TutorialConfig`. The value of the annotation uses the `${..}` notation and follows the form `${some.property:defaultValue}`, where each dot in the property name corresponds to an underscore in the environment variable and environment variables are always written upper-case. The property `some.property` therefore corresponds to the environment variable `SOME_PROPERTY`.
 
-To create an automated documentation of environment variables during the Maven build process, the DSF provided [@ProcessDocumentation](https://github.com/datasharingframework/dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/ProcessDocumentation.java) annotation from the package `dev.dsf.tools.generator` can be used. The `pom.xml` of the `tutorial-process` submodule calls the DSF provided [DocumentGenerator](https://github.com/datasharingframework/dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/DocumentationGenerator.java) class from the same package during the `prepare-package` phase of the build process. The generator searches for all [@ProcessDocumentation](https://github.com/datasharingframework/dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/ProcessDocumentation.java) annotations and generates a Markdown documentation based on the annotation's values in the target folder.
+The DSF provides a feature to automatically generate documentation of environment variables during the Maven build process. 
+You can use the [@ProcessDocumentation](https://github.com/datasharingframework/dsf/blob/main/dsf-tools/dsf-tools-documentation-generator/src/main/java/org/highmed/dsf/tools/generator/ProcessDocumentation.java) annotation to automatically generate Markdown documentation for all fields with this annotation. You simply have to add [dsf-tools-documentation-generator](https://mvnrepository.com/artifact/dev.dsf/dsf-tools-documentation-generator) as a maven plugin. You can take a look at the `pom.xml` for the `tutorial-process` submodule to see how you can add it to your own project. Keep in mind to point the `<workingPackage>` field to the package you want documentation for.
+
 
 ### Task Input Parameters
 Providing input parameters to a specific process instance allows for dynamic configuration of process instances. It can be done by sending additional values as part of the [Task](http://hl7.org/fhir/R4/task.html) resource that starts or continues a process instance. It should be noted that a FHIR profile must be created for each [Task](http://hl7.org/fhir/R4/task.html) resource, i.e. for each message event in a process model, which inherits from the [DSF Task Base Profile](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml). This base profile defines three default input parameters:
@@ -28,7 +31,7 @@ Since input parameters of [Task](http://hl7.org/fhir/R4/task.html) resources are
 https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-bpmn-message-1.0.0.xml) are used in the [DSF Task Base Profile](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml) to define the three default input parameters of [Task](http://hl7.org/fhir/R4/task.html) resources.
 
 ### Version and Release-Date Placeholders
-To avoid the need to specify the version and release date for each [CodeSystem](http://hl7.org/fhir/R4/codesystem.html), [StructureDefinition (Task profile)](http://hl7.org/fhir/R4/structuredefinition.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resource, the placeholders `#{version}` and `#{date}` can be used. They are replaced with the values returned by the methods `ProcessPluginDefinition#getVersion()` and `ProcessPluginDefinition#getReleaseDate()` respectively during deployment of a process plugin by the DSF BPE server.
+To avoid the need to specify the version and release date for each [CodeSystem](http://hl7.org/fhir/R4/codesystem.html), [StructureDefinition (Task profile)](http://hl7.org/fhir/R4/structuredefinition.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resource, the placeholders `#{version}` and `#{date}` can be used. They are replaced with the values returned by the methods `ProcessPluginDefinition#getResourceVersion()` and `ProcessPluginDefinition#getReleaseDate()` respectively during deployment of a process plugin by the DSF BPE server.
 
 ### Read Access Tag
 While writing FHIR resources on the DSF FHIR server is only allowed by the own organization (except [Task](http://hl7.org/fhir/R4/task.html)), rules have to be defined for reading FHIR resources by external organizations (again except [Task](http://hl7.org/fhir/R4/task.html)). The `Resource.meta.tag` field is used for this purpose. To allow read access for all organizations (the standard for metadata resources), the following `read-access-tag` value can be written into this field:
@@ -44,21 +47,30 @@ While writing FHIR resources on the DSF FHIR server is only allowed by the own o
 
 The read access rules for [Task](http://hl7.org/fhir/R4/task.html) resources are defined through the fields `Task.requester` and `Task.restriction.recipient`. Therefore, no `read-access-tag` is needed.
 
-It is also possible to restrict read access of FHIR resources to organizations with a specific role in a consortium or a specific identifier, but this is not covered in the tutorial.
+It is also possible to restrict read access of FHIR resources to organizations with a specific role in a parent organization or a specific identifier, but this is not covered in the tutorial.
 
 The write access rules for [Task](http://hl7.org/fhir/R4/task.html) resources are defined through the [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources belonging to the process. We will take a look at this in [exercise 3](exercise-3.md) and [exercise 5](exercise-5.md).
 
+### TaskHelper
+
+Through the `api` instance accessible to all classes extending `AbstractTaskMessageSend` and `AbstractServiceDelegate` you can get yourself an instance of `TaskHelper` using `ProcessPluginApi#getTaskHelper`. Similar to the `Variables` class, the `TaskHelper` class provides many utility methods to interact with Task resources in the BPMN process execution. For example, it can get you a list of all input parameters conforming to a given CodeSystem and Code for a certain Task resource.
+
 ## Exercise Tasks
-1. Add an environment variable to enable/disable logging to the `TutorialConfig` class specify the default value as `false`.
-1. Inject the value of the environment variable in to `HelloDic` class, by modifying its constructor and using the new field of the `TutorialConfig` class.
-1. Use the value of the environment variable in the `HelloDic` class to decide whether the log message from exercise 1 should be printed.
-1. Adapt `test-setup/docker-compose.yml` by adding the new environment variable to the service `dic-bpe` and set the value to `"true"`.
-1. Create a new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`.
-1. Create a new [ValueSet](http://hl7.org/fhir/R4/valueset.html) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](http://hl7.org/fhir/R4/codesystem.html).
-1. Add the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources to the `dsfdev_helloDic` process in the `TutorialProcessPluginDefinition` class.
-1. Add a new input parameter of type `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile using the concept of the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) as a fixed coding.
-1. Read the new input parameter in the `HelloDic` class from the "leading" [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
-1. Adapt the starter class `TutorialExampleStarter` by adding the new input parameter with an arbitrary string.
+1. Add a new field to the `TutorialConfig` class. It will enable/disable logging. Add the annotation and specify the default value as `false`. You may freely choose a name for your environment variable here. Just make sure you follow the naming convention explained earlier.
+2. Modify the constructor of the `HelloDic` class to use the newly created field. Don't forget to change the `HelloDic` bean in `TutorialConfig`.
+3. Use the value of the environment variable in the `HelloDic` class to decide whether the log message from exercise 1 should be printed.
+4. Add the new environment variable to the `dic-bpe` service in `test-setup/docker-compose.yml` and set the value to `"true"`.
+5. Create a new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
+6. Create a new [ValueSet](http://hl7.org/fhir/R4/valueset.html) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](http://hl7.org/fhir/R4/codesystem.html). Don't forget to add the `read-access-tag`.
+7. Add a new input parameter of type `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile using the concept of the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) as a fixed coding.
+8. `task-hello-dic` and by extension the process `dsfdev_helloDic` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources for the `dsfdev_helloDic` process.
+9. Read the new input parameter in the `HelloDic` class from the start [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
+   <details>
+   <summary>Don't know where to look for the input parameter?</summary>
+   
+   The `TaskHelper` instance will prove useful here. Use it in conjunction with `variables` to get the right Task resource from the BPMN process execution.
+   </details>
+10. We just changed the elements a Task resource has to include. So you need to change the starter class `TutorialExampleStarter` to include the new input parameter. The actual value may be any arbitrary string.
 
 ## Solution Verification
 ### Maven Build and Automated Tests
