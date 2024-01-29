@@ -56,7 +56,7 @@ public class CertificateGenerator
 	private static final char[] CERT_PASSWORD = "password".toCharArray();
 
 	private static final String[] SERVER_COMMON_NAMES = { "localhost", "cos", "dic", "hrp" };
-	private static final String[] CLIENT_COMMON_NAMES = { /*"Webbrowser Test User",*/ "cos-client", "dic-client",
+	private static final String[] CLIENT_COMMON_NAMES = { "Webbrowser Test User", "cos-client", "dic-client",
 			"hrp-client" };
 	private static final Map<String, List<String>> DNS_NAMES = Map.of("localhost",
 			Arrays.asList("localhost", "host.docker.internal", "cos", "dic", "hrp"));
