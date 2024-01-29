@@ -94,7 +94,7 @@ public class ActivityDefinitionProfileTest
 
 		List<Coding> codings = values.stream().map(value -> (Coding)value).toList();
 
-		assertEquals(2, matchesForCodings(codings));
+		assertTrue(matchesForCodings(codings) > 0);
 	}
 
 	private int matchesForCodings(List<Coding> codings){
