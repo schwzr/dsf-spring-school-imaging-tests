@@ -104,20 +104,6 @@ services:
       DEV_DSF_FHIR_SERVER_BASE_URL: https://cos/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_COS
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${COS_BUNDLE_USER_THUMBPRINT}
-      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
-        - webbrowser_test_user:
-            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
-            token-role: admin
-            dsf-role:
-              - CREATE
-              - READ
-              - UPDATE
-              - DELETE
-              - SEARCH
-              - HISTORY
-              - PERMANENT_DELETE
-            practitioner-role:
-              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       cos-fhir-frontend:
@@ -221,20 +207,6 @@ services:
       DEV_DSF_FHIR_SERVER_BASE_URL: https://dic/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_DIC
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${DIC_BUNDLE_USER_THUMBPRINT}
-      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
-        - webbrowser_test_user:
-            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
-            token-role: admin
-            dsf-role:
-              - CREATE
-              - READ
-              - UPDATE
-              - DELETE
-              - SEARCH
-              - HISTORY
-              - PERMANENT_DELETE
-            practitioner-role:
-              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       dic-fhir-frontend:
@@ -340,20 +312,6 @@ services:
       DEV_DSF_FHIR_SERVER_BASE_URL: https://hrp/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_HRP
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${HRP_BUNDLE_USER_THUMBPRINT}
-      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
-        - webbrowser_test_user:
-            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
-            token-role: admin
-            dsf-role:
-              - CREATE
-              - READ
-              - UPDATE
-              - DELETE
-              - SEARCH
-              - HISTORY
-              - PERMANENT_DELETE
-            practitioner-role:
-              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
       hrp-fhir-frontend:
