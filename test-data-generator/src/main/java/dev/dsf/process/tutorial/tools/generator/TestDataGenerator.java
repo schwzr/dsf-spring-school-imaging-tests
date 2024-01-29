@@ -35,12 +35,15 @@ public class TestDataGenerator
 
 		CertificateFiles webbrowserTestUser = clientCertificateFilesByCommonName.get("Webbrowser Test User");
 		Path p12File = certificateGenerator.createP12(webbrowserTestUser);
-		logger.warn(
+		/*logger.warn(
 				"Install client-certificate and CA certificate from \"{}\" into your browsers certificate store to access fhir and bpe servers with your webbrowser",
-				p12File.toAbsolutePath().toString());
+				p12File.toAbsolutePath().toString());*/
 
 		CertificateFiles webbrowserDicClient = clientCertificateFilesByCommonName.get("dic-client");
 		p12File = certificateGenerator.createP12(webbrowserDicClient);
+		logger.warn(
+				"Install DIC client-certificate and CA certificate from \"{}\" into your browsers certificate store to access fhir and bpe servers with your webbrowser",
+				p12File.toAbsolutePath().toString());
 
 		bundleGenerator.createDockerTestBundles(clientCertificateFilesByCommonName);
 		bundleGenerator.copyDockerTestBundles();

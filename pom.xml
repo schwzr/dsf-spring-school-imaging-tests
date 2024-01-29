@@ -225,29 +225,6 @@
 		</plugins>
 	</build>
 
-	<distributionManagement>
-		<!-- for deployment to GitHub Packages the id must be 'github', if not the deployment fails with a 401 error -->
-		<repository>
-			<id>github</id>
-			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/datasharingframework/dsf-process-tutorial</url>
-		</repository>
-	</distributionManagement>
-
-	<repositories>
-		<repository>
-			<id>github</id>
-			<name>GitHub HiGHmed Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/datasharingframework/dsf</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
 	<profiles>
 		<profile>
 			<id>format-and-sort</id>
