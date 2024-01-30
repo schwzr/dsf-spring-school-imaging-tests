@@ -28,7 +28,7 @@ In the example above, the first organization is sending a message to the second 
 If multiple message are send in a **1:n** relationship with an **n:1** return an additional `correlation-key` needs to be configured in order to correlate every bidirectional communication between two DSF instances.
 This is not covered in this tutorial. Until we amend this tutorial, you are able to study the usage of `correlation-keys` in the [Ping-Pong Process](https://github.com/datasharingframework/dsf-process-ping-pong).
 
-### Roles in the DSF
+### Organization Roles in the DSF
 
 In exercise 1 we took a first look at the [process authorization extension](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml). Back then it used either the coding for [all local clients](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) or the one for [all remote clients](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-remote-all-1.0.0.xml). 
 In exercise 3 we used the codings for [local organizations](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-local-organization-1.0.0.xml) and the one for [remote organizations](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-remote-organization-1.0.0.xml) in the ActivityDefinition for the `dsfdev_helloCos` process.
@@ -101,6 +101,11 @@ The example below shows a scenario where all organizations, which have a certain
     * Add a new process authorization extension element to the ActivityDefinition for `dsfdev_helloDic` using the role scenario from above where
    only organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
    organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
+   <details>
+   <summary>Don't know which values to choose for roles?</summary>
+   
+    Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml) CodeSystem.
+   </details>
 
 ## Solution Verification
 ### Maven Build and Automated Tests
