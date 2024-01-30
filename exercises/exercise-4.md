@@ -23,10 +23,10 @@ Via the `DelegateExecution execution` parameter of the `doExecute` method of a c
 For more details on process variables see the [Camunda documentation](https://docs.camunda.org/manual/7.17/user-guide/process-engine/variables/).
 
 ## Exercise Tasks
-1. In the `HelloDic` class, write an algorithm deciding based on the "leading" Task's input parameter `tutorial-input`, whether the `dsfdev_helloCos` process should be started.
-2. Add a boolean variable to the process instance execution variables storing the decision.
+1. In the `HelloDic` class, write an algorithm which decides based on the start Task's input parameter `tutorial-input`, whether the `dsfdev_helloCos` process should be started.
+2. Add a boolean variable to the process execution variables storing the decision.
 3. Add an exclusive gateway to the `dsfdev_helloDic` process model and two outgoing sequence flows - the first starting process `dsfdev_helloDic`, the second stopping process `dsfdev_helloDic` without starting process `dsfdev_helloCos`.
-4. Add a condition expressions to each outgoing sequence flow based on the previously stored execution variable.
+4. Add condition expressions to each outgoing sequence flow based on the previously stored execution variable.
 
 ## Solution Verification
 ### Maven Build and Automated Tests

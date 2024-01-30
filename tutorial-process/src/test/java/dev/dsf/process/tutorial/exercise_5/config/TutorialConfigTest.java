@@ -5,6 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
@@ -13,9 +17,6 @@ import dev.dsf.process.tutorial.service.HelloCos;
 import dev.dsf.process.tutorial.service.HelloDic;
 import dev.dsf.process.tutorial.service.HelloHrp;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 
 public class TutorialConfigTest
 {

@@ -10,11 +10,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
-import dev.dsf.fhir.validation.ResourceValidator;
-import dev.dsf.fhir.validation.ResourceValidatorImpl;
-import dev.dsf.fhir.validation.ValidationSupportRule;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CanonicalType;
 import org.hl7.fhir.r4.model.Coding;
@@ -29,6 +24,11 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
+import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
+import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
+import dev.dsf.fhir.validation.ResourceValidator;
+import dev.dsf.fhir.validation.ResourceValidatorImpl;
+import dev.dsf.fhir.validation.ValidationSupportRule;
 
 public class ActivityDefinitionProfileTest
 {
@@ -72,7 +72,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
-		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true, orgIdentifier -> true, role -> true));
+		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
+				orgIdentifier -> true, role -> true));
 	}
 
 	@Test
@@ -87,7 +88,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
-		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true, orgIdentifier -> true, role -> true));
+		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
+				orgIdentifier -> true, role -> true));
 	}
 
 	@Test
@@ -102,7 +104,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
-		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true, orgIdentifier -> true, role -> true));
+		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
+				orgIdentifier -> true, role -> true));
 	}
 
 	@Test
