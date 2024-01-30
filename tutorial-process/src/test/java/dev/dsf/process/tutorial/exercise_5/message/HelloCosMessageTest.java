@@ -96,14 +96,11 @@ public class HelloCosMessageTest
 		Mockito.when(variables.getTarget())
 				.thenReturn(new TargetImpl("Test_COS", "Test_COS_Endpoint", "https://cos/fhir", null));
 		Mockito.when(messageDelegate.getInstantiatesCanonical(execution, variables))
-				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL); // TODO: Figure out why this needs
-																						// to be mocked in the first
-																						// place
+				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL);
 		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME))
 				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME);
 		Mockito.when(messageDelegate.getProfile(execution, variables))
-				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION); // TODO: Figure out why this needs to
-																					// be mocked in the first place
+				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION);
 		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.BUSINESS_KEY))
 				.thenReturn(UUID.randomUUID().toString());
 		/*

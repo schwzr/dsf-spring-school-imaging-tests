@@ -68,13 +68,7 @@ public class TaskProfileTest
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("Test_DIC");
 
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME)).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode()); // TODO:
-																													// No
-																													// idea
-																													// if
-																													// this
-																													// is
-																													// correct
+				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());
 
 		return task;
 	}

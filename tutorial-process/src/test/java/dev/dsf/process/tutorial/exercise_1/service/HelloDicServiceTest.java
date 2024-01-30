@@ -29,9 +29,6 @@ public class HelloDicServiceTest
 	@InjectMocks
 	private HelloDic service;
 
-	// TODO: I'm assuming this test makes sure the user invoked the appropriate method to get access to the recipient
-	// organization identifier from the "leading" (now: starting) task. Needs confirmation if the check is still valid
-	// the way it is done here
 	@Test
 	public void testHelloDicServiceValid() throws Exception
 	{
