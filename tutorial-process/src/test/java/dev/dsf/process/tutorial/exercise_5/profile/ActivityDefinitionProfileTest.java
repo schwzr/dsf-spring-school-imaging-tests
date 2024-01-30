@@ -121,8 +121,7 @@ public class ActivityDefinitionProfileTest
 
 		Extension processAuthorization0 = extensionsByUrl.get(0);
 		Extension requester = processAuthorization0.getExtensionsByUrl("requester").stream()
-				.filter(extension -> ((Coding) extension.getValue()).getCode().equals("LOCAL_ALL"))
-				.findFirst().get();
+				.filter(extension -> ((Coding) extension.getValue()).getCode().equals("LOCAL_ALL")).findFirst().get();
 		assertNotNull(requester);
 
 		Type value = requester.getValue();

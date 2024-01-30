@@ -2,6 +2,13 @@ package dev.dsf.process.tutorial.spring.config;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
@@ -10,13 +17,6 @@ import dev.dsf.process.tutorial.message.HelloHrpMessage;
 import dev.dsf.process.tutorial.service.HelloCos;
 import dev.dsf.process.tutorial.service.HelloDic;
 import dev.dsf.process.tutorial.service.HelloHrp;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class TutorialConfig
@@ -51,19 +51,22 @@ public class TutorialConfig
 
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public HelloHrpMessage helloHrpMessage(){
+	public HelloHrpMessage helloHrpMessage()
+	{
 		return new HelloHrpMessage(api);
 	}
 
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public HelloHrp helloHrp(){
+	public HelloHrp helloHrp()
+	{
 		return new HelloHrp(api);
 	}
 
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public GoodbyeDicMessage goodbyeDicMessage(){
+	public GoodbyeDicMessage goodbyeDicMessage()
+	{
 		return new GoodbyeDicMessage(api);
 	}
 }

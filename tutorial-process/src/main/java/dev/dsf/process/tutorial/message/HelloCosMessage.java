@@ -14,8 +14,6 @@ import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
 import dev.dsf.bpe.v1.variables.Variables;
 
-import ca.uhn.fhir.context.FhirContext;
-
 // Only needed for exercise 3 and above
 public class HelloCosMessage extends AbstractTaskMessageSend
 {
@@ -32,8 +30,7 @@ public class HelloCosMessage extends AbstractTaskMessageSend
 				variables.getStartTask(), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
 
 
-		return tutorialInputParameter
-				.map(s -> api.getTaskHelper().createInput(new StringType().setValue(s), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT))
-				.stream();
+		return tutorialInputParameter.map(s -> api.getTaskHelper().createInput(new StringType().setValue(s),
+				CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT)).stream();
 	}
 }
