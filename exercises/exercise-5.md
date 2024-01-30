@@ -2,13 +2,16 @@
 ___
 
 # Exercise 5 - Event Based Gateways and Intermediate Events
-In the final exercise we will look at message flow between three organizations as well as how to continue a waiting process if no return message arrives. With this exercise we will add a third process and complete a message loop from `Test_DIC` to `Test_COR` to `Test_HRP` back to `Test_DIC`.
+In the final exercise we will look at message flow between three organizations as well as how to continue a waiting process if no return message arrives. 
+With this exercise we will add a third process and complete a message loop from `Test_DIC` to `Test_COR` to `Test_HRP` back to `Test_DIC`.
 
 ## Introduction
 ### Managing Multiple- and Missing Messages
-If an existing and started process instance is waiting for a message from another organization, the corresponding FHIR [Task](http://hl7.org/fhir/R4/task.html) may never arrive. Either because the other organization decides to never send the "message" or because some technical problem prohibits the [Task](http://hl7.org/fhir/R4/task.html) resource from being posted to the DSF FHIR server. This would result in stale process instances that never finish.
+If an existing and already running process instance is waiting for a message from another organization, the corresponding FHIR [Task](http://hl7.org/fhir/R4/task.html) may never arrive. 
+Either because the other organization decides to never send the message or because some technical problem prohibits the [Task](http://hl7.org/fhir/R4/task.html) resource from being posted to the DSF FHIR server. 
+This would result in stale process instances that never finish.
 
-In order to solve this problem we can add an [Event Based Gateway](https://docs.camunda.org/manual/7.17/reference/bpmn20/gateways/event-based-gateway/) to the process waiting for a response and then either handle a [Task](http://hl7.org/fhir/R4/task.html) resource with the response and finish the process in a success state or fire of an [Intermediate Timer Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event) after a defined wait period and finish the process in an error state. The following BPMN collaboration diagram shows how the process at the first organization would look like if two different message or no message could be received:
+In order to solve this problem we can add an [Event Based Gateway](https://docs.camunda.org/manual/7.17/reference/bpmn20/gateways/event-based-gateway/) to the process waiting for a response and then either handle a [Task](http://hl7.org/fhir/R4/task.html) resource with the response and finish the process in a success state or trigger an [Intermediate Timer Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event) after a defined wait period and finish the process in an error state. The following BPMN collaboration diagram shows how the process at the first organization would look like if two different message or no message could be received:
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/exercise5_event_based_gateway_inverted.svg">
@@ -17,55 +20,20 @@ In order to solve this problem we can add an [Event Based Gateway](https://docs.
 </picture>
 
 #### Timer Events
-For [Timer Events](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/) the duration until the timer fires is specified using the [ISO 8601 Durations](http://en.wikipedia.org/wiki/ISO_8601#Durations) format. Examples can be found in the [Camunda 7 documentation](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#time-duration).
+For [Timer Events](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/) the duration until the timer runs out is specified using the [ISO 8601 Durations](http://en.wikipedia.org/wiki/ISO_8601#Durations) format. Examples can be found in the [Camunda 7 documentation](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#time-duration).
 
 ### Matching Process Instances With Business Keys
-In the example above the first organization is sending a "message" to the second and waiting for a reply. In order to correlate the return message with the waiting process instance, a unique identifier needs to be exchanged between both process instances. Within the DSF this is implemented using the process instance _business-key_ and a corresponding [Task.input](http://hl7.org/fhir/R4/task.html) parameter. For **1:1** communication relationships this is handled by the DSF BPE servers automatically, but the corresponding [Task](http://hl7.org/fhir/R4/task.html) profiles need to define the _business-key_ input parameter as mandatory.
+In the example above, the first organization is sending a message to the second and waiting for a reply. In order to correlate the return message with the waiting process instance, a unique identifier needs to be exchanged between both process instances. Within the DSF this is implemented using the process instance `business-key` and a corresponding [Task.input](http://hl7.org/fhir/R4/task.html) parameter. For **1:1** communication relationships this is handled by the DSF BPE servers automatically, but the corresponding [Task](http://hl7.org/fhir/R4/task.html) profiles need to define the `business-key` input parameter as mandatory.
 
-If multiple message are send in a **1:n** relationship with a **n:1** return an additional _correlation-key_ needs to be configured in order to correlate every bidirectional communication between two DSF instances.
+If multiple message are send in a **1:n** relationship with an **n:1** return an additional `correlation-key` needs to be configured in order to correlate every bidirectional communication between two DSF instances.
+This is not covered in this tutorial. Until we amend this tutorial, you are able to study the usage of `correlation-keys` in the [Ping-Pong Process](https://github.com/datasharingframework/dsf-process-ping-pong).
 
-### ActivityDefinitions for the DSF
-FHIR [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources are used to announce what processes can be instantiated at a given DSF instance and contain the authorization rules for the specified process. [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) for the DSF need to comply with the [http://dsf.dev/fhir/StructureDefinition/activity-definition](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-activity-definition-1.0.0.xml) profile, with authorization rules configured using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) extension.
+### Organization Roles in the DSF
 
-The authorization extension needs to be configured at least once and has four sub extensions:
-#### message-name [1..1]
-String value specifying the message name of [Message Start Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-start-event), [Intermediate Message Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-intermediate-catching-event) or [Message Receive Task](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/receive-task/) this authorization rule should match. Can only be specified once per authorization rule extension.
+In exercise 1 we took a first look at the [process authorization extension](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml). Back then it used either the coding for [all local clients](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) or the one for [all remote clients](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-remote-all-1.0.0.xml). 
+In exercise 3 we used the codings for [local organizations](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-local-organization-1.0.0.xml) and the one for [remote organizations](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-remote-organization-1.0.0.xml) in the ActivityDefinition for the `dsfdev_helloCos` process.
+The example below shows a scenario where all organizations, which have a certain role inside a parent organization, are allowed to request or receive Task resources.
 
-#### task-profile [1..1]
-Canonical URL value specifying the [Task](http://hl7.org/fhir/R4/task.html) profile this authorization rule should match. Can only be specified once per authorization rule extension.
-
-#### requester [1..]
-Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-requester](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-process-authorization-requester-1.0.0.xml) ValueSet:
-* **LOCAL_ORGANIZATION** A local organization with a specific identifier.
-    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
-    
-* **REMOTE_ORGANIZATION** A remote (non local) organization with a specific identifier.
-    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
-    
-* **LOCAL_ROLE** A local organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
-    
-* **REMOTE_ROLE** A remote (non local) organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
-    
-* **LOCAL_ALL** All local organizations regardless of their identifier or role in a consortium.
-
-* **REMOTE_ALL** All remote (non local) organizations regardless of their identifier or role in a consortium.
-
-#### recipient [1..]
-Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-recipient ValueSet](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-process-authorization-recipient-1.0.0.xml).
-* **LOCAL_ORGANIZATION** Organization with a specific identifier.
-    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
-    
-* **LOCAL_ROLE** Organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and consortium identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
-    
-* **LOCAL_ALL** All organizations regardless of their identifier or role in a consortium.
-
-_The local organization of a DSF instance is configured using the environment variables [DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://dsf.dev/stable/maintain/fhir/configuration.html#dev-dsf-fhir-server-organization-identifier-value) for the DSF FHIR server and [DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://github.com/highmed/dsf-dsf/wiki/DSF-0.7.0-Configuration-Parameters-BPE#org_dev_dsf_bpe_fhir_server_organization_identifier_value) for the DSF BPE server._
-
-#### Authorization Extension Example
-The following example specifies that process execution can only be requested by a organization with a specific identifier and only allows execution of the process in the DSF instance of an organization with a specific identifier.
 ```xml
 <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
 	<extension url="message-name">
@@ -77,13 +45,13 @@ The following example specifies that process execution can only be requested by 
 	<extension url="requester">
 		<valueCoding>
 			<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role">
-				<extension url="consortium">
+				<extension url="parent-organization">
 					<valueIdentifier>
 						<system value="http://dsf.dev/sid/organization-identifier" />
-						<value value="identifier.consortium.org" />
+						<value value="identifier.parent.org" />
 					</valueIdentifier>
 				</extension>
-				<extension url="role">
+				<extension url="organization-role">
 					<valueCoding>
 						<system value="http://dsf.dev/fhir/CodeSystem/organization-role" />
 						<code value="SOME_ROLE" />
@@ -97,13 +65,13 @@ The following example specifies that process execution can only be requested by 
 	<extension url="recipient">
 		<valueCoding>
 			<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role">
-				<extension url="consortium">
+				<extension url="parent-organization">
 					<valueIdentifier>
 						<system value="http://dsf.dev/sid/organization-identifier" />
-						<value value="identifier.consortium.org" />
+						<value value="identifier.parent.org" />
 					</valueIdentifier>
 				</extension>
-				<extension url="role">
+				<extension url="organization-role">
 					<valueCoding>
 						<system value="http://dsf.dev/fhir/CodeSystem/organization-role" />
 						<code value="SOME_ROLE" />
@@ -118,8 +86,11 @@ The following example specifies that process execution can only be requested by 
 ```
 
 ## Exercise Tasks
-1. Modify the `HelloCosMessage` and use the value from the [Task.input](http://hl7.org/fhir/R4/task.html) parameter of the `helloDic` [Task](http://hl7.org/fhir/R4/task.html) to send it to the `dsfdev_helloCos` process via a [Task.input](http://hl7.org/fhir/R4/task.html) parameter in the `helloCos` Task. Override the `getAdditionalInputParameters` to configure a [Task.input](http://hl7.org/fhir/R4/task.html) parameter to be send.
+1. Forward the value from the [Task.input](http://hl7.org/fhir/R4/task.html) parameter of the `helloDic` Task to the `dsfdev_helloCos` process using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`.
 1. Modify the `dsfdev_helloCos` process to use a [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) to trigger the process in file `hello-hrp.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) based on the [AcitvityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) in file `hello-hrp.xml`.
+1. Modify the process in file `hello-hrp.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) in file `hello-hrp.xml`.
+1. Add the process in file `hello-hrp.bpmn` to the `TutorialProcessPluginDefinition` and configure the FHIR resources needed for the three processes.
+1. Add the `HelloCos`, `HelloHrpMessage `, `HelloHrp` and `GoodbyeDicMessage` classes as Spring Beans. Don't forget the scope.
 1. Modify the `dsfdev_helloDic` process:
 	* Change the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) to an [Intermediate Message Throw Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-intermediate-throwing-event)
 	* Add an [Event Based Gateway](https://docs.camunda.org/manual/7.17/reference/bpmn20/gateways/event-based-gateway/) after the throw event
@@ -127,9 +98,14 @@ The following example specifies that process execution can only be requested by 
 	    1. An [Intermediate Message Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-intermediate-catching-event) to catch the `goodbyDic` message from the `dsfdev_helloHrp` process.
 	    1. An [Intermediate Timer Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event) to end the process if no message is sent by the `dsfdev_helloHrp` process after two minutes.
 	    Make sure both cases finish with a process [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/).
-1. Modify the process in file `hello-hrp.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) in file `hello-hrp.xml`.
-1. Add the process in file `hello-hrp.bpmn` to the `TutorialProcessPluginDefinition` and configure the FHIR resources needed for the three processes.
-1. Add the `HelloCos`, `HelloHrpMessage `, `HelloHrp` and `GoodbyeDicMessage` classes as spring beans.
+    * Add a new process authorization extension element to the ActivityDefinition for `dsfdev_helloDic` using the role scenario from above where
+   only organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
+   organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
+   <details>
+   <summary>Don't know which values to choose for roles?</summary>
+   
+    Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml) CodeSystem.
+   </details>
 
 ## Solution Verification
 ### Maven Build and Automated Tests

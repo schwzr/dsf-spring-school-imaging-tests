@@ -1,10 +1,6 @@
 package dev.dsf.process.tutorial.exercise_1.service;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.constants.NamingSystems;
-import dev.dsf.bpe.v1.variables.Variables;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import dev.dsf.process.tutorial.service.HelloDic;
 import org.hl7.fhir.r4.model.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.constants.NamingSystems;
+import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.process.tutorial.service.HelloDic;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloDicServiceTest
@@ -28,7 +29,6 @@ public class HelloDicServiceTest
 	@InjectMocks
 	private HelloDic service;
 
-	//TODO: I'm assuming this test makes sure the user invoked the appropriate method to get access to the recipient organization identifier from the "leading" (now: starting) task. Needs confirmation if the check is still valid the way it is done here
 	@Test
 	public void testHelloDicServiceValid() throws Exception
 	{
