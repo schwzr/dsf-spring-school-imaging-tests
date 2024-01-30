@@ -227,7 +227,8 @@ public class CertificateGenerator
 		Path thumbprintsFile = Paths.get("cert", "thumbprints.txt");
 
 		Stream<String> certificates = Streams
-				.concat(serverCertificateFilesByCommonName.values().stream(), clientCertificateFilesByCommonName.values().stream())
+				.concat(serverCertificateFilesByCommonName.values().stream(),
+						clientCertificateFilesByCommonName.values().stream())
 				.sorted(Comparator.comparing(CertificateFiles::getCommonName))
 				.map(c -> c.getCommonName() + "\n\t" + c.getCertificateSha512ThumbprintHex() + " (SHA-512)\n");
 

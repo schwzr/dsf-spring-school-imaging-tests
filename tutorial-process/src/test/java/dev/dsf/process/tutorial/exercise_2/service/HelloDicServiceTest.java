@@ -13,15 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.service.FhirWebserviceClientProvider;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-
-import dev.dsf.bpe.v1.variables.Variables;
-import dev.dsf.fhir.authorization.read.ReadAccessHelper;
-import dev.dsf.process.tutorial.service.HelloDic;
-import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.constants.*;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 import org.junit.Test;
@@ -30,6 +22,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.constants.NamingSystems;
+import dev.dsf.bpe.v1.service.FhirWebserviceClientProvider;
+import dev.dsf.bpe.v1.service.TaskHelper;
+import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.fhir.authorization.read.ReadAccessHelper;
+import dev.dsf.process.tutorial.service.HelloDic;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloDicServiceTest
@@ -121,9 +121,8 @@ public class HelloDicServiceTest
 		Mockito.when(api.getVariables(execution)).thenReturn(variables);
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 		Mockito.when(variables.getStartTask()).thenReturn(task);
-		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
-				eq("http://dsf.dev/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
-				.thenReturn(Optional.of("Test"));
+		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
+				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
 
 		optService.get().execute(execution);
 
