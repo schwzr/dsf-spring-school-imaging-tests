@@ -4,7 +4,6 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_H
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -27,14 +26,11 @@ import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Identifier;
-import org.hl7.fhir.r4.model.MetadataResource;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.Test;
-import org.springframework.core.env.StandardEnvironment;
 
-import ca.uhn.fhir.context.FhirContext;
 import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;

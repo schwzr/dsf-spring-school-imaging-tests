@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -15,11 +14,8 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.hl7.fhir.r4.model.Resource;
 import org.junit.Test;
-import org.springframework.core.env.StandardEnvironment;
 
-import ca.uhn.fhir.context.FhirContext;
 import dev.dsf.bpe.plugin.ProcessIdAndVersion;
-import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;

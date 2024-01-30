@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.variable.value.BooleanValue;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 import org.junit.Test;
@@ -26,12 +25,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.constants.*;
+import dev.dsf.bpe.v1.constants.NamingSystems;
 import dev.dsf.bpe.v1.service.TaskHelper;
 import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
 import dev.dsf.bpe.variables.TargetImpl;
-import dev.dsf.bpe.variables.TargetValues;
 import dev.dsf.process.tutorial.service.HelloDic;
 
 @RunWith(MockitoJUnitRunner.class)

@@ -1,12 +1,10 @@
 package dev.dsf.process.tutorial.service;
 
-import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
 import dev.dsf.bpe.v1.variables.Variables;
-import dev.dsf.fhir.authorization.read.ReadAccessHelper;
 
 public class HelloDic extends AbstractServiceDelegate
 {

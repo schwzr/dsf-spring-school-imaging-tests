@@ -1,7 +1,5 @@
 package dev.dsf.process.tutorial.service;
 
-import static dev.dsf.bpe.v1.constants.BpmnExecutionVariables.TARGET;
-
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;

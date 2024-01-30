@@ -9,15 +9,11 @@ import static org.junit.Assert.assertTrue;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.hl7.fhir.r4.model.ActivityDefinition;
-import org.hl7.fhir.r4.model.CodeType;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
-import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Type;
-import org.hl7.fhir.r5.model.Base;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -25,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
+
 import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
 import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
 import dev.dsf.fhir.validation.ResourceValidator;
