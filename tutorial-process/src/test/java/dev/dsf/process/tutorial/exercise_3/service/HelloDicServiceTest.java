@@ -14,15 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.variables.Target;
-import dev.dsf.bpe.v1.variables.Variables;
-import dev.dsf.bpe.variables.TargetImpl;
-import dev.dsf.fhir.authorization.read.ReadAccessHelper;
-import dev.dsf.process.tutorial.service.HelloDic;
-import dev.dsf.bpe.v1.constants.*;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 import org.junit.Test;
@@ -31,6 +22,15 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.constants.*;
+import dev.dsf.bpe.v1.service.TaskHelper;
+import dev.dsf.bpe.v1.variables.Target;
+import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.variables.TargetImpl;
+import dev.dsf.fhir.authorization.read.ReadAccessHelper;
+import dev.dsf.process.tutorial.service.HelloDic;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloDicServiceTest
@@ -125,10 +125,10 @@ public class HelloDicServiceTest
 		Mockito.when(api.getVariables(execution)).thenReturn(variables);
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 		Mockito.when(variables.getStartTask()).thenReturn(task);
-		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
-				eq("http://dsf.dev/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
-				.thenReturn(Optional.of("Test"));
-		Mockito.when(variables.createTarget(orgIdValue, endpointIdValue, endpointAddress)).thenReturn(new TargetImpl(orgIdValue, endpointIdValue, endpointAddress, null));
+		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
+				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
+		Mockito.when(variables.createTarget(orgIdValue, endpointIdValue, endpointAddress))
+				.thenReturn(new TargetImpl(orgIdValue, endpointIdValue, endpointAddress, null));
 
 		optService.get().execute(execution);
 
@@ -141,7 +141,8 @@ public class HelloDicServiceTest
 		ArgumentCaptor<String> orgIdValueCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> endpointIdValueCaptor = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> endpointAddressCaptor = ArgumentCaptor.forClass(String.class);
-		Mockito.verify(variables).createTarget(orgIdValueCaptor.capture(), endpointIdValueCaptor.capture(), endpointAddressCaptor.capture());
+		Mockito.verify(variables).createTarget(orgIdValueCaptor.capture(), endpointIdValueCaptor.capture(),
+				endpointAddressCaptor.capture());
 		assertEquals(orgIdValue, orgIdValueCaptor.getValue());
 		assertEquals(endpointIdValue, endpointIdValueCaptor.getValue());
 		assertEquals(endpointAddress, endpointAddressCaptor.getValue());

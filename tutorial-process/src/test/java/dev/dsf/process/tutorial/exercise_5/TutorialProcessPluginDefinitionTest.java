@@ -27,14 +27,6 @@ import org.camunda.bpm.model.bpmn.instance.TimerEventDefinition;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputOutput;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaInputParameter;
-
-import dev.dsf.bpe.plugin.ProcessIdAndVersion;
-import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
-import dev.dsf.process.tutorial.ConstantsTutorial;
-import dev.dsf.process.tutorial.TestProcessPluginGenerator;
-import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
-import dev.dsf.process.tutorial.message.HelloHrpMessage;
-import dev.dsf.process.tutorial.service.HelloCos;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.MetadataResource;
@@ -45,6 +37,13 @@ import org.junit.Test;
 import org.springframework.core.env.StandardEnvironment;
 
 import ca.uhn.fhir.context.FhirContext;
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
+import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
+import dev.dsf.process.tutorial.ConstantsTutorial;
+import dev.dsf.process.tutorial.TestProcessPluginGenerator;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.process.tutorial.message.HelloHrpMessage;
+import dev.dsf.process.tutorial.service.HelloCos;
 
 public class TutorialProcessPluginDefinitionTest
 {
@@ -88,13 +87,15 @@ public class TutorialProcessPluginDefinitionTest
 		processPlugin.initializeAndValidateResources(processOrgIdentifier);
 		assumeNotNull(processPlugin);
 
-		return processPlugin.getFhirResources().get(new ProcessIdAndVersion(processKey, ConstantsTutorial.RESOURCE_VERSION));
+		return processPlugin.getFhirResources()
+				.get(new ProcessIdAndVersion(processKey, ConstantsTutorial.RESOURCE_VERSION));
 	}
 
 	@Test
 	public void testGetResourceProviderCos() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
+				ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(4, resources.size());
 
@@ -126,7 +127,8 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDic() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(5, resources.size());
 
@@ -166,7 +168,8 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDicActivityDefinitionHelloDic() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assumeNotNull(resources);
 
 		var aOpt = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
@@ -176,8 +179,7 @@ public class TutorialProcessPluginDefinitionTest
 		assumeTrue(aOpt.isPresent());
 
 		var a = aOpt.get();
-		var pAuthExts = a
-				.getExtensionsByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
+		var pAuthExts = a.getExtensionsByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
 		assertNotNull(pAuthExts);
 		assertEquals(2, pAuthExts.size());
 	}
@@ -185,7 +187,8 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderHrp() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_HRP, ConstantsTutorial.TUTORIAL_HRP_ORGANIZATION_IDENTIFIER);
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_HRP,
+				ConstantsTutorial.TUTORIAL_HRP_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(4, resources.size());
 
@@ -312,8 +315,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorMessageEndEventImplementation, HelloHrpMessage.class.getName(),
 				messageEndEvent.get(0).getCamundaClass());
 
-		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream()
-				.findAny().stream().flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream())
+		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream().findAny()
+				.stream().flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream())
 				.flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
 				.flatMap(e -> e.getChildElementsByType(CamundaField.class).stream().filter(Objects::nonNull))
 				.collect(Collectors.toList());

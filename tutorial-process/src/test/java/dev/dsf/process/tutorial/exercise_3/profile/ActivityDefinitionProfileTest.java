@@ -10,11 +10,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
-import dev.dsf.fhir.validation.ResourceValidator;
-import dev.dsf.fhir.validation.ResourceValidatorImpl;
-import dev.dsf.fhir.validation.ValidationSupportRule;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
@@ -26,6 +21,11 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
+import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
+import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
+import dev.dsf.fhir.validation.ResourceValidator;
+import dev.dsf.fhir.validation.ResourceValidatorImpl;
+import dev.dsf.fhir.validation.ValidationSupportRule;
 
 public class ActivityDefinitionProfileTest
 {
@@ -69,7 +69,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
-		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true, orgIdentifier -> true, role -> true));
+		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
+				orgIdentifier -> true, role -> true));
 	}
 
 	@Test
@@ -84,7 +85,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
-		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true, orgIdentifier -> true, role -> true));
+		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
+				orgIdentifier -> true, role -> true));
 	}
 
 	@Test
@@ -103,20 +105,25 @@ public class ActivityDefinitionProfileTest
 		List<Type> values = requesters.stream().map(extension -> extension.getValue()).toList();
 		values.stream().forEach(value -> assertTrue(value instanceof Coding));
 
-		List<Coding> codings = values.stream().map(value -> (Coding)value).toList();
+		List<Coding> codings = values.stream().map(value -> (Coding) value).toList();
 
 		assertEquals(2, matchesForCodings(codings));
 	}
 
-	private int matchesForCodings(List<Coding> codings){
+	private int matchesForCodings(List<Coding> codings)
+	{
 		int matches = 0;
 
-		for(Coding coding: codings){
-			if(coding.getSystem().equals("http://dsf.dev/fhir/CodeSystem/process-authorization")){
-				if(coding.getCode().equals("LOCAL_ALL")) matches++;
-				if(coding.getCode().equals("LOCAL_ALL_PRACTITIONER")
-						&& ((Coding)coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner").getValue())
-						.getCode().equals("DSF_ADMIN"))
+		for (Coding coding : codings)
+		{
+			if (coding.getSystem().equals("http://dsf.dev/fhir/CodeSystem/process-authorization"))
+			{
+				if (coding.getCode().equals("LOCAL_ALL"))
+					matches++;
+				if (coding.getCode().equals("LOCAL_ALL_PRACTITIONER") && ((Coding) coding
+						.getExtensionByUrl(
+								"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner")
+						.getValue()).getCode().equals("DSF_ADMIN"))
 					matches++;
 			}
 		}

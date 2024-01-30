@@ -10,7 +10,6 @@ import org.springframework.core.env.StandardEnvironment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.uhn.fhir.context.FhirContext;
-
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.ProcessPluginApiImpl;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
@@ -40,11 +39,13 @@ public class TestProcessPluginGenerator
 	private static ReadAccessHelper readAccessHelper = mock(ReadAccessHelper.class);
 	private static TaskHelper taskHelper = mock(TaskHelper.class);
 
-	private static ProcessPluginApi processPluginApi = new ProcessPluginApiImpl(proxyConfig, endpointProvider, fhirContext,
-			fhirWebserviceClientProvider, mailService, objectMapper, organizationProvider, processAuthorizationHelper,
-			questionnaireResponseHelper, readAccessHelper, taskHelper);
+	private static ProcessPluginApi processPluginApi = new ProcessPluginApiImpl(proxyConfig, endpointProvider,
+			fhirContext, fhirWebserviceClientProvider, mailService, objectMapper, organizationProvider,
+			processAuthorizationHelper, questionnaireResponseHelper, readAccessHelper, taskHelper);
 	private static ConfigurableEnvironment environment = new StandardEnvironment();
-	public static ProcessPluginImpl generate(ProcessPluginDefinition processPluginDefinition, boolean draft, Class loadingClass)
+
+	public static ProcessPluginImpl generate(ProcessPluginDefinition processPluginDefinition, boolean draft,
+			Class loadingClass)
 	{
 		return new ProcessPluginImpl(processPluginDefinition, processPluginApi, draft, Path.of("test.jar"),
 				loadingClass.getClassLoader(), fhirContext, environment);

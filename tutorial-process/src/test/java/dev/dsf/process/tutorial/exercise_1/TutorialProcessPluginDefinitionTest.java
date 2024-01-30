@@ -9,25 +9,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import dev.dsf.bpe.plugin.ProcessIdAndVersion;
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
-
-import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
-import dev.dsf.process.tutorial.ConstantsTutorial;
-import dev.dsf.process.tutorial.TestProcessPluginGenerator;
-import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
-import dev.dsf.process.tutorial.service.HelloDic;
-
 import org.hl7.fhir.r4.model.Resource;
 import org.junit.Test;
 import org.springframework.core.env.StandardEnvironment;
 
 import ca.uhn.fhir.context.FhirContext;
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.ProcessPluginDefinition;
+import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
+import dev.dsf.process.tutorial.ConstantsTutorial;
+import dev.dsf.process.tutorial.TestProcessPluginGenerator;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.process.tutorial.service.HelloDic;
 
 public class TutorialProcessPluginDefinitionTest
 {
@@ -56,11 +54,12 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+		boolean initialized = processPlugin
+				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertEquals(true, initialized);
 
-		List<Resource> resources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
-				definition.getResourceVersion()));
+		List<Resource> resources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
 		assertEquals(2, resources.size());
 	}

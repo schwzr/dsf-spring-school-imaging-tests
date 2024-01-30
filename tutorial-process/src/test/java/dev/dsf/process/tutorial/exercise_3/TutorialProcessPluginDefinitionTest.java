@@ -22,15 +22,6 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
-
-import dev.dsf.bpe.plugin.ProcessIdAndVersion;
-import dev.dsf.bpe.v1.ProcessPluginDefinition;
-import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
-import dev.dsf.process.tutorial.ConstantsTutorial;
-import dev.dsf.process.tutorial.TestProcessPluginGenerator;
-import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
-import dev.dsf.process.tutorial.message.HelloCosMessage;
-import dev.dsf.process.tutorial.service.HelloDic;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Coding;
@@ -44,6 +35,14 @@ import org.junit.Test;
 import org.springframework.core.env.StandardEnvironment;
 
 import ca.uhn.fhir.context.FhirContext;
+import dev.dsf.bpe.plugin.ProcessIdAndVersion;
+import dev.dsf.bpe.v1.ProcessPluginDefinition;
+import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
+import dev.dsf.process.tutorial.ConstantsTutorial;
+import dev.dsf.process.tutorial.TestProcessPluginGenerator;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.process.tutorial.message.HelloCosMessage;
+import dev.dsf.process.tutorial.service.HelloDic;
 
 public class TutorialProcessPluginDefinitionTest
 {
@@ -80,8 +79,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorMessageEndEventImplementation, HelloCosMessage.class.getName(),
 				messageEndEvent.get(0).getCamundaClass());
 
-		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream()
-				.findAny().stream().flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream())
+		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream().findAny()
+				.stream().flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream())
 				.flatMap(e -> e.getChildElementsByType(ExtensionElements.class).stream())
 				.flatMap(e -> e.getChildElementsByType(CamundaField.class).stream().filter(Objects::nonNull))
 				.collect(Collectors.toList());
@@ -121,12 +120,13 @@ public class TutorialProcessPluginDefinitionTest
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+		boolean initialized = processPlugin
+				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 
 		assertEquals(true, initialized);
 
-		List<Resource> helloDic = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
-				definition.getResourceVersion()));
+		List<Resource> helloDic = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
 		String errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
@@ -149,8 +149,8 @@ public class TutorialProcessPluginDefinitionTest
 		String filename = "bpe/hello-cos.bpmn";
 		String processId = "dsfdev_helloCos";
 
-		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getProcessModels()
-				.stream().anyMatch(f -> filename.equals(f));
+		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getProcessModels().stream()
+				.anyMatch(f -> filename.equals(f));
 		assertTrue("Process '" + processId + "' from file '" + filename + "' not configured in "
 				+ TutorialProcessPluginDefinition.class.getSimpleName(), cosProcessConfigured);
 
@@ -182,12 +182,13 @@ public class TutorialProcessPluginDefinitionTest
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		boolean initialized = processPlugin.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
+		boolean initialized = processPlugin
+				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
 
 		assertEquals(true, initialized);
 
-		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
-				definition.getResourceVersion()));
+		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, definition.getResourceVersion()));
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
@@ -198,8 +199,8 @@ public class TutorialProcessPluginDefinitionTest
 				+ "' and version '" + RESOURCE_VERSION + "'";
 		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
 
-		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '" + RESOURCE_VERSION
-				+ "' is missing expected requester extension";
+		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '"
+				+ RESOURCE_VERSION + "' is missing expected requester extension";
 		assertEquals(errorMessageRequester, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))
@@ -213,8 +214,8 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
 				.filter(i -> "Test_DIC".equals(i.getValue())).count());
 
-		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '" + RESOURCE_VERSION
-				+ "' is missing expected recipient extension";
+		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '"
+				+ RESOURCE_VERSION + "' is missing expected recipient extension";
 		assertEquals(errorMessageRecipient, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))
