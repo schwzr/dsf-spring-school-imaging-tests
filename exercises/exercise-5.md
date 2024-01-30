@@ -6,7 +6,7 @@ In the final exercise we will look at message flow between three organizations a
 With this exercise we will add a third process and complete a message loop from `Test_DIC` to `Test_COR` to `Test_HRP` back to `Test_DIC`.
 
 ## Introduction
-### Managing Multiple- and Missing Messages
+### Managing Multiple and Missing Messages
 If an existing and already running process instance is waiting for a message from another organization, the corresponding FHIR [Task](http://hl7.org/fhir/R4/task.html) may never arrive. 
 Either because the other organization decides to never send the message or because some technical problem prohibits the [Task](http://hl7.org/fhir/R4/task.html) resource from being posted to the DSF FHIR server. 
 This would result in stale process instances that never finish.
@@ -32,7 +32,7 @@ This is not covered in this tutorial. Until we amend this tutorial, you are able
 
 In exercise 1 we took a first look at the [process authorization extension](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml). Back then it used either the coding for [all local clients](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) or the one for [all remote clients](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-remote-all-1.0.0.xml). 
 In exercise 3 we used the codings for [local organizations](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-local-organization-1.0.0.xml) and the one for [remote organizations](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-remote-organization-1.0.0.xml) in the ActivityDefinition for the `dsfdev_helloCos` process.
-The example below shows a scenario where all organizations, which have a certain role inside a parent organization, are allowed to request or receive Task resources.
+The example below shows a scenario where all organizations, which have a certain role inside a parent organization, are allowed to request or receive [Task](http://hl7.org/fhir/R4/task.html) resources.
 
 ```xml
 <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
@@ -86,7 +86,7 @@ The example below shows a scenario where all organizations, which have a certain
 ```
 
 ## Exercise Tasks
-1. Forward the value from the [Task.input](http://hl7.org/fhir/R4/task.html) parameter of the `helloDic` Task to the `dsfdev_helloCos` process using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`.
+1. Forward the value from the [Task.input](http://hl7.org/fhir/R4/task.html) parameter of the `helloDic` [Task](http://hl7.org/fhir/R4/task.html) to the `dsfdev_helloCos` process using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`.
 1. Modify the `dsfdev_helloCos` process to use a [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) to trigger the process in file `hello-hrp.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) based on the [AcitvityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) in file `hello-hrp.xml`.
 1. Modify the process in file `hello-hrp.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) in file `hello-hrp.xml`.
 1. Add the process in file `hello-hrp.bpmn` to the `TutorialProcessPluginDefinition` and configure the FHIR resources needed for the three processes.
