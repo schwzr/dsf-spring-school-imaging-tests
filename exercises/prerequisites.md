@@ -21,28 +21,7 @@ When implementing DSF processes, we use Maven 3.8 to manage the software project
 - An installation guide for Maven 3.8 can be found here: [installation guide](https://maven.apache.org/install.html)
 - The most important maven commands are described here: [commands](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
 
-### GitHub Packages
-In order to download DSF packages from the GitHub Package Registry using Maven you need a personal GitHub access token with scope `read:packages`. This [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) shows you how to generate one.
-
-After that, add the following `server` configuration to your local `.m2/settings.xml`. Replace `USERNAME` with your GitHub username and `TOKEN` with the previously generated personal GitHub access token. The token needs at least the `read:packages` scope.
-
-```xml
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
-
-  ...
-
-  <servers>
-    <server>
-      <id>github</id>
-      <username>USERNAME</username>
-      <password>TOKEN</password>
-    </server>
-  </servers>
-</settings>
-```
+You can also find all DSF Maven artifacts [here](https://mvnrepository.com/artifact/dev.dsf).
 
 ## Docker and docker-compose
 To be able to test the implemented processes, we use a test-setup based on Docker and docker-compose. This allows us to simulate multiple organizations with different roles and run the processes across "organizational boundaries".
@@ -69,7 +48,9 @@ For the development of the processes we recommend the use of an IDE, e.g. Eclips
 ## BPMN Editor
 To simplify modeling of BPMN processes, we recommend a graphical editor, e.g. the Camunda Modeler:
 
-- An installation guide for the Camunda Modeler can be found here: [installation guide](https://camunda.com/de/download/modeler/)
+- An installation guide for the Camunda Modeler can be found here: [installation guide](https://camunda.com/de/download/modeler/)  
+     When creating models with Camunda Modeler, make sure you create a Camunda 7 model, not a Camunda 8 model. The DSF
+relies on Camunda 7 which is incompatible with Camunda 8.
 
 ## Hardware
 The minimum hardware requirements to run all simulated organizations as part of the Docker test-setup is 16 GB of RAM.
