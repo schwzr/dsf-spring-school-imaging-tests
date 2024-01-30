@@ -157,7 +157,6 @@ services:
       DEV_DSF_BPE_DB_USER_USERNAME: cos_bpe_server_user
       DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: cos_camunda_users
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: cos_camunda_server_user
-      DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_COS
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://cos/fhir
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
@@ -260,7 +259,6 @@ services:
       DEV_DSF_BPE_DB_USER_USERNAME: dic_bpe_server_user
       DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: dic_camunda_users
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: dic_camunda_server_user
-      DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_DIC
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://dic/fhir
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
 
@@ -366,7 +364,6 @@ services:
       DEV_DSF_BPE_DB_USER_USERNAME: hrp_bpe_server_user
       DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: hrp_camunda_users
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: hrp_camunda_server_user
-      DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_HRP
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://hrp/fhir
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
     networks:
