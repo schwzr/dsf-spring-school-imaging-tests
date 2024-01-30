@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.rwh.utils.crypto.CertificateAuthority;
-
 import dev.dsf.process.tutorial.tools.generator.CertificateGenerator.CertificateFiles;
 
 public class TestDataGenerator
