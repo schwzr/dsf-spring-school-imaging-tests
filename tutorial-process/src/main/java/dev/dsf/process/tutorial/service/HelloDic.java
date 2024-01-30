@@ -1,5 +1,10 @@
 package dev.dsf.process.tutorial.service;
 
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
+
+import java.util.Optional;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +18,25 @@ public class HelloDic extends AbstractServiceDelegate
 
 	private static final Logger logger = LoggerFactory.getLogger(HelloDic.class);
 
-	public HelloDic(ProcessPluginApi api)
+	private final boolean loggingEnabled;
+
+	public HelloDic(ProcessPluginApi api, boolean loggingEnabled)
 	{
 		super(api);
+		this.loggingEnabled = loggingEnabled;
 	}
 
 	@Override
 	protected void doExecute(DelegateExecution execution, Variables variables)
 	{
-		logger.info("Hello Dic from organization '{}'",
-				variables.getStartTask().getRestriction().getRecipientFirstRep().getIdentifier().getValue());
+		if (loggingEnabled)
+		{
+			Optional<String> tutorialInputParameter = api.getTaskHelper().getFirstInputParameterStringValue(
+					variables.getStartTask(), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
+
+			logger.info("Hello Dic from organization '{}' with message '{}'",
+					variables.getStartTask().getRestriction().getRecipientFirstRep().getIdentifier().getValue(),
+					tutorialInputParameter.orElse("<no message>"));
+		}
 	}
 }

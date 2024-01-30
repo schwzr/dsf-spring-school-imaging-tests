@@ -355,6 +355,8 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-bpe
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: ytqFCErw9GfhVUrrM8xc0Grbu4r7qGig
+
+      DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: 'true'
     networks:
       dic-bpe-frontend:
         ipv4_address: 172.20.0.115
