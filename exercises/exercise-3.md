@@ -4,16 +4,15 @@ ___
 # Exercise 3 - Message Events
 Communication between organizations in BPMN processes is modeled using message flow. The third exercise shows how a process at one organization can trigger a process at another organization.
 
-To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_helloDic` and `dsfdev_helloCos`. The processes are then to be executed at the organizations `Test_DIC` and `Test_COS` respectively in the docker test setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) from organization `Test_DIC` to organization `Test_COS`.
+To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_helloDic` and `dsfdev_helloCos`. After that, the processes are to be executed at the organizations `Test_DIC` and `Test_COS` respectively in the docker test setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `Test_DIC` to organization `Test_COS`.
 
 ## Introduction
 ### Message Flow and FHIR Task resources
-BPMN processes are instantiated and started within the DSF by creating a matching FHIR [Task](http://hl7.org/fhir/R4/task.html) resource in the DSF FHIR server which then gets consumed by the DSF BPE server. You can manually create such Task resources to start BPMN processes, like we did with `TutorialExampleStarter`, but you can also start a BPMN process automatically at any location during the execution of another BPMN process. 
+BPMN processes are instantiated and started within the DSF by creating a matching FHIR [Task](http://hl7.org/fhir/R4/task.html) resource in the DSF FHIR server which then gets consumed by the DSF BPE server. You can manually create such [Task](http://hl7.org/fhir/R4/task.html) resources to start BPMN processes, like we did with `TutorialExampleStarter`, but you can also start a BPMN process automatically at any location during the execution of another BPMN process. 
 
 To achieve this, you need to include message flow into your BPMN model. Message flow is typically represented by a dashed line arrow between BPMN elements with a black (send) or white (receive) envelope icon.
 The following BPMN collaboration diagram shows two processes. The process at "Organization 1" is sending a message to "Organization 2" which results in the instantiation and execution of a new BPMN process instance at the second organization.
 
-In order to exchange information between different processes, for example at two different organizations, BPMN message flow is used. Typically represented by a dashed line arrow between elements with black (send) and white (receive) envelop icons. The following BPMN collaboration diagram shows two processes. The process at "Organization 1" is sending a message to "Organization 2" which results in the instantiation and execution of new process instance at the second organization.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/exercise3_message_flow_inverted.svg">
@@ -21,13 +20,14 @@ In order to exchange information between different processes, for example at two
   <img alt="BPMN collaboration diagram with two processes using message flow to exchange information between two organizations" src="figures/exercise3_message_flow.svg">
 </picture>
 
-Whenever you use message flow, the DSF will send a Task resource specific to that one communication interaction to the receiving party. Therefore, every usage of message flow requires a corresponding Task profile.
+Whenever you use message flow, the DSF will send a [Task](http://hl7.org/fhir/R4/task.html) resource specific to that one communication interaction to the receiving party. Therefore, every usage of message flow requires a corresponding [Task](http://hl7.org/fhir/R4/task.html)
+profile.
 The profile specifies which process is addressed and should be executed through the `instantiatesCanonical` value.
-It also includes a `message-name` field to correlate this Task resource to a specific message flow event inside the BPMN process.
+It also includes a `message-name` field to correlate this [Task](http://hl7.org/fhir/R4/task.html) resource to a specific message flow event inside the BPMN process.
 Some examples for message flow events available to BPMN processes are [Message Start Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-start-event) and [Intermediate Message Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-intermediate-catching-event).
-Task profiles also include the fields `business-key` and `correlation-key`. They are both used to correlate message flow events and BPMN process execution instances.
+[Task](http://hl7.org/fhir/R4/task.html) profiles also include the fields `business-key` and `correlation-key`. They are both used to correlate message flow events and BPMN process execution instances.
 While the `business-key` is usually sufficient to link message flow events to BPMN process instances, there are some limitations.  
-Consider a scenario where a BPMN service task spawns multiple child processes which all send a message to another execution and expect an individual response.
+Consider a scenario where a BPMN [Service Task](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/) spawns multiple child processes which all send a message to another execution and expect an individual response.
 If we only have a `business-key` we might be able to link the messages to the correct execution, but we won't be able to link the individual responses to the right child process since there is no way to differentiate between
 any of the responses. This is where you would use a `correlation-key` in every child process message. Combined with the `business-key` you can resolve to
 the original execution of the child processes and deliver the correct response to each one thanks to the `correlation-key`. More on `business-keys` in exercise 5.
@@ -49,16 +49,17 @@ This results in a canonical URL used to identify the process, for example:
 ```
 http://domain.org/bpe/Process/processKey|1.0
 ```
-This canonical URL is used as is for [Task.instantiatesCanonical](http://hl7.org/fhir/R4/task.html). It's also used for [ActivityDefinition.url](http://hl7.org/fhir/R4/activitydefinition.html) while omitting the resource version and using the `#{version}` placeholder in `ActivityDefinition.version`.
 
 As you can see, we lost the `.2.0` part of the original process version. This is because the first two numbers (`1.0`) specify the FHIR resource version
 used by this process plugin and latter two (`2.0`) specify the version of the plugin code base. This was done so that minor version changes in the code base
 of a process plugin don't automatically invalidate communication to all other deployed instances of this process plugin. Instead, it will be assumed that as
 long as two deployed process plugins share the same FHIR resource version number, they will be sufficiently compatible to remain operational. Larger changes in BPMN process flow
-usually require the addition of new Task profiles or changes to the ActivityDefinition. It is expected that your resource version reflects these changes to signal (in)compatibility appropriately.  
+usually require the addition of new [Task](http://hl7.org/fhir/R4/task.html) profiles or changes to the ActivityDefinition. It is expected that your resource version reflects these changes to signal (in)compatibility appropriately.  
+  
+The resulting canonical URL is used as is for [Task.instantiatesCanonical](http://hl7.org/fhir/R4/task.html). It's also used for [ActivityDefinition.url](http://hl7.org/fhir/R4/activitydefinition.html) while omitting the resource version and using the `#{version}` placeholder in [ActivityDefinition.version](http://hl7.org/fhir/R4/activitydefinition.html).
 
 ### Authorization for the DSF
-FHIR [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources also contain the authorization rules for the specified process. [ActivityDefinitions](http://hl7.org/fhir/R4/activitydefinition.html) for the DSF need to comply with the [http://dsf.dev/fhir/StructureDefinition/activity-definition](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-activity-definition-1.0.0.xml) profile, with authorization rules configured using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) extension.
+FHIR [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources also contain the authorization rules for the specified process. [ActivityDefinitions](http://hl7.org/fhir/R4/activitydefinition.html) for the DSF need to comply with the [http://dsf.dev/fhir/StructureDefinition/activity-definition](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-activity-definition-1.0.0.xml) profile, with authorization rules configured using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) extension.
 
 The authorization extension needs to be configured at least once and has four sub extensions:
 #### message-name [1..1]
@@ -68,34 +69,34 @@ String value specifying the message name of [Message Start Event](https://docs.c
 Canonical URL value specifying the [Task](http://hl7.org/fhir/R4/task.html) profile this authorization rule should match. Can only be specified once per authorization rule extension.
 
 #### requester [1..]
-Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-requester](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-process-authorization-requester-1.0.0.xml) ValueSet:
+Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-requester](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-process-authorization-requester-1.0.0.xml) ValueSet:
 * **LOCAL_ORGANIZATION** A local organization with a specific identifier.
-    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
+    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
     
 * **REMOTE_ORGANIZATION** A remote (non local) organization with a specific identifier.
-    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
+    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
     
 * **LOCAL_ROLE** A local organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and parent organization identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
+    Role and parent organization identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
     
 * **REMOTE_ROLE** A remote (non local) organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and parent organization identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
+    Role and parent organization identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
     
 * **LOCAL_ALL** All local organizations regardless of their identifier or role in a consortium.
 
 * **REMOTE_ALL** All remote (non local) organizations regardless of their identifier or role in a consortium.
 
 #### recipient [1..]
-Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-recipient ValueSet](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-process-authorization-recipient-1.0.0.xml).
+Coding value matching entries from the [http://dsf.dev/fhir/ValueSet/process-authorization-recipient ValueSet](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/ValueSet/dsf-process-authorization-recipient-1.0.0.xml).
 * **LOCAL_ORGANIZATION** Organization with a specific identifier.
-    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
+    The organization identifier needs to specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-1.0.0.xml) extension.
     
 * **LOCAL_ROLE** Organizations with a specific role defined via [OrganizationAffiliation](http://hl7.org/fhir/R4/organizationaffiliation.html).
-    Role and parent organization identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
+    Role and parent organization identifier need to be specified using the [http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-parent-organization-role-1.0.0.xml) extension.
     
 * **LOCAL_ALL** All organizations regardless of their identifier or role in a consortium.
 
-_The local organization of a DSF instance is configured using the environment variables [DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://dsf.dev/stable/maintain/fhir/configuration.html#dev-dsf-fhir-server-organization-identifier-value) for the DSF FHIR server and [DEV_DSF_BPE_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://github.com/highmed/dsf-dsf/wiki/DSF-0.7.0-Configuration-Parameters-BPE#org_dev_dsf_bpe_fhir_server_organization_identifier_value) for the DSF BPE server._
+_The local organization of a DSF instance is configured using the environment variable [DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE](https://dsf.dev/stable/maintain/fhir/configuration.html#dev-dsf-fhir-server-organization-identifier-value)._
 
 #### Authorization Extension Example
 The following example specifies that process execution can only be requested by an organization with a specific identifier and only allows execution of the process in the DSF instance of an organization with a specific identifier.
@@ -143,7 +144,7 @@ In your message event implementation (the class extending `AbstractTaskMessageSe
 add your targets and then call the super-method.
 #### 2. Adding the target in a service  task right before the message event
 This is the preferred method of this tutorial but both methods will work perfectly fine. For our use-cases, we usually prefer this one
-since there is enough complexity to warrant putting it into a separate BPMN service task.  
+since there is enough complexity to warrant putting it into a separate BPMN [Service Task](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/).  
 
 In both cases you can access methods to create and set `targets` through the `variables` instance.
 
@@ -156,7 +157,7 @@ In both cases you can access methods to create and set `targets` through the `va
     <details>
    <summary>Don't know how to get started?</summary>
    
-   You can base this Task profile off the `StructureDefinition/task-hello-dic.xml` resource. Then take a look at elements that need to be added, changed or can be omitted.
+   You can base this [Task](http://hl7.org/fhir/R4/task.html) profile off the `StructureDefinition/task-hello-dic.xml` resource. Then take a look at elements that need to be added, changed or can be omitted.
     </details>
 1. Create a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource for the `dsfdev_helloCos` process and configure the authorization extension to allow the `Test_DIC` organization as the requester and the `Test_COS` organization as the recipient.
     <details>

@@ -12,14 +12,14 @@ Different sequence flows during the execution of a process instance can be model
 A BPMN [Condition Expression](https://docs.camunda.org/manual/7.17/user-guide/process-engine/expression-language/#conditions) uses the `${..}` notation. Within the curly braces all execution variables of a process instance can be accessed, e.g. the ones that were stored in a previous Java implementation of a BPMN [ServiceTask](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/). For example, the BPMN [Condition Expression](https://docs.camunda.org/manual/7.17/user-guide/process-engine/expression-language/#conditions) `${cohortSize > 100}` checks whether the value in the execution variable *cohortSize* is greater than 100.
 
 ### Storing / Modifying Process Variables
-Via the `DelegateExecution execution` parameter of the `doExecute` method of a class extending `AbstractServiceDelegate`, we can write and read process variables of the current process instance. The following code listing show how to write and read a `boolean` variable:
+Via the `variables` parameter of the `doExecute` method of a class extending `AbstractServiceDelegate`, we can write and read process variables of the current process instance. The following code listing show how to write and read a `boolean` variable:
 ```java
 {
-	execution.setVariable("variable-name", Variables.booleanValue(false));
-	boolean variable = (boolean) execution.getVariable("variable-name");
+	variables.setBoolean("variable-name", false);
+	boolean variable = variables.getBoolean("variable-name");
 }
 ```
-
+You can also achieve the same effect with the `DelegateExecution execution` parameter. But as we already discussed in exercise 1, you should only use this method if you are limited by the methods offered in the `Variables` class.
 For more details on process variables see the [Camunda documentation](https://docs.camunda.org/manual/7.17/user-guide/process-engine/variables/).
 
 ## Exercise Tasks
