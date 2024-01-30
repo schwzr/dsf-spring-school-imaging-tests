@@ -82,33 +82,33 @@ We will take a closer look at [ActivityDefinition](http://hl7.org/fhir/R4/activi
 ## Exercise Tasks
 1. Add a log message to the `HelloDic#doExecute` method that logs the recipient organization identifier from the start [Task](http://hl7.org/fhir/R4/task.html) resource.
 
-<details>
-    <summary>Don't know where to get a logger?</summary>
-
-This project uses slf4j. So use `LoggerFactory` to get yourself a logger instance.
-</details>
-
-<details>
-    <summary>Can't find a way to get the start task?</summary>
-
-The `doExecute` method provides a <em>Variables</em> instance. Try it through this one.
-</details>
-
-<details>
-    <summary>Don't know where to look for the identifier?</summary>
-
-Take a look at the official [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource, find elements that have a recipient and manoeuvre your way to those elements using the right getters. Then test which of them has the correct value.
-</details>
+    <details>
+        <summary>Don't know where to get a logger?</summary>
+    
+    This project uses slf4j. So use `LoggerFactory` to get yourself a logger instance.
+    </details>
+    
+    <details>
+        <summary>Can't find a way to get the start task?</summary>
+    
+    The `doExecute` method provides a <em>Variables</em> instance. Try it through this one.
+    </details>
+    
+    <details>
+        <summary>Don't know where to look for the identifier?</summary>
+    
+    Take a look at the official [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource, find elements that have a recipient and manoeuvre your way to those elements using the right getters. Then test which of them has the correct value.
+    </details>
 
 2. Register the `HelloDic` class as a prototype bean in the `TutorialConfig` class.
 3. Set the `HelloDic` class as the service implementation of the appropriate service task within the `hello-dic.bpmn` process model.
 4. Modify the ActivityDefinition for the `dsfdev_helloDic` process to only allow local clients to instantiate the process via a `helloDic` message.
 
-<details>
-    <summary>Can't find the right code?</summary>
-
-Take a look at the [dsf-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-process-authorization-1.0.0.xml) CodeSystem.
-</details>
+    <details>
+        <summary>Can't find the right code?</summary>
+    
+    Take a look at the [dsf-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-process-authorization-1.0.0.xml) CodeSystem.
+    </details>
 
 ## Solution Verification
 ### Maven Build and Automated Tests

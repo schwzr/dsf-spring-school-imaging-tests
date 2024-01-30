@@ -1,40 +1,24 @@
 package dev.dsf.process.tutorial.exercise_5.message;
 
-
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.variables.Variables;
-import dev.dsf.bpe.variables.TargetImpl;
-import dev.dsf.fhir.authorization.read.ReadAccessHelper;
-import dev.dsf.bpe.v1.service.FhirWebserviceClientProvider;
-import dev.dsf.bpe.v1.service.OrganizationProvider;
-import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.variables.Target;
-import dev.dsf.bpe.v1.constants.*;
-import dev.dsf.process.tutorial.message.HelloCosMessage;
-import dev.dsf.fhir.client.FhirWebserviceClient;
-import dev.dsf.fhir.client.PreferReturnMinimalWithRetry;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.ParameterComponent;
-import org.hl7.fhir.r4.model.Type;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -42,7 +26,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ca.uhn.fhir.context.FhirContext;
+import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.constants.CodeSystems;
+import dev.dsf.bpe.v1.constants.NamingSystems;
+import dev.dsf.bpe.v1.service.TaskHelper;
+import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.variables.TargetImpl;
+import dev.dsf.fhir.client.PreferReturnMinimalWithRetry;
+import dev.dsf.process.tutorial.message.HelloCosMessage;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloCosMessageTest
@@ -63,7 +54,8 @@ public class HelloCosMessageTest
 	@Mock
 	private Variables variables;
 
-	private class MockableHelloCosMessage extends HelloCosMessage{
+	private class MockableHelloCosMessage extends HelloCosMessage
+	{
 
 		public MockableHelloCosMessage(ProcessPluginApi api)
 		{
@@ -97,15 +89,18 @@ public class HelloCosMessageTest
 		Mockito.when(variables.getTarget())
 				.thenReturn(new TargetImpl("Test_COS", "Test_COS_Endpoint", "https://cos/fhir", null));
 		Mockito.when(messageDelegate.getInstantiatesCanonical(execution, variables))
-				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL); //TODO: Figure out why this needs to be mocked in the first place
+				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL);
 		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME))
 				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME);
 		Mockito.when(messageDelegate.getProfile(execution, variables))
-				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION); // TODO: Figure out why this needs to be mocked in the first place
-		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.BUSINESS_KEY)).thenReturn(UUID.randomUUID().toString());
-		/*Mockito.when(clientProvider.getWebserviceClient(anyString())).thenReturn(client);
-		Mockito.when(client.getBaseUrl()).thenReturn("https://cos/fhir");
-		Mockito.when(client.withMinimalReturn()).thenReturn(clientWithMinimalReturn);*/
+				.thenReturn(PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION);
+		Mockito.when(variables.getVariable(CodeSystems.BpmnMessage.Codes.BUSINESS_KEY))
+				.thenReturn(UUID.randomUUID().toString());
+		/*
+		 * Mockito.when(clientProvider.getWebserviceClient(anyString())).thenReturn(client);
+		 * Mockito.when(client.getBaseUrl()).thenReturn("https://cos/fhir");
+		 * Mockito.when(client.withMinimalReturn()).thenReturn(clientWithMinimalReturn);
+		 */
 
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 
@@ -113,12 +108,11 @@ public class HelloCosMessageTest
 
 		Mockito.when(variables.getStartTask()).thenReturn(getTask());
 
-		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
-				eq("http://dsf.dev/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
-				.thenReturn(Optional.of("Test"));
+		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
+				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
 
-		Mockito.when(taskHelper.createInput(eq(new Reference("http://dsf.dev/fhir/CodeSystem/tutorial")), eq("tutorial-input"),
-				eq("Test")))
+		Mockito.when(taskHelper.createInput(eq(new Reference("http://dsf.dev/fhir/CodeSystem/tutorial")),
+				eq("tutorial-input"), eq("Test")))
 				.thenReturn(new ParameterComponent(
 						new CodeableConcept(
 								new Coding("http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input", null)),

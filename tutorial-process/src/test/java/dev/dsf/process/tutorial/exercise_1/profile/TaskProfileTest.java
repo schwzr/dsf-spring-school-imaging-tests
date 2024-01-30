@@ -1,21 +1,15 @@
 package dev.dsf.process.tutorial.exercise_1.profile;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_INSTANTIATES_CANONICAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.Date;
 
-import dev.dsf.bpe.v1.constants.CodeSystems;
-import dev.dsf.bpe.v1.constants.NamingSystems;
-import dev.dsf.fhir.validation.ResourceValidator;
-import dev.dsf.fhir.validation.ResourceValidatorImpl;
-import dev.dsf.fhir.validation.ValidationSupportRule;
 import org.hl7.fhir.r4.model.ResourceType;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
@@ -28,6 +22,11 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
+import dev.dsf.bpe.v1.constants.CodeSystems;
+import dev.dsf.bpe.v1.constants.NamingSystems;
+import dev.dsf.fhir.validation.ResourceValidator;
+import dev.dsf.fhir.validation.ResourceValidatorImpl;
+import dev.dsf.fhir.validation.ValidationSupportRule;
 
 public class TaskProfileTest
 {
@@ -68,7 +67,7 @@ public class TaskProfileTest
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("Test_DIC");
 
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME)).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());  //TODO: No idea if this is correct
+				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());
 
 		return task;
 	}
