@@ -1,5 +1,5 @@
 # DSF Process Plugin Tutorial
-This repository contains exercises to learn how to implement process plugins for the [Data Sharing Framework (DSF)](https://github.com/datasharingframework/dsf). The tutorial is divided into several exercises that build on each other. For each exercise, a sample solution is provided in a separate branch.
+This repository contains exercises to learn how to implement process plugins for the [Data Sharing Framework (DSF)](https://github.com/datasharingframework/dsf) versions 1.0.0 and above. The tutorial is divided into several exercises that build on each other. For each exercise, a sample solution is provided in a separate branch.
 
 This tutorial was first executed at the [GMDS / TMF 2022](https://gmds-tmf-2022.de) conference. A recording of the opening remarks by H. Hund and R. Wettstein can be found on [YouTube](https://youtu.be/2AUPwQQQsPY). The slides of the opening remarks are available as a [PDF download](exercises/figures/2022-08-21_GMDS_2022_DSF_Process_Tutorial.pdf).
 
