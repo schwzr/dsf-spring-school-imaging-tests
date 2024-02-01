@@ -185,26 +185,26 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `dsfdev_helloDic` and `dsfdev_helloCos` processes can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_helloDic` process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker test setup.
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/test-setup`:
+1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully.
 
-2. Start the DSF BPE server for the `Test_DIC` organization in another console at location `.../dsf-process-tutorial/test-setup`:
+2. Start the DSF BPE server for the `Test_DIC` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_helloDic` process.
 
-3. Start the DSF FHIR server for the `Test_COS` organization in a console at location `.../dsf-process-tutorial/test-setup`:
+3. Start the DSF FHIR server for the `Test_COS` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir.  
    The DSF FHIR server uses a server certificate that was generated during the first maven build. To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/Webbrowser_Test_User/Webbrowser_Test_User_certificate.p12` (Password: password).
 
-4. Start the DSF BPE server for the `Test_COS` organization in another console at location `.../dsf-process-tutorial/test-setup`:
+4. Start the DSF BPE server for the `Test_COS` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-bpe
    ```

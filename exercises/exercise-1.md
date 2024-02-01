@@ -18,7 +18,7 @@ the service within a simple demo process.
 The tutorial project consists of three parts: A `test-data-generator` project used to generate X.509 certificates and FHIR resources
 during the maven build of the project. The certificates and FHIR resources are needed to start DSF instances which simulate
 installations at three different organizations. The DSF instances are configured using 
-a `docker-compose.yml` file in the `test-setup` folder. The docker-compose test setup uses a single PostgreSQL database server, 
+a `docker-compose.yml` file in the `dev-setup` folder. The docker-compose test setup uses a single PostgreSQL database server, 
 a single nginx reverse proxy as well as three separate DSF FHIR server- and 3 separate DSF BPE server instances. 
 The `tutorial-process` project contains all resources (FHIR resources, BPMN process models and Java code) for the actual 
 DSF process plugin.
@@ -123,7 +123,7 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
 execute the process. The maven `install` build is configured to create a process jar file with all necessary resources 
 and to copy the jar to the appropriate locations of the docker test setup.
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/test-setup`:
+1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
 	```
 	docker-compose up dic-fhir
 	```
@@ -135,7 +135,7 @@ and to copy the jar to the appropriate locations of the docker test setup.
 	**Caution:** __If you add the generated Root CA to your browsers certificate store as a trusted Root CA, make sure you are 
     the only one with access to the private key at `.../dsf-process-tutorial/test-data-generator/cert/ca/testca_private-key.pem`.__
 
-2. Start the DSF BPE server for the `Test_DIC` organization in a second console at location `.../dsf-process-tutorial/test-setup`:
+2. Start the DSF BPE server for the `Test_DIC` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
 	```
 	docker-compose up dic-bpe
 	```

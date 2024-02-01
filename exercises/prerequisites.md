@@ -24,13 +24,13 @@ When implementing DSF processes, we use Maven 3.8 to manage the software project
 You can also find all DSF Maven artifacts [here](https://mvnrepository.com/artifact/dev.dsf).
 
 ## Docker and docker-compose
-To be able to test the implemented processes, we use a test-setup based on Docker and docker-compose. This allows us to simulate multiple organizations with different roles and run the processes across "organizational boundaries".
+To be able to test the implemented processes, we use a dev-setup based on Docker and docker-compose. This allows us to simulate multiple organizations with different roles and run the processes across "organizational boundaries".
 
 - An installation guide for Docker and docker-compose can be found here: [installation guide](https://docs.docker.com/get-docker/)
 - The most important Docker commands are described here: [Docker commands](https://docs.docker.com/engine/reference/run/)
 - An overview of docker-compose commands are described here: [docker-compose commands](https://docs.docker.com/compose/reference/)
 
-### Host entries for test-setup
+### Host entries for dev-setup
 The following entries are required in the `hosts` file of your computer so that the FHIR servers of the simulated organizations can be accessed in your web browser. On Linux and Mac this file is located at `/etc/hosts`. On Windows you can find it at `C:\Windows\System32\drivers\etc\hosts`.
 
 ```
@@ -53,7 +53,7 @@ To simplify modeling of BPMN processes, we recommend a graphical editor, e.g. th
 relies on Camunda 7 which is incompatible with Camunda 8.
 
 ## Hardware
-The minimum hardware requirements to run all simulated organizations as part of the Docker test-setup is 16 GB of RAM.
+The minimum hardware requirements to run all simulated organizations as part of the Docker dev-setup is 16 GB of RAM.
 
 ___
 **Prerequisites** • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
