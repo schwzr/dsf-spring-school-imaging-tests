@@ -2,7 +2,7 @@
 ___
 
 # Exercise 1 - Simple Process
-The first exercise focuses on setting up the testing environment used in this tutorial and shows how to implement and execute a simple
+The first exercise focuses on setting up the development environment used in this tutorial and shows how to implement and execute a simple
 BPMN process.
 
 With this exercise we will take a look at the general setup of the tutorial code base, modify a service class and execute 
@@ -13,12 +13,12 @@ the service within a simple demo process.
 #### Also, make sure you read the [prerequisites](prerequisites.md)!
 
 ## Introduction
-### Tutorial Code Base Structure and Docker Test Setup
+### Tutorial Code Base Structure and Docker Dev Setup
 
 The tutorial project consists of three parts: A `test-data-generator` project used to generate X.509 certificates and FHIR resources
 during the maven build of the project. The certificates and FHIR resources are needed to start DSF instances which simulate
 installations at three different organizations. The DSF instances are configured using 
-a `docker-compose.yml` file in the `dev-setup` folder. The docker-compose test setup uses a single PostgreSQL database server, 
+a `docker-compose.yml` file in the `dev-setup` folder. The docker-compose dev setup uses a single PostgreSQL database server, 
 a single nginx reverse proxy as well as three separate DSF FHIR server- and 3 separate DSF BPE server instances. 
 The `tutorial-process` project contains all resources (FHIR resources, BPMN process models and Java code) for the actual 
 DSF process plugin.
@@ -121,7 +121,7 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `dsfdev_helloDic` process can be executed successfully, we need to deploy it into a DSF instance and 
 execute the process. The maven `install` build is configured to create a process jar file with all necessary resources 
-and to copy the jar to the appropriate locations of the docker test setup.
+and to copy the jar to the appropriate locations of the docker dev setup.
 
 1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
 	```
