@@ -53,12 +53,12 @@ available as a Spring Bean.
 
 ### Process Execution and FHIR Task Resources
 
-Business process instances are started or the execution continued via FHIR [Task](http://hl7.org/fhir/R4/task.html) resources. The [Task](http://hl7.org/fhir/R4/task.html) resource 
+Business process instances are started or the execution is continued via FHIR [Task](http://hl7.org/fhir/R4/task.html) resources. The [Task](http://hl7.org/fhir/R4/task.html) resource 
 specifies what process to instantiate or continue, what organization is requesting this action and what organization 
 is the target for the request. When a BPE instance receives a [Task](http://hl7.org/fhir/R4/task.html) resource, it finds a fitting BPMN model by parsing the `instantiatesCanonical` element
 from the [Task](http://hl7.org/fhir/R4/task.html) resource and matching it to the BPMN process id and version. It then adds that [Task](http://hl7.org/fhir/R4/task.html) resource to the BPMN process execution instance.
 The BPMN process execution instance is the in-memory representation of the BPMN diagram you are currently running.
-You will have access to all information ([Task](http://hl7.org/fhir/R4/task.html) resources included) inside this execution instance through something called [Process Variables](https://docs.camunda.org/manual/7.17/user-guide/process-engine/variables/). 
+You will have access to all information ([Task](http://hl7.org/fhir/R4/task.html) resources included) inside this execution instance through the so called [Process Variables](https://docs.camunda.org/manual/7.17/user-guide/process-engine/variables/). 
 This construct holds all information accessible to that BPMN process execution. You can see that in `HelloDic#doExecute` you have access
 to an object called `execution` and an object called `variables`. These two objects provide you with full access to the 
 BPMN process execution and [Process Variables](https://docs.camunda.org/manual/7.17/user-guide/process-engine/variables/). The `variables` object provides you with utility functions for common DSF use cases that
@@ -129,7 +129,7 @@ and to copy the jar to the appropriate locations of the docker dev setup.
 	```
 	Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://dic/fhir.  
 	The DSF FHIR server uses a server certificate that was generated during the first maven install build. 
-    To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/Webbrowser_Test_User/Webbrowser_Test_User_certificate.p12` (Password: password). 
+    To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/Webbrowser_Test_User/Webbrowser_Test_User_certificate.p12` (Password: `password`). 
     Add the certificate and the generated Root CA to your browser certificate store.
 	
 	**Caution:** __If you add the generated Root CA to your browsers certificate store as a trusted Root CA, make sure you are 
