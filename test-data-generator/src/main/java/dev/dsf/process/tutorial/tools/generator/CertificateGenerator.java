@@ -494,7 +494,7 @@ public class CertificateGenerator
 
 	public void copyDockerTestClientCerts()
 	{
-		Path baseFolder = Paths.get("../test-setup");
+		Path baseFolder = Paths.get("../dev-setup");
 
 		Arrays.stream(CLIENT_COMMON_NAMES).filter(cn -> !cn.equals("Webbrowser Test User"))
 				.forEach(cn -> copyDockerTestClientCertFiles(baseFolder.resolve("secrets").toString(), cn));
@@ -520,7 +520,7 @@ public class CertificateGenerator
 
 	public void copyDockerTestServerCert()
 	{
-		Path baseFolder = Paths.get("../test-setup");
+		Path baseFolder = Paths.get("../dev-setup");
 
 		final X509Certificate testCaCertificate = ca.getCertificate();
 
@@ -528,7 +528,7 @@ public class CertificateGenerator
 		logger.info("Copying Test CA certificate file to {}", testCaCertificateFile.toString());
 		writeCertificate(testCaCertificateFile, testCaCertificate);
 
-		copyDockerTestServerCertFiles("../test-setup/secrets");
+		copyDockerTestServerCertFiles("../dev-setup/secrets");
 	}
 
 	private void copyDockerTestServerCertFiles(String folder)

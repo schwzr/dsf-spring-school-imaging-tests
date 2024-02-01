@@ -59,7 +59,7 @@ Through the `api` instance accessible to all classes extending `AbstractTaskMess
 1. Add a new boolean variable to the `TutorialConfig` class. It will enable/disable logging and have its value injected from an environment variable. Add the annotation and specify the default value as `false`. You may freely choose a name for your environment variable here. Just make sure you follow the naming convention explained earlier.
 2. Modify the constructor of the `HelloDic` class to use the newly created variable. Don't forget to change the `HelloDic` bean in `TutorialConfig`.
 3. Use the value of the environment variable in the `HelloDic` class to decide whether the log message from exercise 1 should be printed.
-4. Add the new environment variable to the `dic-bpe` service in `test-setup/docker-compose.yml` and set the value to `"true"`.
+4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
 5. Create a new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
 6. Create a new [ValueSet](http://hl7.org/fhir/R4/valueset.html) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](http://hl7.org/fhir/R4/codesystem.html). Don't forget to add the `read-access-tag`.
 7. Add a new input parameter of type `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile using the concept of the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) as a fixed coding.
@@ -83,15 +83,15 @@ mvn clean install -Pexercise-2
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `dsfdev_helloDic` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker test setup.
+To verify the `dsfdev_helloDic` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/test-setup`:
+1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully.
 
-2. Start the DSF BPE server for the `Test_DIC` organization in second console at location `.../dsf-process-tutorial/test-setup`:
+2. Start the DSF BPE server for the `Test_DIC` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-bpe
    ```

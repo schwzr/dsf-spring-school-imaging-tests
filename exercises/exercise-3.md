@@ -4,7 +4,7 @@ ___
 # Exercise 3 - Message Events
 Communication between organizations in BPMN processes is modeled using message flow. The third exercise shows how a process at one organization can trigger a process at another organization.
 
-To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_helloDic` and `dsfdev_helloCos`. After that, the processes are to be executed at the organizations `Test_DIC` and `Test_COS` respectively in the docker test setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `Test_DIC` to organization `Test_COS`.
+To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_helloDic` and `dsfdev_helloCos`. After that, the processes are to be executed at the organizations `Test_DIC` and `Test_COS` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `Test_DIC` to organization `Test_COS`.
 
 ## Introduction
 ### Message Flow and FHIR Task resources
@@ -183,28 +183,28 @@ mvn clean install -Pexercise-3
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `dsfdev_helloDic` and `dsfdev_helloCos` processes can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_helloDic` process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker test setup.
+To verify the `dsfdev_helloDic` and `dsfdev_helloCos` processes can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_helloDic` process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/test-setup`:
+1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully.
 
-2. Start the DSF BPE server for the `Test_DIC` organization in another console at location `.../dsf-process-tutorial/test-setup`:
+2. Start the DSF BPE server for the `Test_DIC` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_helloDic` process.
 
-3. Start the DSF FHIR server for the `Test_COS` organization in a console at location `.../dsf-process-tutorial/test-setup`:
+3. Start the DSF FHIR server for the `Test_COS` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir.  
    The DSF FHIR server uses a server certificate that was generated during the first maven build. To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/Webbrowser_Test_User/Webbrowser_Test_User_certificate.p12` (Password: password).
 
-4. Start the DSF BPE server for the `Test_COS` organization in another console at location `.../dsf-process-tutorial/test-setup`:
+4. Start the DSF BPE server for the `Test_COS` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-bpe
    ```
