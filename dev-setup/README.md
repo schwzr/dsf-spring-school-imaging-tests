@@ -1,4 +1,4 @@
-# Testing using Docker Setup
+# Development using Docker Setup
 
 Build the project from the root directory of this repository by executing the following command.
 
@@ -13,4 +13,4 @@ Add entries to your hosts file
 127.0.0.1	hrp
 ```
 
-TODO start dsf instances
+The start of the DSF FHIR and BPE servers is described in exercise 1.
