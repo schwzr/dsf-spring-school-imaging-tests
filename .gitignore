@@ -12,16 +12,16 @@ test-data-generator/cert/thumbprints.txt
 
 test-data-generator/bundle/*.xml
 
-test-setup/**/bpe/log/*.log
-test-setup/**/bpe/log/*.log.gz
-test-setup/**/bpe/last_event/time.file
-test-setup/**/bpe/plugin/*.jar
-test-setup/**/bpe/process/*.jar
+dev-setup/**/bpe/log/*.log
+dev-setup/**/bpe/log/*.log.gz
+dev-setup/**/bpe/last_event/time.file
+dev-setup/**/bpe/plugin/*.jar
+dev-setup/**/bpe/process/*.jar
 
-test-setup/**/fhir/conf/bundle.xml
-test-setup/**/fhir/log/*.log
-test-setup/**/fhir/log/*.log.gz
+dev-setup/**/fhir/conf/bundle.xml
+dev-setup/**/fhir/log/*.log
+dev-setup/**/fhir/log/*.log.gz
 
-test-setup/secrets/*.pem
-test-setup/.env
-test-setup/docker-compose.override.yml
+dev-setup/secrets/*.pem
+dev-setup/.env
+dev-setup/docker-compose.override.yml
