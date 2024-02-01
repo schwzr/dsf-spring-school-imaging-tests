@@ -108,15 +108,15 @@ public class BundleGenerator
 
 	public void copyDockerTestBundles()
 	{
-		Path cosBundleFile = Paths.get("../test-setup/cos/fhir/conf/bundle.xml");
+		Path cosBundleFile = Paths.get("../dev-setup/cos/fhir/conf/bundle.xml");
 		logger.info("Copying fhir bundle to {}", cosBundleFile);
 		writeBundle(cosBundleFile, bundle);
 
-		Path dicBundleFile = Paths.get("../test-setup/dic/fhir/conf/bundle.xml");
+		Path dicBundleFile = Paths.get("../dev-setup/dic/fhir/conf/bundle.xml");
 		logger.info("Copying fhir bundle to {}", dicBundleFile);
 		writeBundle(dicBundleFile, bundle);
 
-		Path hrpBundleFile = Paths.get("../test-setup/hrp/fhir/conf/bundle.xml");
+		Path hrpBundleFile = Paths.get("../dev-setup/hrp/fhir/conf/bundle.xml");
 		logger.info("Copying fhir bundle to {}", hrpBundleFile);
 		writeBundle(hrpBundleFile, bundle);
 	}
