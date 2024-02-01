@@ -2,19 +2,19 @@
 ___
 
 # Exercise 1.1 - Process Debugging
-This exercise looks at how to use the Java debugger of your IDE to remote debug the execution of a process plugin.
+This exercise looks at how to use the Java debugger of your IDE to remotely debug the execution of a process plugin.
 
 ## Introduction
-The DSF FHIR server and the DSF BPE server applications are written in Java and as such are execute on a headless JRE 11 within their docker containers. Command line arguments can be passed to the JVM inside the [ghcr.io/datasharingframework/fhir](https://github.com/datasharingframework/dsf/pkgs/container/fhir) and [ghcr.io/datasharingframework/bpe](https://github.com/datasharingframework/dsf/pkgs/container/bpe) docker images by specifying the environment variable `EXTRA_JVM_ARGS`. This can be used for example to configure the minimum and maximum heap of the JVM; but can also be used to specify a remote debugging port, which we will use in this exercise.
+The DSF FHIR server and the DSF BPE server applications are written in Java and as such are executed on a headless JRE 11 within their docker containers. Command line arguments can be passed to the JVM inside the [ghcr.io/datasharingframework/fhir](https://github.com/datasharingframework/dsf/pkgs/container/fhir) and [ghcr.io/datasharingframework/bpe](https://github.com/datasharingframework/dsf/pkgs/container/bpe) docker images by specifying the environment variable `EXTRA_JVM_ARGS`. This can be used for example to configure the minimum and maximum heap of the JVM; but can also be used to specify a remote debugging port, which we will use in this exercise.
 
-An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR server and DSF BPE server docker containers in the tutorial docker-compose test setup. Take a look at the [docker-compose.yml](https://github.com/datasharingframework/dsf-process-tutorial/blob/main/test-setup/docker-compose.yml) file to look up the port numbers specified for the different DSF FHIR and DSF BPE servers.
+An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR server and DSF BPE server docker containers in the tutorial docker-compose test setup. Take a look at the [docker-compose.yml](https://github.com/datasharingframework/dsf-process-tutorial/blob/main/dev-setup/docker-compose.yml) file to look up the port numbers specified for the different DSF FHIR and DSF BPE servers.
 
 ## Exercise Tasks
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/test-setup`:
+1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
     ```
     docker-compose up dic-fhir
     ```
-2. Start the DSF BPE server for the `Test_DIC` organization in second console at location `.../dsf-process-tutorial/test-setup`:
+2. Start the DSF BPE server for the `Test_DIC` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
     ```
     docker-compose up dic-bpe
     ```
@@ -27,10 +27,10 @@ An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR 
 4. Create a debug breakpoint in the first line of the `HelloDic` class `doExecute` method. 
 5. Start your previously defined remote Java debugger in your IDE.
 6. Execute the `TutorialExampleStarter` class to start `dsfdev_helloDic` process.
-7. User your IDE's debugger to step through the code of the `HelloDic` class `doExecute` method.
+7. Use your IDE's debugger to step through the code of the `HelloDic` class `doExecute` method.
 
 ## Hint
-You can also use this technique to debug the FHIR server and BPE server side of the DSF by cloning the [DSF repository](https://github.com/datasharingframework/dsf) and setting up the remote debugger in that project.
+You can also use this technique to debug the DSF FHIR server and DSF BPE server side of the DSF by cloning the [DSF repository](https://github.com/datasharingframework/dsf) and setting up the remote debugger in that project.
 When you execute `TutorialExampleStarter` you will be able to see what the DSF is doing internally when executing your process.
 
 ___

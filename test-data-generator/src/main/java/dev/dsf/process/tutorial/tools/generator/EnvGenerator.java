@@ -77,7 +77,7 @@ public class EnvGenerator
 
 		Map<String, String> additionalEntries = Map.of(PROCESS_VERSION, TutorialProcessPluginDefinition.VERSION);
 
-		writeEnvFile(Paths.get("../test-setup/.env"), entries, additionalEntries);
+		writeEnvFile(Paths.get("../dev-setup/.env"), entries, additionalEntries);
 	}
 
 	private Stream<String> filterAndMapToThumbprint(Map<String, CertificateFiles> clientCertificateFilesByCommonName,
