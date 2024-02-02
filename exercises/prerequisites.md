@@ -4,7 +4,7 @@ ___
 # Prerequisites
 In order to be able to solve the exercises described in this tutorial a software development environment with GIT, Java 17, Maven 3.8, Docker, docker-compose, a Java IDE like Eclipse or IntelliJ, a BPMN Editor like the Camunda Modeler and a minimum 16GB of RAM is needed.
 Make sure you read through the introductory documentation pages located [here](https://dsf.dev/intro/).
-You also want to have some amount of experience in [HL7 FHIR](https://www.hl7.org/fhir/).
+You also want to have some amount of experience in [HL7 FHIR R4](https://www.hl7.org/fhir/R4/).
 
 ## GIT
 [git](https://git-scm.com) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
@@ -48,7 +48,7 @@ For the development of the processes we recommend the use of an IDE, e.g. Eclips
 ## BPMN Editor
 To simplify modeling of BPMN processes, we recommend a graphical editor, e.g. the Camunda Modeler:
 
-- An installation guide for the Camunda Modeler can be found here: [installation guide](https://camunda.com/de/download/modeler/)  
+- An installation guide for the Camunda Modeler can be found here: [installation guide](https://camunda.com/download/modeler/)  
      - **CAVE:** When creating models with Camunda Modeler, make sure you create a **Camunda 7 model**, not a Camunda 8 model. The DSF
 relies on Camunda 7 which is incompatible with Camunda 8.
 
