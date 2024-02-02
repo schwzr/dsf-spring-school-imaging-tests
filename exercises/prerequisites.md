@@ -48,7 +48,7 @@ For the development of the processes we recommend the use of an IDE, e.g. Eclips
 ## BPMN Editor
 To simplify modeling of BPMN processes, we recommend a graphical editor, e.g. the Camunda Modeler:
 
-- An installation guide for the Camunda Modeler can be found here: [installation guide](https://camunda.com/de/download/modeler/)  
+- An installation guide for the Camunda Modeler can be found here: [installation guide](https://camunda.com/download/modeler/)  
      - **CAVE:** When creating models with Camunda Modeler, make sure you create a **Camunda 7 model**, not a Camunda 8 model. The DSF
 relies on Camunda 7 which is incompatible with Camunda 8.
 
