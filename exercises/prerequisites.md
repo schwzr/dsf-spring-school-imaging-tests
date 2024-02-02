@@ -4,7 +4,7 @@ ___
 # Prerequisites
 In order to be able to solve the exercises described in this tutorial a software development environment with GIT, Java 17, Maven 3.8, Docker, docker-compose, a Java IDE like Eclipse or IntelliJ, a BPMN Editor like the Camunda Modeler and a minimum 16GB of RAM is needed.
 Make sure you read through the introductory documentation pages located [here](https://dsf.dev/intro/).
-You also want to have some amount of experience in [HL7 FHIR](https://www.hl7.org/fhir/).
+You also want to have some amount of experience in [HL7 FHIR R4](https://www.hl7.org/fhir/R4/).
 
 ## GIT
 [git](https://git-scm.com) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
