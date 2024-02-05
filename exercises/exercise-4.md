@@ -4,26 +4,13 @@ ___
 # Exercise 4 - Exclusive Gateways
 Different execution paths in a process based on the state of process variables can be achieved using Exclusive Gateways. In Exercise 4 we will examine how this can be implemented by modifying the `dsfdev_helloDic` process.
 
-## Introduction
-### Exclusive Gateways
-Different sequence flows during the execution of a process instance can be modeled using BPMN [Exclusive Gateways](https://docs.camunda.org/manual/7.4/reference/bpmn20/gateways/exclusive-gateway/). For each outgoing sequence flow of the gateway, a BPMN [Condition Expression](https://docs.camunda.org/manual/7.17/user-guide/process-engine/expression-language/#conditions) can be added to the process model, deciding whether a sequence flow should be followed. Thereby, all condition decisions must be in an XOR relationship to each other. 
+In order to solve this exercise, you should have solved Exercise 3 and read the topics on
+[Exclusive Gateways](basic-concepts-and-lessons.md#exclusive-gateways)
+and [Conditions](basic-concepts-and-lessons.md#conditions).
 
-### Condition Expressions
-A BPMN [Condition Expression](https://docs.camunda.org/manual/7.17/user-guide/process-engine/expression-language/#conditions) uses the `${..}` notation. Within the curly braces all execution variables of a process instance can be accessed, e.g. the ones that were stored in a previous Java implementation of a BPMN [ServiceTask](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/). For example, the BPMN [Condition Expression](https://docs.camunda.org/manual/7.17/user-guide/process-engine/expression-language/#conditions) `${cohortSize > 100}` checks whether the value in the execution variable *cohortSize* is greater than 100.
-
-### Storing / Modifying Process Variables
-Via the `variables` parameter of the `doExecute` method of a class extending `AbstractServiceDelegate`, we can write and read process variables of the current process instance. The following code listing show how to write and read a `boolean` variable:
-```java
-{
-	variables.setBoolean("variable-name", false);
-	boolean variable = variables.getBoolean("variable-name");
-}
-```
-You can also achieve the same effect with the `DelegateExecution execution` parameter. But as we already discussed in exercise 1, you should only use this method if you are limited by the methods offered in the `Variables` class.
-For more details on process variables see the [Camunda documentation](https://docs.camunda.org/manual/7.17/user-guide/process-engine/variables/).
 
 ## Exercise Tasks
-1. In the `HelloDic` class, write an algorithm which decides based on the start Task's input parameter `tutorial-input`, whether the `dsfdev_helloCos` process should be started.
+1. In the `HelloDic` class, write an algorithm which decides whether the `dsfdev_helloCos` process should be started based on the start Task's input parameter `tutorial-input`.
 2. Add a boolean variable to the process execution variables storing the decision.
 3. Add an exclusive gateway to the `dsfdev_helloDic` process model and two outgoing sequence flows - the first starting process `dsfdev_helloDic`, the second stopping process `dsfdev_helloDic` without starting process `dsfdev_helloCos`.
 4. Add condition expressions to each outgoing sequence flow based on the previously stored execution variable.
