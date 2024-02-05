@@ -262,7 +262,7 @@ If you want to find out more, you may look at the [dsf-read-access-tag](https://
 
 ### Process Access Control
 
-As mentioned in the chapter on [ActivityDefinition](basic-concepts-and-lessons.md#activitydefinition) and [Process Access Control](basic-concepts-and-lessons.md#process-access-control), you will
+As mentioned in the description of [ActivityDefinition](basic-concepts-and-lessons.md#activitydefinition) and [Read Access Tag](basic-concepts-and-lessons.md#read-access-tag), you will
 use the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) to define access rules for all [Task](basic-concepts-and-lessons.md#task) resources
 available to the BPMN process that ActivityDefinition represents. Depending on your use-case
 the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) will look quite different once configured. 
