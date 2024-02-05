@@ -58,17 +58,17 @@ stop the execution of a BPMN process and finish by sending a message.
 
 ### Gateways
 
-[Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/) allow you to control the Sequence Flow. Different
+[Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/) allow you to control the [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow). Different
 types of gateways will be useful for different scenarios.
 
 #### Exclusive Gateways
 [Exclusive Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/exclusive-gateway/)
-allow you to decide which Sequence Flow should be followed based on [conditions](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/#conditions). 
+allow you to decide which [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) should be followed based on [conditions](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/#conditions). 
 [Conditions](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/#conditions) aren't part of the 
 [Exclusive Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/exclusive-gateway/) themselves. You set them 
 through the sequence Flow Exiting the [Exclusive Gateway](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/exclusive-gateway/).  
-In the [Camunda Modeler](https://camunda.com/download/modeler/), you can add conditions to Sequence Flow by selecting
-a Sequence Flow and opening the `Condition` tab. You can find more information on how to
+In the [Camunda Modeler](https://camunda.com/download/modeler/), you can add conditions to [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) by selecting
+a [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) and opening the `Condition` tab. You can find more information on how to
 use Conditions [here](basic-concepts-and-lessons.md#conditions).
 
 #### Event-based Gateway
@@ -80,7 +80,7 @@ allows you model scenarios where you are expecting one out of a number of events
 A [Timer Intermediate Catching Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event)
 allows you model stopwatch behavior. A timer is started once the BPMN execution arrives at the event.
 The duration until the timer runs out is specified using the [ISO 8601 Durations](http://en.wikipedia.org/wiki/ISO_8601#Durations) format. 
-Examples can be found [here](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#time-duration). After running out, the BPMN process executes the Sequence Flow following
+Examples can be found [here](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#time-duration). After running out, the BPMN process executes the [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) following
 the [Timer Intermediate Catching Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event).
 
 ### Conditions
@@ -88,12 +88,12 @@ the [Timer Intermediate Catching Event](https://docs.camunda.org/manual/7.17/ref
 [Conditions](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/#conditions) 
 allow you to change the behaviour of BPMN processes during execution. There are two ways you 
 are able to add decision logic to Conditions. The [Camunda Modeler](https://camunda.com/download/modeler/) refers to them as `Type`. You can find them in the ``Condition`` tab of 
-certain BPMN elements. The first one is ``Script``. This allows you to add arbitrary complexity 
-to your decisions logic and is rarely used for process plugins. The more common Type is ``Expression``.
-Expressions have the following syntax: ``${expression}``. For this tutorial, _expression_ will
-use a boolean condition like ``var == true``. You can learn more advanced features of Expressions [here](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/).
+certain BPMN elements. The first one is `Script`. This allows you to add arbitrary complexity 
+to your decisions logic and is rarely used for process plugins. The more common Type is `Expression`.
+Expressions have the following syntax: `${expression}`. For this tutorial, _expression_ will
+use a boolean condition like `var == true`. You can learn more advanced features of Expressions [here](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/).
  For this to work during BPMN process execution, the variable you want to use for the boolean 
-condition must be available in the BPMN process variables before Sequence Flow
+condition must be available in the BPMN process variables before [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow)
 reaches the evaluation of the expression.
 
 ## FHIR
@@ -119,22 +119,25 @@ Whenever a BPMN process instance communicates with a different process instance,
 based on parameters you set in the BPMN model itself but also during execution. It will then 
 automatically send the Task resource to the recipient to start or continue whatever process the Task resource referred to.
 All Task resources used in the DSF derive from the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
-This profile includes a splicing for Task.input with three additional Input Parameters:  
-- ``message-name``
-- ``business-key``
-- ``correlation-key``
+This profile includes a splicing for Task.input with three additional [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters):  
+- `message-name`
+- `business-key`
+- `correlation-key`
 
 When creating your own plugin, you will want to create your own profiles based on the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
-For example, if your particular data exchange requires additional information, you would add a slice to your Task profile in the same
-way the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml)
-adds slices to the original FHIR [Task](https://www.hl7.org/fhir/R4/task.html) resource. Notice that this also requires creating a [CodeSystem](basic-concepts-and-lessons.md#codesystem) and
+
+#### Task Input Parameters
+
+Task Input Parameters allow you to add additional information to [Task](basic-concepts-and-lessons.md#task) resources.
+For example, if your particular data exchange requires additional medical data, you would add a slice to your Task profile in the same
+way the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml) adds slices to the original FHIR [Task](https://www.hl7.org/fhir/R4/task.html) resource. Notice that this also requires creating a [CodeSystem](basic-concepts-and-lessons.md#codesystem) and
 including it in a [ValueSet](basic-concepts-and-lessons.md#valueset) to be able to use it in the Task resource.
 
 ### CodeSystem
 
 Plugin development for the DSF requires the use of [CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) in two major ways:
 1. Using existing DSF [CodeSystems](https://github.com/datasharingframework/dsf/tree/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem) in other FHIR resources like the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
-2. Creating your own CodeSystem to add additional Input Parameters to your [Task](https://www.hl7.org/fhir/R4/task.html) profiles.
+2. Creating your own CodeSystem to add additional [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters) to your [Task](https://www.hl7.org/fhir/R4/task.html) profiles.
 
 ### ValueSet
 
@@ -170,7 +173,7 @@ In order for the DSF BPE server to load your plugin you need to provide it with 
 You will provide this information by implementing the `dev.dsf.bpe.ProcessPluginDefinition` interface.
 The DSF BPE server then searches for classes implementing this interface using the
 Java [ServiceLoader](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html) mechanism. Therefore, you will have to register your interface implementation in the `src/main/resources/META-INF/services/dev.dsf.bpe.ProcessPluginDefinition` file.
-For this tutorial, the class implementing the ``ProcessPluginDefinition`` interface, `TutorialProcessPluginDefinition`,
+For this tutorial, the class implementing the `ProcessPluginDefinition` interface, `TutorialProcessPluginDefinition`,
 has already been added to the file. You can use it as a reference for later when you want to create your own plugin.
 
 ### About Versions, Placeholders and URLs
@@ -183,7 +186,7 @@ Process plugin versions have to obey the pattern:
 
 The first two numbers (`1.0`) are used in FHIR resources and signal changes which break compatibility with previous
 process versions. The latter two (`1.2`) signal changes which don't break compatibility with previous process versions. Specifically,
-the last number is reserved for bug-fixes and the number before that includes all other non-breaking changes.
+the 4th number is reserved for bug-fixes and the 3rd number includes all other non-breaking changes.
 
 #### Placeholders
 To avoid the need to specify the version and release date for each [CodeSystem](basic-concepts-and-lessons.md#codesystem),
@@ -231,7 +234,7 @@ have to provide [Spring Beans](https://docs.spring.io/spring-framework/reference
 - `ProcessPluginDeploymentStateListener`
 
 A [Spring-Framework configuration class](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-java-basic-concepts) located in `spring/config` is expected to provide the Spring Beans. 
-For this plugin, the `TutorialConfig` class will take this role.
+For this tutorial, the `TutorialConfig` class will take this role.
 
 ### Read Access Tag
 
@@ -257,28 +260,35 @@ The read access rules for [Task](basic-concepts-and-lessons.md#task) resources a
 [ActivityDefinitions](basic-concepts-and-lessons.md#activitydefinition). Therefore, no `read-access-tag` is needed.
 
 It is also possible to restrict read access of FHIR resources to organizations with 
-a specific role in a parent organization or a specific identifier, but this is not covered in the tutorial.
-If you want to find out more, you may look at the [dsf-read-access-tag](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-read-access-tag-1.0.0.xml) resource.
+a specific role in a parent organization or a specific identifier.
+If you want to find out more, you may look at the [dsf-read-access-tag](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-read-access-tag-1.0.0.xml).
 
 ### Process Access Control
-
-As mentioned in the chapter on [ActivityDefinition](basic-concepts-and-lessons.md#activitydefinition) and [Process Access Control](basic-concepts-and-lessons.md#process-access-control), you will
-use the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) to define access rules for all [Task](basic-concepts-and-lessons.md#task) resources
-available to the BPMN process that ActivityDefinition represents. Depending on your use-case
+In order to manage who is allowed to request/process [Task](basic-concepts-and-lessons.md#task) resources in your BPMN process,
+you will use the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
+It is part of [Activity Definition](basic-concepts-and-lessons.md#activitydefinition) resources which are used to 
+advertise available DSF process plugins to other DSF instances. 
+The extension defines access rules for all [Task](basic-concepts-and-lessons.md#task) resources
+available to the BPMN process. Depending on your use-case
 the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) will look quite different once configured. 
 We will first look at the elements all permutations have in common and then show some example 
 scenarios and how their extension configuration would look like.
 
-All extensions have these elements in common:
-* Exactly 1 ``message-name`` element
-* Excatly 1 ``task-profile`` element
-* At least 1 ``requester`` element
-* At least 1 ``recipient`` element
+All extension permutations have these elements in common:
+* Exactly 1 `message-name` element
+* Excatly 1 `task-profile` element
+* At least 1 `requester` element
+* At least 1 `recipient` element
+
+The `message-name` refers to the name of the [Message Event](basic-concepts-and-lessons.md#messaging) inside your BPMN model.
+The `task-profile` then references the [Task](basic-concepts-and-lessons.md#task) resource used for communicating this [Message Event](basic-concepts-and-lessons.md#messaging).  
+The `requester` and `recipient` elements specify how certain organizations or users are allowed to use the [Task](basic-concepts-and-lessons.md#task) resource
+specified by `task-profile`.
 
 When you take a look at the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml), you will find a list of 
-[Codes](https://www.hl7.org/fhir/R4/datatypes.html#code) for the ``requester`` and `recipient` elements.
+[Codes](https://www.hl7.org/fhir/R4/datatypes.html#code) for the `requester` and `recipient` elements.
 You will choose one of these Codes depending on your use-case. And depending on which Code
-you choose you will have to puzzle together the right [DSF FHIR resources](https://github.com/datasharingframework/dsf/tree/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir)
+you choose you will have to put together the right [DSF FHIR resources](https://github.com/datasharingframework/dsf/tree/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir)
 to configure the extension properly.  
 For the purposes of this tutorial we have 3 example scenarios and how their [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml)
 would be configured.
@@ -417,10 +427,11 @@ like `doExecute` or `getAdditionalInputParameters`.
 
 ### BPMN Process Variables
 
-BPMN process variables hold all information which isn't a BPMN element. For example, if you added an [Exclusive Gateway](basic-concepts-and-lessons.md#exclusive-gateways)
-to your model, this would be part of the [BPMN process execution](basic-concepts-and-lessons.md#bpmn-process-execution). The [conditions](basic-concepts-and-lessons.md#conditions)
-you added to the outgoing Sequence Flows will refer to some variables for boolean operation. These variables are part of
-the BPMN process variables. BPMN process variables are stored key-value pairs with the key being the variable name.
+BPMN process variables hold additional information which has to be available during BPMN process execution. 
+Variables can be directly related to BPMN elements like the boolean value for [Conditions](basic-concepts-and-lessons.md#conditions), but
+don't have to be. BPMN process variables are stored as key-value pairs with the key being the variable name. 
+They are accessible during the entirety of the execution to all [Service](basic-concepts-and-lessons.md#service-delegates) / 
+[Message](basic-concepts-and-lessons.md#message-delegates) Delegates.
 
 You can learn how to access to the BPMN process variables [here](basic-concepts-and-lessons.md#accessing-bpmn-process-variables).
 
@@ -494,10 +505,11 @@ we need some mechanism to map messages to their rightful process instance.
 This mechanism is called Message Correlation and requires attaching a unique identifier to every process instance.
 This identifier is called the `business-key`. The `business-key` will get attached to every outgoing message automatically.  
   
-It's possible that the ´business-key´ is insufficient to map messages to the correct process instance. This happens
+It's possible that the `business-key` is insufficient to map messages to the correct process instance. This happens
 when you use subprocesses in your BPMN model which all expect messages to be sent to them, not the parent process.
-To solve this issue, [Task](basic-concepts-and-lessons.md#task) resources also come with an Input Parameter called `correlation-key`.
+To solve this issue, [Task](basic-concepts-and-lessons.md#task) resources also come with an [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) called `correlation-key`.
 This is a secondary identifier you can attach to all messages if you need them to arrive at a specific subprocess.
+You can learn more about how `correlation-keys` are used by studying the [Ping-Pong Process](https://github.com/datasharingframework/dsf-process-ping-pong).
 
 ## Lessons
 
@@ -512,20 +524,22 @@ to solve your problem, we would like to learn how the current API of the `Variab
 
 ### Accessing Task Resources During Execution
 
-If you want access to the [Task](basic-concepts-and-lessons.md#task) resources in your [Service](basic-concepts-and-lessons.md#service-delegates) / [Message](basic-concepts-and-lessons.md#message-delegates) Delegates, the `Variables` class will
-also provide methods which return certain kinds of [Task](basic-concepts-and-lessons.md#task) resources. The most commonly used ones are
-the start [Task](basic-concepts-and-lessons.md#task), referring to the [Task](basic-concepts-and-lessons.md#task) / Message Start Event responsible for starting the process,
-and the latest [Task](basic-concepts-and-lessons.md#task), referring to most recently received [Task](basic-concepts-and-lessons.md#task).  
-If you want to go one level deeper and extract certain information from a particular [Task](basic-concepts-and-lessons.md#task) resource,
-you may use the `ProcessPluginApi`'s `TaskHelper` in conjunction with the method we just described. The `TaskHelper` class
-offers methods to retrieve specific information from a [Task](basic-concepts-and-lessons.md#task) resource you provide as a parameter.  
-The most common use-case for this is retrieving data from a [Task's](basic-concepts-and-lessons.md#task) Input Parameter or creating a new Input Parameter
+If you want access to the [Task](basic-concepts-and-lessons.md#task) resources in your [Service](basic-concepts-and-lessons.md#service-delegates) / [Message](basic-concepts-and-lessons.md#message-delegates) Delegates, the `Variables` class will 
+provide methods which return certain kinds of [Task](basic-concepts-and-lessons.md#task) resources. The most commonly used ones are
+the start [Task](basic-concepts-and-lessons.md#task), referring to the [Task](basic-concepts-and-lessons.md#task) / [Message Start Event](basic-concepts-and-lessons.md#message-start-event) responsible for starting the process,
+and the latest [Task](basic-concepts-and-lessons.md#task), referring to most recently received [Task](basic-concepts-and-lessons.md#task) / Message.  
+In principle, this is sufficient to access all information in a [Task](basic-concepts-and-lessons.md#task) resource, since you have 
+the [Task](basic-concepts-and-lessons.md#task) resource's Java object, but very cumbersome.
+Instead of navigating the [Task](basic-concepts-and-lessons.md#task) resource's element tree,
+you should first try to use the `ProcessPluginApi`'s `TaskHelper` in conjunction with the method above. The `TaskHelper` class
+offers specific methods related to [Task](basic-concepts-and-lessons.md#task) resources.  
+The most common use-case for this is retrieving data from a [Task's](basic-concepts-and-lessons.md#task) [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) or creating a new [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters)
 for a [Message Delegate's](basic-concepts-and-lessons.md#message-delegates) `getAdditionalInputParameters` method.  
-When retrieving data from a [Task's](basic-concepts-and-lessons.md#task) Input Parameter you first have to get to the Input Parameter you are looking to extract
-data from. You can use one of the `TaskHelper's` getters for Input Parameters to find the right one. The method will try to match
-the provided [CodeSystem](basic-concepts-and-lessons.md#codesystem) and Code to any Input Parameter of the provided [Task](basic-concepts-and-lessons.md#task) resource.
+When retrieving data from a [Task's](basic-concepts-and-lessons.md#task) Input Parameter you first have to get to the [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) you are looking to extract
+data from. You can use one of the `TaskHelper's` getters for [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters) to find the right one. The method will try to match
+the provided [CodeSystem](basic-concepts-and-lessons.md#codesystem) and Code to any [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) of the provided [Task](basic-concepts-and-lessons.md#task) resource.
 Depending on the method you chose you will for example receive all matches or just the first one.  
-To create new Input Parameters to attach to a [Task](basic-concepts-and-lessons.md#task) resource, you may invoke the `TaskHelper.createInput` method. This
+To create new [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters) to attach to a [Task](basic-concepts-and-lessons.md#task) resource, you may invoke the `TaskHelper#createInput` method. This
 is most often used when overriding the `getAdditionalInputParamters` method of you [Message Delegate](basic-concepts-and-lessons.md#message-delegates).
 
 
@@ -540,7 +554,7 @@ add your targets and then call the super-method.
 This is the preferred method of this tutorial but both methods will work perfectly fine. For our use-cases, we usually prefer this one
 since there is enough complexity to warrant putting it into a separate BPMN [Service Task](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/).
 
-In both cases you can access methods to create and set `targets` through the `variables` instance.
+In both cases you can access methods to create and set `targets` through the `Variables` instance.
 
 ### Managing Multiple Incoming Messages And Missing Messages
 If an already running process instance is waiting for a message from another organization, the corresponding FHIR [Task](basic-concepts-and-lessons.md#task) may never arrive.
