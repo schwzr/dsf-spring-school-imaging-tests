@@ -65,8 +65,8 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
 	```
 	Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://dic/fhir.  
 	The DSF FHIR server uses a server certificate that was generated during the first maven install build. 
-    To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/Webbrowser_Test_User/Webbrowser_Test_User_certificate.p12` (Password: `password`). 
-    Add the certificate and the generated Root CA to your browser certificate store.
+    To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/dic-client/dic-client_certificate.p12` (Password: `password`). 
+    Add the certificate and the generated Root CA located at `.../dsf-process-tutorial/test-data-generator/cert/ca/testca_certificate.pem` to your browser certificate store.
 	
 	**Caution:** __If you add the generated Root CA to your browsers certificate store as a trusted Root CA, make sure you are 
     the only one with access to the private key at `.../dsf-process-tutorial/test-data-generator/cert/ca/testca_private-key.pem`.__
