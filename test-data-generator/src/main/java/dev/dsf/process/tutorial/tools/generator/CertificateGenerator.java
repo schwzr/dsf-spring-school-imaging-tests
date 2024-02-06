@@ -1,6 +1,7 @@
 package dev.dsf.process.tutorial.tools.generator;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,6 +33,9 @@ import java.util.stream.Stream;
 
 import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.asn1.x500.style.IETFUtils;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.pkcs.PKCSException;
@@ -55,7 +59,7 @@ public class CertificateGenerator
 
 	private static final char[] CERT_PASSWORD = "password".toCharArray();
 
-	private static final String[] SERVER_COMMON_NAMES = { "localhost"/*, "cos", "dic", "hrp"*/ };
+	private static final String[] SERVER_COMMON_NAMES = { "localhost", "keycloak" };
 	private static final String[] CLIENT_COMMON_NAMES = { "Webbrowser Test User", "cos-client", "dic-client",
 			"hrp-client" };
 	private static final Map<String, List<String>> DNS_NAMES = Map.of("localhost",
@@ -533,6 +537,8 @@ public class CertificateGenerator
 
 	private void copyDockerTestServerCertFiles(String folder)
 	{
+		Path baseFolder = Paths.get("../dev-setup");
+		Path testCaCertificateFile = baseFolder.resolve("secrets/proxy_trusted_client_cas.pem");
 		X509Certificate testCaCertificate = ca.getCertificate();
 
 		CertificateFiles localhost = serverCertificateFilesByCommonName.get("localhost");
@@ -544,6 +550,35 @@ public class CertificateGenerator
 		Path serverCertificatePrivateKey = Paths.get(folder, "proxy_certificate_private_key.pem");
 		logger.info("Copying server private-key file to {}", serverCertificatePrivateKey.toString());
 		writePrivateKeyNotEncrypted(serverCertificatePrivateKey, localhost.keyPair.getPrivate());
+
+		CertificateFiles keycloak = serverCertificateFilesByCommonName.get("keycloak");
+
+		Path keycloakCertificateAndCa = Paths.get(folder, "keycloak_certificate_and_int_cas.pem");
+		logger.info("Writing keycloak certificate and CA certificate to {}", testCaCertificateFile.toString());
+		writeCertificates(keycloakCertificateAndCa, keycloak.getCertificate()); // no intermediate CAs
+
+		Path keycloakCertificatePrivateKey = Paths.get(folder, "keycloak_certificate_private_key.pem");
+		logger.info("Copying keycloak private-key file to {}", keycloakCertificatePrivateKey);
+		writePrivateKeyNotEncrypted(keycloakCertificatePrivateKey, keycloak.keyPair.getPrivate());
+
+		Path keycloakTrustStoreFile = Paths.get(folder, "keycloak_trust_store.jks");
+		logger.info("Copying Test CA certificate as trust store file to {}", keycloakTrustStoreFile.toString());
+		KeyStore trustStore = createJksKeyStore(getCommonName(ca.getCertificate()), testCaCertificate);
+		writeKeyStore(keycloakTrustStoreFile, trustStore);
+	}
+
+	private String getCommonName(X509Certificate certificate)
+	{
+		try
+		{
+			return IETFUtils.valueToString(new JcaX509CertificateHolder(certificate).getSubject().getRDNs(BCStyle.CN)[0]
+					.getFirst().getValue());
+		}
+		catch (CertificateEncodingException e)
+		{
+			logger.error("Error unable to extract common-name from certificate", e);
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void writeCertificates(Path certificateFile, X509Certificate... certificates)
@@ -596,6 +631,22 @@ public class CertificateGenerator
 		}
 	}
 
+	private KeyStore createJksKeyStore(String commonName, X509Certificate certificate)
+	{
+		try
+		{
+			KeyStore keyStore = KeyStore.getInstance("jks");
+			keyStore.load(null, null);
+			keyStore.setCertificateEntry(commonName, certificate);
+			return keyStore;
+		}
+		catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e)
+		{
+			logger.error("Error while creating jks key-store", e);
+			throw new RuntimeException(e);
+		}
+	}
+
 	private void writeP12File(Path p12File, KeyStore p12KeyStore)
 	{
 		try
@@ -605,6 +656,19 @@ public class CertificateGenerator
 		catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e)
 		{
 			logger.error("Error while writing certificate P12 file to " + p12File.toString(), e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void writeKeyStore(Path file, KeyStore keyStore)
+	{
+		try (OutputStream stream = Files.newOutputStream(file))
+		{
+			keyStore.store(stream, CERT_PASSWORD);
+		}
+		catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e)
+		{
+			logger.error("Error while writing keystore file to {}", file.toString(), e);
 			throw new RuntimeException(e);
 		}
 	}
