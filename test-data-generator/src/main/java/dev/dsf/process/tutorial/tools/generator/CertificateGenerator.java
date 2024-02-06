@@ -55,7 +55,7 @@ public class CertificateGenerator
 
 	private static final char[] CERT_PASSWORD = "password".toCharArray();
 
-	private static final String[] SERVER_COMMON_NAMES = { "localhost", "cos", "dic", "hrp" };
+	private static final String[] SERVER_COMMON_NAMES = { "localhost"/*, "cos", "dic", "hrp"*/ };
 	private static final String[] CLIENT_COMMON_NAMES = { "Webbrowser Test User", "cos-client", "dic-client",
 			"hrp-client" };
 	private static final Map<String, List<String>> DNS_NAMES = Map.of("localhost",
@@ -255,14 +255,14 @@ public class CertificateGenerator
 
 		Path certificatePemFile = createFolderIfNotExists(getCertPemPath(commonName));
 		X509Certificate certificate = signOrReadCertificate(certificatePemFile, certificateRequest,
-				keyPair.getPrivate(), commonName, certificateType);
+				commonName, certificateType);
 
 		return new CertificateFiles(commonName, keyPair, privateKeyFile, certificate,
 				calculateSha512CertificateThumbprint(certificate));
 	}
 
 	private X509Certificate signOrReadCertificate(Path certificateFile,
-			JcaPKCS10CertificationRequest certificateRequest, PrivateKey privateKey, String commonName,
+			JcaPKCS10CertificationRequest certificateRequest, String commonName,
 			CertificateType certificateType)
 	{
 		if (Files.isReadable(certificateFile))
