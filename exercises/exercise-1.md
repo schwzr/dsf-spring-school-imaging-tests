@@ -90,7 +90,7 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
   		2. password for the client certificate (`password`)
     	* Or set the environment variables `DSF_CLIENT_CERTIFICATE_PATH` and `DSF_CLIENT_CERTIFICATE_PASSWORD` with the appropriate values.
 	
-    Verify that the  [FHIR Task](http://hl7.org/fhir/R4/task.html) resource could be created at the DSF FHIR server. The TutorialExampleStarter class should print a message `HTTP 201: Created` showing that the [FHIR Task](http://hl7.org/fhir/R4/task.html) resource was created.
+    Verify that the  [FHIR Task](http://hl7.org/fhir/R4/task.html) resource could be created at the DSF FHIR server. Either look at your docker container log for the DIC FHIR server or find your [Task](basic-concepts-and-lessons.md#task) resource in the list of all [Task](basic-concepts-and-lessons.md#task) resources under https://dic/fhir/Task/. 
 	
     Verify that the `dsfdev_helloDic` process was executed by the DSF BPE server. The BPE server should print a message showing that the process was started, print the log message you added to the `HelloDic` class and end with a message showing that the process finished.
 
