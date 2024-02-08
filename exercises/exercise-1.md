@@ -1,6 +1,8 @@
 [Prerequisites](prerequisites.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
 ___
-
+## Disclaimer
+The concept of `Tasks` exists in both the FHIR and BPMN domains. For this tutorial `Task resource` always refers
+to [FHIR Tasks](https://www.hl7.org/fhir/R4/task.html) and `Service Task` always means the BPMN concept.
 # Exercise 1 - Simple Process
 The first exercise focuses on setting up the development environment used in this tutorial and shows how to implement and execute a simple
 BPMN process.
@@ -84,7 +86,7 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
    
     For the TutorialExampleStarter to work the location of the client certificate and its password need to be specified:
 	* Either specify the location and password via program arguments:
-		1. location of the client certificate (`.../dsf-process-tutorial/test-data-generator/cert/Webbrowser_Test_User/Webbrowser_Test_User_certificate.p12`),
+		1. location of the client certificate (`.../dsf-process-tutorial/test-data-generator/cert/dic-client/dic-client_certificate.p12`),
   		2. password for the client certificate (`password`)
     	* Or set the environment variables `DSF_CLIENT_CERTIFICATE_PATH` and `DSF_CLIENT_CERTIFICATE_PASSWORD` with the appropriate values.
 	
