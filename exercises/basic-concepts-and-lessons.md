@@ -164,6 +164,18 @@ a single nginx reverse proxy as well as three separate DSF FHIR server instances
 DSF process plugin. Java code for the `tutorial-process` project is located at `src/main/java`, FHIR resources and
 BPMN process models at `src/main/resources` as well as prepared JUnit tests to verify your solution at `src/test/java`.
 
+### Certificates
+There is a number of certificates that need to be generated in order for DSF instances to communicate with each other securely.
+You can find a comprehensive lists of certificates needed by the [DSF FHIR](https://dsf.dev/stable/maintain/fhir/configuration.html)
+and [DSF BPE](https://dsf.dev/stable/maintain/bpe/configuration.html) servers on the DSF website.  
+Certificates will be created by the `test-data-generator` project through Maven by the time of the `package` phase in your process plugin build.
+You can also invoke the generation of certificates separately by running the Maven build of `test-data-generator` until (and including) the `package` phase.   
+Since this tutorial comes with three preconfigured DSF instances, the only time you will need to interact with certificates
+is when you want to make requests to the DSF FHIR server. Either for access to the web-frontend under https://instance-host-name/fhir/,
+or when [starting your process plugin](basic-concepts-and-lessons.md#starting-a-process-via-task-resources).  
+In case of the web-frontend, you will need to add the CA certificate and client certificate of the DSF instance you want to access to your browser.
+Certificates can be found in `test-data-generator/cert`. 
+
 ### The Process Plugin Definition
 
 In order for the DSF BPE server to load your plugin you need to provide it with the following information:
@@ -578,3 +590,55 @@ or missing messages:
   <source media="(prefers-color-scheme: light)" srcset="figures/exercise5_event_based_gateway.svg">
   <img alt="BPMN collaboration diagram with an Event Based Gateway" src="figures/exercise5_event_based_gateway.svg">
 </picture>
+
+### Starting A Process Via Task Resources
+
+To start a BPMN process, you need to create new a [Task](basic-concepts-and-lessons.md#task) resource in the DSF FHIR server
+by sending an HTTP request according to the [FHIR RESTful API](https://www.hl7.org/fhir/R4/http.html). Specifically, you need to [create](https://www.hl7.org/fhir/R4/http.html#create)
+a resource for the first time. Also, remember that the [Task](basic-concepts-and-lessons.md#task)
+resource you are sending needs to comply to the [Task](basic-concepts-and-lessons.md#task) profile of the process you 
+want to start and the [ActivityDefinition's](basic-concepts-and-lessons.md#activitydefinition) authorization rules.   
+In this tutorial, there are two ways making this HTTP request:  
+1. Using the tutorial's `TutorialExampleStarter` class
+2. Using cURL
+
+#### Using TutorialExampleStarter
+This class allows you to interact with the [Task](basic-concepts-and-lessons.md#task) resource you are sending using the same Java API
+that is also used for all other FHIR resources in this tutorial. It will automatically send it to the specified endpoint. 
+But first, it requires some configuration. You need to include the client certificate and its password for the endpoint you are sending the 
+request to, as parameters of the main method. You can do that by either including them in your IDE's run configuration
+or by configuring the `DSF_CLIENT_CERTIFICATE_PATH` and `DSF_CLIENT_CERTIFICATE_PASSWORD` environment variables. 
+
+#### Using cURL
+Using cURL might look more intimidating than using the `TutorialExampleStarter`.
+But since cURL requires the actual [Task](basic-concepts-and-lessons.md#task) payload as an XML, it will prove useful to
+gain more insight in how actual [Task](basic-concepts-and-lessons.md#task) resources look like and how they relate to
+your [Task](basic-concepts-and-lessons.md#task) profiles and [ActivityDefinitions](basic-concepts-and-lessons.md#activitydefinition).  
+
+Below are some cURL command skeletons. Replace all <>-Placeholders with appropriate values. Host name depends on the
+instance you want to address. For this tutorial this is either one of `dic`, `cos` or `hrp`. Certificates can be found in 
+`test-data-generator/cert`. Lastly, the `example-task.xml` can be found in `tutorial-process/src/main/resources/fhir`.
+
+##### Linux:
+```shell
+curl https://<instance-host-name>/fhir/Task \
+--cacert <path/to/ca-certificate-file.pem> \
+--cert <path/to/client-certificate-file.pem>:password \
+--key <path/to/client-private-key-file.pem> \
+-H "Content-Type: application/fhir+xml" \
+-H "Accept: application/fhir+xml" \
+-d @<path/to/example-task.xml>
+```
+##### Windows CMD:
+```shell
+curl https://<instance-host-name>/fhir/Task ^
+--cacert <path/to/ca-certificate-file.pem> ^
+--cert <path/to/client-certificate-file.pem>:password ^
+--key <path/to/client-private-key-file.pem> ^
+-H "Content-Type: application/fhir+xml" ^
+-H "Accept: application/fhir+xml" ^
+-d @<path/to/example-task.xml>
+```
+*This may throw an error depending on which version of cURL Windows is using. If this is the case for you after making sure
+you entered everything correctly, you can try using Git's version of cURL instead by adding it to the very top of your system environment
+variables. Git's cURL is usually situated in C:\Program Files\Git\mingw64\bin.*
