@@ -25,12 +25,12 @@
 	</properties>
 
 	<description>TODO</description>
-	<url>https://github.com/highmed/dsf-process-tutorial</url>
+	<url>https://github.com/datasharingframework/dsf-process-tutorial</url>
 
 	<scm>
-		<connection>scm:git:git://github.com/highmed/dsf-process-tutorial.git</connection>
-		<developerConnection>scm:git:git@github.com:highmed/dsf-process-tutorial.git</developerConnection>
-		<url>https://github.com/highmed/dsf-process-tutorial</url>
+		<connection>scm:git:git://github.com/datasharingframework/dsf-process-tutorial.git</connection>
+		<developerConnection>scm:git:git@github.com:datasharingframework/dsf-process-tutorial.git</developerConnection>
+		<url>https://github.com/datasharingframework/dsf-process-tutorial</url>
 	</scm>
 
 	<licenses>
