@@ -5,6 +5,10 @@ Exercises will tell you which concepts or lessons you need to be familiar with t
 but may also provide additional information concerning that concept to solve that specific exercise.  
 Make sure you have read the [prerequisites](prerequisites.md).
 
+## Disclaimer
+The concept of `Tasks` exists in both the FHIR and BPMN domains. For this tutorial `Task resource` always refers
+to [FHIR Tasks](https://www.hl7.org/fhir/R4/task.html) and `Service Task` always means the BPMN concept.
+
 ## BPMN Model
 
 The DSF expects BPMN 2.0 for its process execution. This write-up will cover BPMN elements 
@@ -114,7 +118,7 @@ to ensure your plugin will only work with the communication partners you intend 
 
 ### Task
 
-The FHIR [Task](https://www.hl7.org/fhir/R4/task.html) resource enables the DSF's distributed communication. 
+The [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource enables the DSF's distributed communication. 
 Whenever a BPMN process instance communicates with a different process instance, the DSF will create a Task resource 
 based on parameters you set in the BPMN model itself but also during execution. It will then 
 automatically send the Task resource to the recipient to start or continue whatever process the Task resource referred to.
