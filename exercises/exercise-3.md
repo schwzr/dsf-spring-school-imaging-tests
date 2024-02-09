@@ -13,6 +13,8 @@ In order to solve this exercise, you should have solved exercise 2 and read the 
 [URLs](basic-concepts-and-lessons.md#urls) 
 and [Setting Targets For Message Events](basic-concepts-and-lessons.md#setting-targets-for-message-events).
 
+Solutions to this exercise are found on the branch `solutions/exercise-3`.
+
 ## Exercise Tasks
 1. Replace the [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/#none-end-event) of the `dsfdev_helloDic` process in the `hello-dic.bpmn` file with a [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event). Give the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) a name and an ID and set its implementation to the `HelloCosMessage` class.  
    Configure field injections `instantiatesCanonical`, `profile` and `messageName` in the BPMN model for the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event).
