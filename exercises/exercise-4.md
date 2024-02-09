@@ -8,6 +8,7 @@ In order to solve this exercise, you should have solved Exercise 3 and read the 
 [Exclusive Gateways](basic-concepts-and-lessons.md#exclusive-gateways)
 and [Conditions](basic-concepts-and-lessons.md#conditions).
 
+Solutions to this exercise are found on the branch `solutions/exercise-4`.
 
 ## Exercise Tasks
 1. In the `HelloDic` class, write an algorithm which decides whether the `dsfdev_helloCos` process should be started based on the start Task's input parameter `tutorial-input`.

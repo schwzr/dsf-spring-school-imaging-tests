@@ -9,6 +9,8 @@ In order to solve this exercise, you should have solved exercise 4 and read the 
 [Managing Multiple Incoming Messages And Missing Messages](basic-concepts-and-lessons.md#managing-multiple-incoming-messages-and-missing-messages)
 and [Message Correlation](basic-concepts-and-lessons.md#message-correlation).
 
+Solutions to this exercise are found on the branch `solutions/exercise-5`.
+
 ## Exercise Tasks
 1. Forward the value from the [Task.input](http://hl7.org/fhir/R4/task.html) parameter of the `helloDic` [Task](http://hl7.org/fhir/R4/task.html) to the `dsfdev_helloCos` process using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`.
 1. Modify the `dsfdev_helloCos` process to use a [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) to trigger the process in file `hello-hrp.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) based on the [AcitvityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) in file `hello-hrp.xml`.

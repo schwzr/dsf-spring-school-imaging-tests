@@ -14,6 +14,8 @@ In order to solve this exercise, you should have solved the first exercise and r
 [Placeholders](basic-concepts-and-lessons.md#placeholders) and
 [Read Access Tag](basic-concepts-and-lessons.md#read-access-tag).
 
+Solutions to this exercise are found on the branch `solutions/exercise-2`.
+
 
 ## Exercise Tasks
 1. Add a new boolean variable to the `TutorialConfig` class. It will enable/disable logging and have its value injected from an environment variable. Add the annotation and specify the default value as `false`. You may freely choose a name for your environment variable here. Just make sure you follow the naming convention explained earlier.
