@@ -76,14 +76,12 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_DB: postgres
       KC_DB_USERNAME: liquibase_user
-      KC_DB_PASSWORD: /run/secrets/db_liquibase.password
-      KC_DB_SCHEMA: keycloak
+      KC_DB_PASSWORD: NKb2D7ZCxgmhrddh4KNgCrBr49mSsqWUnQAQHgGPkYZ2k7W9VQCFevuGRFYeZg9p
       KC_DB_URL: jdbc:postgresql://db/keycloak
     secrets:
       - keycloak_certificate.pem
       - keycloak_certificate_private_key.pem
       - keycloak_trust_store.jks
-      - db_liquibase.password
     volumes:
       - type: bind
         source: ./keycloak
