@@ -19,6 +19,8 @@ In order to solve this exercise, you need to have read the topics on [FHIR Task]
 [BPMN Process Execution](basic-concepts-and-lessons.md#bpmn-process-execution), [BPMN Process Variables](basic-concepts-and-lessons.md#bpmn-process-variables), 
 [Accessing BPMN Process Variables](basic-concepts-and-lessons.md#accessing-bpmn-process-variables) and [Process Access Control](basic-concepts-and-lessons.md#process-access-control).
 
+Solutions to this exercise are found on the branch `solutions/exercise-1`.
+
 ## Exercise Tasks
 1. Add a log message to the `HelloDic#doExecute` method that logs the recipient organization identifier from the start [FHIR Task](http://hl7.org/fhir/R4/task.html) resource.
 
