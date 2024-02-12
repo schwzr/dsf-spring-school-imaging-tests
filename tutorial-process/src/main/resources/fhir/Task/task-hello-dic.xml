@@ -4,9 +4,9 @@
     </meta>
     <identifier>
         <system value="http://dsf.dev/sid/task-identifier" />
-        <value value="http://dsf.dev/bpe/helloDic/#{version}/task-hello-dic" />
+        <value value="http://dsf.dev/bpe/Process/helloDic/#{version}/task-hello-dic" />
     </identifier>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|#{version}" />
     <status value="draft"/>
     <intent value="order"/>
     <authoredOn value="#{date}" />
