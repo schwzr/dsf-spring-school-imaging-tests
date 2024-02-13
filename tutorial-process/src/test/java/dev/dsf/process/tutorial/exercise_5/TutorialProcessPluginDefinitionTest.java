@@ -29,6 +29,7 @@ import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StructureDefinition;
+import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.Test;
 
@@ -125,7 +126,19 @@ public class TutorialProcessPluginDefinitionTest
 		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
-		assertEquals(5, resources.size());
+		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+		int numExpectedResources = 5;
+
+		if(draftTaskExists(draftTaskFile))
+		{
+			numExpectedResources  = 6;
+			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
+			assertEquals(errorDraftTask, 1, resources.stream().filter(r -> r instanceof Task)
+					.count()
+			);
+		}
+
+		assertEquals(numExpectedResources, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
 				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
@@ -158,6 +171,10 @@ public class TutorialProcessPluginDefinitionTest
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
+	}
+
+	private boolean draftTaskExists(String draftTaskFile){
+		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
 	}
 
 	@Test
