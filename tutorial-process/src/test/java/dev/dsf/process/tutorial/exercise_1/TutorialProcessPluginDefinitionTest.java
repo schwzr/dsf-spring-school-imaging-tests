@@ -62,11 +62,11 @@ public class TutorialProcessPluginDefinitionTest
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
 
-		int numExpectedResources = 4;
+		int numExpectedResources = 2;
 
 		if(draftTaskExists(draftTaskFile))
 		{
-			numExpectedResources  = 5;
+			numExpectedResources  = 3;
 			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
 			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task)
 					.count()
