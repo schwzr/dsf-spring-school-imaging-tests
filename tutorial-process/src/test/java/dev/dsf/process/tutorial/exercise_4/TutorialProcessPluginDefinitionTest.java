@@ -134,7 +134,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		int numberEntries = helloDic.size();
 		String errorTooManyEntries = "Too many processes in Map. Got " + numberEntries + " entries. Expected 1.";
-		assertEquals(errorTooManyEntries, 1, numberEntries);
+		assertEquals(errorTooManyEntries, 2, numberEntries);
 
 		String firstKey = helloDic.keySet().stream().findFirst().get();
 		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
