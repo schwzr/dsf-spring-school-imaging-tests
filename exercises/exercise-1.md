@@ -17,7 +17,9 @@ In order to solve this exercise, you need to have read the topics on [FHIR Task]
 [Spring Integration](basic-concepts-and-lessons.md#spring-integration), [Service Tasks](basic-concepts-and-lessons.md#service-tasks), 
 [Service Delegates](basic-concepts-and-lessons.md#service-delegates),
 [BPMN Process Execution](basic-concepts-and-lessons.md#bpmn-process-execution), [BPMN Process Variables](basic-concepts-and-lessons.md#bpmn-process-variables), 
-[Accessing BPMN Process Variables](basic-concepts-and-lessons.md#accessing-bpmn-process-variables) and [Process Access Control](basic-concepts-and-lessons.md#process-access-control).
+[Accessing BPMN Process Variables](basic-concepts-and-lessons.md#accessing-bpmn-process-variables),
+[Process Access Control](basic-concepts-and-lessons.md#process-access-control) 
+and [Starting A Process Via Task Resources](basic-concepts-and-lessons.md#starting-a-process-via-task-resources).
 
 Solutions to this exercise are found on the branch `solutions/exercise-1`.
 
@@ -51,6 +53,22 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     
     Take a look at the [dsf-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-process-authorization-1.0.0.xml) CodeSystem.
     </details>
+5. In order to start your process you need to either create a regular [Task](basic-concepts-and-lessons.md#task) resource
+    or a [Draft Task Resource](basic-concepts-and-lessons.md#draft-task-resources). Based on whether you would like
+    to use cURL or the DSF FHIR server's web interface for starting processes you can do one of the following
+    assignments (although we invite you to do both):
+   * Create a [Task](basic-concepts-and-lessons.md#task) resource in `tutorial-process/src/main/resources/fhir/example-task.xml` based on the [Task](basic-concepts-and-lessons.md#task)
+     profile `tutorial-process/src/main/resources/fhir/StructureDefinition/task-hello-dic.xml`.  
+     You will need it to start your process via cURL.
+   
+        <details>
+        <summary>Don't know how to create Task resources?</summary>
+
+        Take a look at [this guide](basic-concepts-and-lessons.md#creating-task-resources-based-on-a-definition).
+        </details>
+   * Create a [Draft Task Resource](basic-concepts-and-lessons.md#draft-task-resources). You will need to be able
+    to create [Task](basic-concepts-and-lessons.md#task) resources as a prerequisite. If you don't know how to do this, 
+    we recommend checking out the cURL method first and revisiting this assignment after that.
 
 ## Solution Verification
 ### Maven Build and Automated Tests
@@ -82,15 +100,7 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
 	Verify the DSF BPE server started successfully and deployed the `dsfdev_helloDic` process. 
     The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to `https://dic/fhir/ActivityDefinition` to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to `https://dic/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-dic` to check if the expected [FHIR Task](http://hl7.org/fhir/R4/task.html) profile was created.
 
-3. Start the `dsfdev_helloDic` process by posting an appropriate [FHIR Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server:
-
-    The [FHIR Task](http://hl7.org/fhir/R4/task.html) resource is used to tell the DSF BPE server via the DSF FHIR server that a specific organization wants to start (or continue) one process instance at a specified organization. The needed [FHIR Task](http://hl7.org/fhir/R4/task.html) resource can be generated and posted to the DSF FHIR server by executing the `main` method of the `dev.dsf.process.tutorial.TutorialExampleStarter` class.
-   
-    For the TutorialExampleStarter to work the location of the client certificate and its password need to be specified:
-	* Either specify the location and password via program arguments:
-		1. location of the client certificate (`.../dsf-process-tutorial/test-data-generator/cert/dic-client/dic-client_certificate.p12`),
-  		2. password for the client certificate (`password`)
-    	* Or set the environment variables `DSF_CLIENT_CERTIFICATE_PATH` and `DSF_CLIENT_CERTIFICATE_PASSWORD` with the appropriate values.
+3. Start the `dsfdev_helloDic` process by posting an appropriate [FHIR Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-lessons.md#starting-a-process-via-task-resources) again if you are unsure.  
 	
     Verify that the  [FHIR Task](http://hl7.org/fhir/R4/task.html) resource could be created at the DSF FHIR server. Either look at your docker container log for the DIC FHIR server or find your [Task](basic-concepts-and-lessons.md#task) resource in the list of all [Task](basic-concepts-and-lessons.md#task) resources under https://dic/fhir/Task/. 
 	
