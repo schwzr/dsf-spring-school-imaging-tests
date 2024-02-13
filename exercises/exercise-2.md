@@ -22,22 +22,22 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 2. Modify the constructor of the `HelloDic` class to use the newly created variable. Don't forget to change the `HelloDic` bean in `TutorialConfig`.
 3. Use the value of the environment variable in the `HelloDic` class to decide whether the log message from exercise 1 should be printed.
 4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
-5. Create a new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
+5. Create a new [CodeSystem](basic-concepts-and-lessons.md#codesystem) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't know where to put the CodeSystem?</summary>
    
-   `tutorial-process/src/main/resources/fhir/CodeSystem`. Create the folder if it doesn't exist.
+   `tutorial-process/src/main/resources/fhir/CodeSystem`.
    </details>
 
-6. Create a new [ValueSet](http://hl7.org/fhir/R4/valueset.html) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](http://hl7.org/fhir/R4/codesystem.html). Don't forget to add the `read-access-tag`.
+6. Create a new [ValueSet](basic-concepts-and-lessons.md#valueset) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](basic-concepts-and-lessons.md#codesystem). Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't know where to put the ValueSet?</summary>
 
-   `tutorial-process/src/main/resources/fhir/ValueSet`. Create the folder if it doesn't exist.
+   `tutorial-process/src/main/resources/fhir/ValueSet`.
    </details>
 
-7. Add a new input parameter of type `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile using the concept of the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) as a fixed coding.
-8. `task-hello-dic` and by extension the process `dsfdev_helloDic` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](http://hl7.org/fhir/R4/codesystem.html) and [ValueSet](http://hl7.org/fhir/R4/valueset.html) resources for the `dsfdev_helloDic` process.
+7. Add a new input parameter of type `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile using the concept of the new [CodeSystem](basic-concepts-and-lessons.md#codesystem) as a fixed coding.
+8. `task-hello-dic` and by extension the process `dsfdev_helloDic` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](basic-concepts-and-lessons.md#codesystem) and [ValueSet](basic-concepts-and-lessons.md#valueset) resources for the `dsfdev_helloDic` process.
 9. Read the new input parameter in the `HelloDic` class from the start [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
    <details>
    <summary>Don't know how to get the input parameter?</summary>
