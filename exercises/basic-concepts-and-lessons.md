@@ -110,7 +110,7 @@ reaches the evaluation of the expression.
 
 ## FHIR
 
-The DSF uses a variety of [FHIR resources](https://dsf.dev/intro/info/basics.html#why-are-we-using-fhir-and-bpmn). 
+The DSF uses a variety of [FHIR resources](https://dsf.dev/intro/info/basics.html#why-are-we-using-fhir-and-bpmn). They use the XML format for the DSF.  
 The most important ones for plugin development will be [ActivityDefinitions](http://hl7.org/fhir/R4/activitydefinition.html), [Tasks](https://www.hl7.org/fhir/R4/task.html), 
 [CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) and [ValueSets](https://www.hl7.org/fhir/R4/valueset.html).
 There is also a catalogue of DSF-specific FHIR resources including CodeSystems, ValueSets and Extensions. For now, you can find them in the official
@@ -147,12 +147,19 @@ way the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release
 including it in a [ValueSet](basic-concepts-and-lessons.md#valueset) to be able to use it in the Task resource.
 
 ### CodeSystem
+**First use in [exercise 2](exercise-2.md)**
+
+[CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) are usually represent a set of concepts which 
+can be assigned to a code (think LOINC). If you want to actually use a Code in a resource, you will have to include them in a 
+[ValueSet](basic-concepts-and-lessons.md#valueset).
 
 Plugin development for the DSF requires the use of [CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) in two major ways:
-1. Using existing DSF [CodeSystems](https://github.com/datasharingframework/dsf/tree/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem) in other FHIR resources like the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
+1. Using existing [DSF CodeSystems](https://github.com/datasharingframework/dsf/tree/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem) in other FHIR resources like the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
 2. Creating your own CodeSystem to add additional [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters) to your [Task](https://www.hl7.org/fhir/R4/task.html) profiles.
 
 ### ValueSet
+**First use in [exercise 2](exercise-2.md)**
+[ValueSets](https://www.hl7.org/fhir/R4/valueset.html) act kind of like a 
 
 [ValueSets](https://www.hl7.org/fhir/R4/valueset.html) are mostly needed to use the [Concepts](https://www.hl7.org/fhir/R4/codesystem-definitions.html#CodeSystem.concept) from [CodeSystems](basic-concepts-and-lessons.md#codesystem)
 in your [Task](basic-concepts-and-lessons.md#task) profiles.
