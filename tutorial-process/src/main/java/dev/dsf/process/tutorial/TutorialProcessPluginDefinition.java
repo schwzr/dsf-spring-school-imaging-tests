@@ -41,11 +41,8 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	public Map<String, List<String>> getFhirResourcesByProcessId()
 	{
 
-		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml"; // 'a' in the beginning of 'aHelloDic' stands for
-																	// ActivityDefinition
-
-		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml"; // 's' in the beginning of 'sTaskHelloDic'
-																				// stands for StructureDefinition
+		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";
+		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";
 		String tTaskHelloDic = "fhir/Task/task-hello-dic.xml";
 		String cTutorial = "fhir/CodeSystem/tutorial.xml";
 
