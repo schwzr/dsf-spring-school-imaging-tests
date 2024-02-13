@@ -44,8 +44,8 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";
 		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";
 		String tTaskHelloDic = "fhir/Task/task-hello-dic.xml";
-		String cTutorial = "fhir/CodeSystem/tutorial.xml";
 
+		String cTutorial = "fhir/CodeSystem/tutorial.xml";
 		String vTutorial = "fhir/ValueSet/tutorial.xml";
 
 		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
