@@ -57,6 +57,6 @@ public class TutorialProcessPluginDefinitionTest
 		List<Resource> resources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
-		assertEquals(2, resources.size());
+		assertEquals(3, resources.size());
 	}
 }
