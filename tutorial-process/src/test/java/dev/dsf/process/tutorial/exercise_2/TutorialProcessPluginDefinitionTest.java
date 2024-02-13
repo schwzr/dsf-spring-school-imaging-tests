@@ -83,10 +83,10 @@ public class TutorialProcessPluginDefinitionTest
 		String errorTooManyEntries = "Too many processes in Map. Got " + numberEntries + " entries. Expected 1.";
 		assertEquals(errorTooManyEntries, 1, numberEntries);
 
-		String firstKey = helloDic.keySet().stream().findFirst().get();
+		String dicProcessKey = helloDic.keySet().stream().filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC)).findFirst().get();
 		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
-				+ ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + firstKey + "'";
-		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, firstKey);
+				+ ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + dicProcessKey + "'";
+		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, dicProcessKey);
 
 		String errorCodeSystem = "Process is missing CodeSystem with file name '" + codeSystemFile + "'";
 		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
