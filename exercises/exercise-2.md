@@ -71,8 +71,7 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_helloDic` process.
 
-3. Start the `dsfdev_helloDic` process by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization:
-   Execute the `main` method of the `dev.dsf.process.tutorial.TutorialExampleStarter` class as in [exercise 1](exercise-1.md) to create the [Task](http://hl7.org/fhir/R4/task.html) resource needed to start the `dsfdev_helloDic` process.
+3. Start the `dsfdev_helloDic` process by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-lessons.md#starting-a-process-via-task-resources) again if you are unsure.
 
    Verify that the `dsfdev_helloDic` process was executed by the DSF BPE server. The BPE server should:
     * Print a message showing that the process was started.
