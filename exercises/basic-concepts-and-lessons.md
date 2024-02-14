@@ -821,7 +821,7 @@ will create an XML element with the same name and the value according to [URLs](
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
 </Task>
 ```
-We can continue this process for all basic elements like these. Just make sure you pay attention to use the correct
+We can continue this process for all primitive elements like these. Just make sure you pay attention to use the correct
 data type (e.g. proper coding value for elements with `coding` type).
 
 Let's look at a more complex element like the `requester` element:  
@@ -845,7 +845,7 @@ By now your [Task](basic-concepts-and-lessons.md#task) resources should look som
 ```
 </details>
 
-We will start the same way we started with simple elements, by adding the `requester` element:  
+We will start the same way we started with primitive elements, by adding the `requester` element:  
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
@@ -861,7 +861,7 @@ We will start the same way we started with simple elements, by adding the `reque
 </Task>
 ```
 
-Then, we'll add simple elements to `requester` like we did before for `Task`:  
+Then, we'll add primitive elements to `requester` like we did before for `Task`:  
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
@@ -878,7 +878,7 @@ Then, we'll add simple elements to `requester` like we did before for `Task`:
 ```
 *Important to note here that the value for the `status` will always be `requested` for Tasks being posted using cURL and the `type` element for `requester` and `recipient` will always have the value `Organization` in the DSF context.*
 
-Next, we'll add the `identifier` element and its simple sub-elements just like we started out doing it for the `requester` element:  
+Next, we'll add the `identifier` element and its primitive sub-elements just like we started out doing it for the `requester` element:  
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
@@ -981,7 +981,7 @@ All this means is that we effectively ignore the name of the slice as an element
 ```
 
 Now you should be able to add all remaining mandatory elements to your [Task](basic-concepts-and-lessons.md#task) 
-resource. In the end, it should look something like this:  
+resource on your own. In the end, it should look something like this:  
 <details>
 <summary>Suggested solution</summary>
 
