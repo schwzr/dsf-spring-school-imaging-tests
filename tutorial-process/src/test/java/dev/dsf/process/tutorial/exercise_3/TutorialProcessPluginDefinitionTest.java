@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StructureDefinition;
+import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.Test;
 
@@ -114,6 +116,10 @@ public class TutorialProcessPluginDefinitionTest
 		String codeSystemCode = "tutorial-input";
 		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
 
+		String codeSystemFile = "fhir/CodeSystem/tutorial.xml";
+		String valueSetFile = "fhir/CodeSystem/tutorial.xml";
+		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 		boolean initialized = processPlugin
@@ -121,22 +127,56 @@ public class TutorialProcessPluginDefinitionTest
 
 		assertEquals(true, initialized);
 
-		List<Resource> helloDic = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+		Map<String, List<String>> helloDic = definition.getFhirResourcesByProcessId();
+
+		int numberEntries = helloDic.size();
+		String errorTooManyEntries = "Too many processes in Map. Got " + numberEntries + " entries. Expected 1.";
+		assertEquals(errorTooManyEntries, 2, numberEntries);
+
+		String dicProcessKey = helloDic.keySet().stream().filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC)).findFirst().get();
+		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
+				+ ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + dicProcessKey + "'";
+		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, dicProcessKey);
+
+		String errorCodeSystem = "Process is missing CodeSystem with file name '" + codeSystemFile + "'";
+		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+				.filter(r -> codeSystemFile.equals(r)).count());
+
+		String errorValueSet = "Process is missing ValueSet with file name '" + valueSetFile + "'";
+		assertEquals(errorValueSet, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+				.filter(r -> valueSetFile.equals(r)).count());
+
+		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
-		String errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
+		errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
-		assertEquals(errorCodeSystem, 1, helloDic.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
+		assertEquals(errorCodeSystem, 1, helloDicResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
 				.filter(c -> codeSystemUrl.equals(c.getUrl()))
 				.filter(c -> c.getConcept().stream().anyMatch(con -> codeSystemCode.equals(con.getCode()))).count());
 
-		String errorValueSet = "Process is missing ValueSet with url '" + valueSetUrl + "'";
-		assertEquals(errorValueSet, 1, helloDic.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
+		errorValueSet = "Process is missing ValueSet with url '" + valueSetUrl + "'";
+		assertEquals(errorValueSet, 1, helloDicResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> valueSetUrl.equals(v.getUrl()))
 				.filter(v -> v.getCompose().getInclude().stream().anyMatch(i -> codeSystemUrl.equals(i.getSystem())))
 				.count());
 
-		assertEquals(4, helloDic.size());
+		int numExpectedResources = 4;
+
+		if(draftTaskExists(draftTaskFile))
+		{
+			numExpectedResources  = 5;
+			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
+			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task)
+					.count()
+			);
+		}
+
+		assertEquals(numExpectedResources, helloDicResources.size());
+	}
+
+	private boolean draftTaskExists(String draftTaskFile){
+		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
 	}
 
 	@Test
