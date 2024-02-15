@@ -25,6 +25,14 @@
       <path value="Task.instantiatesCanonical" />
       <fixedCanonical value="http://dsf.dev/bpe/Process/helloDic|#{version}" />
     </element>
+    <element id="Task.requester.type">
+      <path value="Task.requester.type"/>
+      <min value="1"/>
+    </element>
+    <element id="Task.restriction.recipient.type">
+      <path value="Task.restriction.recipient.type"/>
+      <min value="1" />
+    </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
         <valueString value="Parameter" />

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.Task;
 import org.junit.Test;
 
 import dev.dsf.bpe.plugin.ProcessIdAndVersion;
@@ -48,15 +50,33 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testHelloDicResources() throws Exception
 	{
+		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 		boolean initialized = processPlugin
 				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertEquals(true, initialized);
 
-		List<Resource> resources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
-		assertEquals(2, resources.size());
+
+		int numExpectedResources = 2;
+
+		if(draftTaskExists(draftTaskFile))
+		{
+			numExpectedResources  = 3;
+			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
+			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task)
+					.count()
+			);
+		}
+
+		assertEquals(numExpectedResources, helloDicResources.size());
+	}
+
+	private boolean draftTaskExists(String draftTaskFile){
+		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
 	}
 }

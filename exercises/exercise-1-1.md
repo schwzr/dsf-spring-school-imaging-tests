@@ -31,7 +31,7 @@ An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR 
 
 ## Hint
 You can also use this technique to debug the DSF FHIR server and DSF BPE server side of the DSF by cloning the [DSF repository](https://github.com/datasharingframework/dsf) and setting up the remote debugger in that project.
-When you execute `TutorialExampleStarter` you will be able to see what the DSF is doing internally when executing your process.
+You will be able to see what the DSF is doing internally when executing your process.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 1](exercise-1.md) • **Exercise 1.1** • [Exercise 2](exercise-2.md) • [Exercise 2.1](exercise-2-1.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
