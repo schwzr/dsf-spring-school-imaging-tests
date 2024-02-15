@@ -444,7 +444,7 @@ to be able to execute a BPMN process:
                <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
                     <valueIdentifier>
                         <system value="http://dsf.dev/sid/organization-identifier" />
-                        <value value="identifier.remote.org" />
+                        <value value="identifier.remote.org" />     <!--replace this value-->
                     </valueIdentifier>
                </extension>
                <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -456,7 +456,7 @@ to be able to execute a BPMN process:
                <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
                     <valueIdentifier>
                         <system value="http://dsf.dev/sid/organization-identifier" />
-                        <value value="identifier.local.org" />
+                        <value value="identifier.local.org" />      <!--replace this value-->
                     </valueIdentifier>
                </extension>
                <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -491,13 +491,13 @@ organization to be able to execute a BPMN process:
                     <extension url="parent-organization">
                         <valueIdentifier>
                             <system value="http://dsf.dev/sid/organization-identifier" />
-                            <value value="identifier.parent.org" />
+                            <value value="identifier.parent.org" />     <!--replace this value-->
                         </valueIdentifier>
                     </extension>
                     <extension url="organization-role">
                         <valueCoding>
                             <system value="http://dsf.dev/fhir/CodeSystem/organization-role" />
-                            <code value="SOME_ROLE" />
+                            <code value="SOME_ROLE" />      <!--replace this value-->
                         </valueCoding>
                     </extension>
                 </extension>
@@ -511,13 +511,13 @@ organization to be able to execute a BPMN process:
                     <extension url="parent-organization">
                         <valueIdentifier>
                             <system value="http://dsf.dev/sid/organization-identifier" />
-                            <value value="identifier.parent.org" />
+                            <value value="identifier.parent.org" />     <!--replace this value-->
                         </valueIdentifier>
                     </extension>
                     <extension url="organization-role">
                         <valueCoding>
                             <system value="http://dsf.dev/fhir/CodeSystem/organization-role" />
-                            <code value="SOME_ROLE" />
+                            <code value="SOME_ROLE" />      <!--replace this value-->
                         </valueCoding>
                     </extension>
                 </extension>
