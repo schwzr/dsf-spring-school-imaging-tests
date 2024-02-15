@@ -42,7 +42,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-3`.
     
     You can base the authorization extension off [scenario 2](basic-concepts-and-guides.md#scenario-2).
     </details>
-1. Add the `dsfdev_helloCos` process and its resources to the `TutorialProcessPluginDefinition` class.
+1. Add the `dsfdev_helloCos` process and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `helloCos` process as the key and a List of associated FHIR resources as the value.
 1. Modify `HelloDic` service class to set the `target` process variable for the `Test_COS` organization.
 1. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
 
