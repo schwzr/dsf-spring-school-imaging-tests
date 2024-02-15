@@ -120,7 +120,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals(2, extensionsByUrl.size());
 
 		Extension processAuthorization0 = extensionsByUrl.get(0);
-		Extension requester = processAuthorization0.getExtensionByUrl("requester");
+		Extension requester = processAuthorization0.getExtensionsByUrl("requester").stream()
+				.filter(extension -> ((Coding) extension.getValue()).getCode().equals("LOCAL_ALL")).findFirst().get();
 		assertNotNull(requester);
 
 		Type value = requester.getValue();
@@ -152,14 +153,14 @@ public class ActivityDefinitionProfileTest
 		Extension extRequesterExtRole = ((Coding) extRequester.getValue()).getExtensionByUrl(
 				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role");
 		assertNotNull(extRequesterExtRole);
-		Extension extRequesterExtRoleConsortium = extRequesterExtRole.getExtensionByUrl("consortium");
+		Extension extRequesterExtRoleConsortium = extRequesterExtRole.getExtensionByUrl("parent-organization");
 		assertNotNull(extRequesterExtRoleConsortium);
 		assertTrue(extRequesterExtRoleConsortium.getValue() instanceof Identifier);
 		assertEquals("http://dsf.dev/sid/organization-identifier",
 				((Identifier) extRequesterExtRoleConsortium.getValue()).getSystem());
 		assertEquals("medizininformatik-initiative.de",
 				((Identifier) extRequesterExtRoleConsortium.getValue()).getValue());
-		Extension extRequesterExtRoleRole = extRequesterExtRole.getExtensionByUrl("role");
+		Extension extRequesterExtRoleRole = extRequesterExtRole.getExtensionByUrl("organization-role");
 		assertNotNull(extRequesterExtRoleRole);
 		assertTrue(extRequesterExtRoleRole.getValue() instanceof Coding);
 		assertEquals("http://dsf.dev/fhir/CodeSystem/organization-role",
@@ -174,18 +175,18 @@ public class ActivityDefinitionProfileTest
 		Extension extRecipientExtRole = ((Coding) extRecipient.getValue()).getExtensionByUrl(
 				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-parent-organization-role");
 		assertNotNull(extRecipientExtRole);
-		Extension extRecipientExtRoleConsortium = extRecipientExtRole.getExtensionByUrl("consortium");
+		Extension extRecipientExtRoleConsortium = extRecipientExtRole.getExtensionByUrl("parent-organization");
 		assertNotNull(extRecipientExtRoleConsortium);
 		assertTrue(extRecipientExtRoleConsortium.getValue() instanceof Identifier);
 		assertEquals("http://dsf.dev/sid/organization-identifier",
 				((Identifier) extRecipientExtRoleConsortium.getValue()).getSystem());
 		assertEquals("medizininformatik-initiative.de",
 				((Identifier) extRecipientExtRoleConsortium.getValue()).getValue());
-		Extension extRecipientExtRoleRole = extRecipientExtRole.getExtensionByUrl("role");
+		Extension extRecipientExtRoleRole = extRecipientExtRole.getExtensionByUrl("organization-role");
 		assertNotNull(extRecipientExtRoleRole);
 		assertTrue(extRecipientExtRoleRole.getValue() instanceof Coding);
 		assertEquals("http://dsf.dev/fhir/CodeSystem/organization-role",
 				((Coding) extRecipientExtRoleRole.getValue()).getSystem());
-		assertEquals("MeDIC", ((Coding) extRecipientExtRoleRole.getValue()).getCode());
+		assertEquals("DIC", ((Coding) extRecipientExtRoleRole.getValue()).getCode());
 	}
 }
