@@ -717,6 +717,8 @@ is most often used when overriding the `getAdditionalInputParamters` method of y
 **First use in [exercise 3](exercise-3.md)**
 
 Setting a target for a message event requires a `Target` object. To create one, you require a target's organization identifier, endpoint identifier and endpoint address.
+You can find these values by visiting the DSF FHIR server's webinterface. In the top right corner, click
+the `Show Bookmarks` button, then select `Endpoint`. You will be taken to a list of all Endpoint available to the FHIR server.  
 There are two ways of adding `targets` to the BPMN execution variables:
 #### 1. Adding the target in the message event implementation
 In your message event implementation (the class extending `AbstractTaskMessageSend`), you can override `AbstractTaskMessageSend#doExecute`,
