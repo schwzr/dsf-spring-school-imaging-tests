@@ -22,6 +22,8 @@ public class TutorialExampleStarter
 	// test-data-generator/cert/dic-client/dic-client_certificate.p12
 	// Environment variable "DSF_CLIENT_CERTIFICATE_PASSWORD" or args[1]: the password of the client-certificate
 	// password
+
+	//TODO: Delete this file
 	public static void main(String[] args) throws Exception
 	{
 		Task task = createStartResource();
