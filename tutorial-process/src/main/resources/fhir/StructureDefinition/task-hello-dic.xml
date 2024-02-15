@@ -25,7 +25,7 @@
       <path value="Task.instantiatesCanonical" />
       <fixedCanonical value="http://dsf.dev/bpe/Process/helloDic|#{version}" />
     </element>
-    <element id="Task.requester.type">                        <!--TODO: Made type mandatory since FHIR server requires it, should be designated as mandatory in dsf-task-base but isn't. Keep it in here until dsf-task-base is changed or FHIR server doesn't require it anymore-->
+    <element id="Task.requester.type">
       <path value="Task.requester.type"/>
       <min value="1"/>
     </element>
