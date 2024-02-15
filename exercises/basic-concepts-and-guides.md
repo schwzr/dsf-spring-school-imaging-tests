@@ -1,22 +1,30 @@
-# Basic Concepts And Lessons
+# Basic Concepts And Guides
 
-This is a centralized write-up of all concepts and lessons you will need to solve the tutorial exercises.
-Exercises will tell you which concepts or lessons you need to be familiar with to be able to solve them 
+This is a centralized write-up of all concepts and guides you will need to solve the tutorial exercises.
+Exercises will tell you which concepts or guides you need to be familiar with to be able to solve them 
 but may also provide additional information concerning that concept to solve that specific exercise.  
 Make sure you have read the [prerequisites](prerequisites.md).
+
+***
 
 ## Disclaimer
 The concept of `Tasks` exists in both the FHIR and BPMN domains. For this tutorial `Task resource` always refers
 to [FHIR Tasks](https://www.hl7.org/fhir/R4/task.html) and `Service Task` always means the BPMN concept.
 
+***
+
 ## BPMN Model
 
-The DSF expects BPMN 2.0 for its process execution. This write-up will cover BPMN elements 
+The DSF expects BPMN 2.0 for its process execution. This write-up covers the BPMN elements 
 most commonly used in DSF process plugins.
+
+***
 
 ### Sequence Flow
 BPMN 2.0 calls the continuous arrows connecting the BPMN elements in BPMN models, Sequence Flow.
 Sequence Flow exits one BPMN element and points at the next BPMN element to be processed.
+
+***
 
 ### Service Tasks
 **First use in [exercise 1](exercise-1.md)**
@@ -26,6 +34,8 @@ when creating BPMN models. They are different from regular BPMN Tasks in that th
 link an implementation to the [Service Task](https://docs.camunda.org/manual/7.20/reference/bpmn20/tasks/service-task/)
 which can be called and executed by a BPMN engine. This BPE (Business Process Engine) server of the DSF leverages
 this feature to execute your BPMN processes.
+
+***
 
 ### Messaging
 **First use in [exercise 3](exercise-3.md)**
@@ -55,29 +65,31 @@ are used to send messages during process execution.
 
 #### Message Intermediate Catching Event
 [Message Intermediate Catching Events](https://docs.camunda.org/manual/7.20/reference/bpmn20/events/message-events/#message-intermediate-catching-event) serve as
-the counterpart to [Message Intermediate Throwing Events](basic-concepts-and-lessons.md#message-intermediate-throwing-event). 
+the counterpart to [Message Intermediate Throwing Events](basic-concepts-and-guides.md#message-intermediate-throwing-event). 
 Use them whenever you expect to receive a message from another process or organization during execution.
 
 #### Message End Event
 The [Message End Event](https://docs.camunda.org/manual/7.20/reference/bpmn20/events/message-events/#message-end-event) will 
 stop the execution of a BPMN process and finish by sending a message.
 
+***
+
 ### Gateways
 
-[Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/) allow you to control the [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow). Different
+[Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/) allow you to control the [Sequence Flow](basic-concepts-and-guides.md#sequence-flow). Different
 types of gateways will be useful for different scenarios.
 
 #### Exclusive Gateways
 **First use in [exercise 4](exercise-4.md)**
 
 [Exclusive Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/exclusive-gateway/)
-allow you to decide which [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) should be followed based on [conditions](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/#conditions). 
+allow you to decide which [Sequence Flow](basic-concepts-and-guides.md#sequence-flow) should be followed based on [conditions](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/#conditions). 
 [Conditions](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/#conditions) aren't part of the 
 [Exclusive Gateways](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/exclusive-gateway/) themselves. You set them 
 through the sequence Flow Exiting the [Exclusive Gateway](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/exclusive-gateway/).  
-In the [Camunda Modeler](https://camunda.com/download/modeler/), you can add conditions to [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) by selecting
-a [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) and opening the `Condition` tab. You can find more information on how to
-use Conditions [here](basic-concepts-and-lessons.md#conditions).
+In the [Camunda Modeler](https://camunda.com/download/modeler/), you can add conditions to [Sequence Flow](basic-concepts-and-guides.md#sequence-flow) by selecting
+a [Sequence Flow](basic-concepts-and-guides.md#sequence-flow) and opening the `Condition` tab. You can find more information on how to
+use Conditions [here](basic-concepts-and-guides.md#conditions).
 
 #### Event-based Gateway
 **First use in [exercise 5](exercise-5.md)**
@@ -85,14 +97,18 @@ use Conditions [here](basic-concepts-and-lessons.md#conditions).
 The [Event-based Gateway](https://docs.camunda.org/manual/7.20/reference/bpmn20/gateways/event-based-gateway/)
 allows you model scenarios where you are expecting one out of a number of events to occur. 
 
+***
+
 ### Timer Intermediate Catching Events
 **First use in [exercise 5](exercise-5.md)**
 
 A [Timer Intermediate Catching Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event)
 allows you model stopwatch behavior. A timer is started once the BPMN execution arrives at the event.
 The duration until the timer runs out is specified using the [ISO 8601 Durations](http://en.wikipedia.org/wiki/ISO_8601#Durations) format. 
-Examples can be found [here](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#time-duration). After running out, the BPMN process executes the [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow) following
+Examples can be found [here](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#time-duration). After running out, the BPMN process executes the [Sequence Flow](basic-concepts-and-guides.md#sequence-flow) following
 the [Timer Intermediate Catching Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event).
+
+***
 
 ### Conditions
 **First use in [exercise 4](exercise-4.md)**
@@ -105,8 +121,10 @@ to your decisions logic and is rarely used for process plugins. The more common 
 Expressions have the following syntax: `${expression}`. For this tutorial, _expression_ will
 use a boolean condition like `var == true`. You can learn more advanced features of Expressions [here](https://docs.camunda.org/manual/7.20/user-guide/process-engine/expression-language/).
  For this to work during BPMN process execution, the variable you want to use for the boolean 
-condition must be available in the BPMN process variables before [Sequence Flow](basic-concepts-and-lessons.md#sequence-flow)
+condition must be available in the BPMN process variables before [Sequence Flow](basic-concepts-and-guides.md#sequence-flow)
 reaches the evaluation of the expression.
+
+***
 
 ## FHIR
 
@@ -116,6 +134,8 @@ The most important ones for plugin development will be [ActivityDefinitions](htt
 There is also a catalogue of DSF-specific FHIR resources including CodeSystems, ValueSets and Extensions. For now, you can find them in the official
 DSF GitHub repository [here](https://github.com/datasharingframework/dsf/tree/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir).
 
+***
+
 ### ActivityDefinition
 
 [ActivityDefinitions](http://hl7.org/fhir/R4/activitydefinition.html) are used by the DSF to advertise which processes are
@@ -123,6 +143,8 @@ available at any given instance and who is allowed to request and who is allowed
 For this they use an extension called [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
 Having an understanding of this extension and its references to the other DSF-specific FHIR resources is vital
 to ensure your plugin will only work with the communication partners you intend to include for your particular use-case.
+
+***
 
 ### Task
 **First use in [exercise 1](exercise-1.md)**
@@ -132,7 +154,7 @@ Whenever a BPMN process instance communicates with a different process instance,
 based on parameters you set in the BPMN model itself but also during execution. It will then 
 automatically send the Task resource to the recipient to start or continue whatever process the Task resource referred to.
 All Task resources used in the DSF derive from the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
-This profile includes a splicing for `Task.input` with three additional [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters):  
+This profile includes a splicing for `Task.input` with three additional [Input Parameters](basic-concepts-and-guides.md#task-input-parameters):  
 - `message-name`
 - `business-key`
 - `correlation-key`
@@ -141,28 +163,38 @@ When creating your own plugin, you will want to create your own profiles based o
 
 #### Task Input Parameters
 
-Task Input Parameters allow you to add additional information to [Task](basic-concepts-and-lessons.md#task) resources.
+Task Input Parameters allow you to add additional information to [Task](basic-concepts-and-guides.md#task) resources.
 For example, if your particular data exchange requires additional medical data, you would add a slice to your Task profile in the same
-way the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml) adds slices to the original [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource. Notice that this also requires creating a [CodeSystem](basic-concepts-and-lessons.md#codesystem) and
-including it in a [ValueSet](basic-concepts-and-lessons.md#valueset) to be able to use it in the Task resource.
+way the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml) adds slices to the original [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource. Notice that this also requires creating a [CodeSystem](basic-concepts-and-guides.md#codesystem) and
+including it in a [ValueSet](basic-concepts-and-guides.md#valueset) to be able to use it in the Task resource.
+
+If these instructions are insufficient you can check out the guide on [how to add Task Input Parameters](basic-concepts-and-guides.md#adding-task-input-parameters-to-task-profiles).
+
+***
 
 ### CodeSystem
 **First use in [exercise 2](exercise-2.md)**
 
 [CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) are usually represent a set of concepts which 
 can be assigned to a code (think LOINC). If you want to actually use a Code in a resource, you will have to include them in a 
-[ValueSet](basic-concepts-and-lessons.md#valueset).
+[ValueSet](basic-concepts-and-guides.md#valueset).
 
 Plugin development for the DSF requires the use of [CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) in two major ways:
 1. Using existing [DSF CodeSystems](https://github.com/datasharingframework/dsf/tree/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem) in other FHIR resources like the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
-2. Creating your own CodeSystem to add additional [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters) to your [Task](https://www.hl7.org/fhir/R4/task.html) profiles.
+2. Creating your own CodeSystem to add additional [Input Parameters](basic-concepts-and-guides.md#task-input-parameters) to your [Task](https://www.hl7.org/fhir/R4/task.html) profiles.
+
+***
 
 ### ValueSet
 **First use in [exercise 2](exercise-2.md)**
-[ValueSets](https://www.hl7.org/fhir/R4/valueset.html) act kind of like a 
 
-[ValueSets](https://www.hl7.org/fhir/R4/valueset.html) are mostly needed to use the [Concepts](https://www.hl7.org/fhir/R4/codesystem-definitions.html#CodeSystem.concept) from [CodeSystems](basic-concepts-and-lessons.md#codesystem)
-in your [Task](basic-concepts-and-lessons.md#task) profiles.
+[ValueSets](https://www.hl7.org/fhir/R4/valueset.html) bind codes from [CodeSystems](basic-concepts-and-guides.md#codesystem) to coded elements like
+`code`, `Coding` or `CodeableConcept`.
+
+[ValueSets](https://www.hl7.org/fhir/R4/valueset.html) are mostly needed to use the [Concepts](https://www.hl7.org/fhir/R4/codesystem-definitions.html#CodeSystem.concept) from [CodeSystems](basic-concepts-and-guides.md#codesystem)
+in your [Task](basic-concepts-and-guides.md#task) profiles.
+
+***
 
 ## DSF
 
@@ -182,6 +214,8 @@ a single nginx reverse proxy as well as three separate DSF FHIR server instances
 DSF process plugin. Java code for the `tutorial-process` project is located at `src/main/java`, FHIR resources and
 BPMN process models at `src/main/resources` as well as prepared JUnit tests to verify your solution at `src/test/java`.
 
+***
+
 ### Certificates
 **First use in [exercise 1](exercise-1.md)**
 
@@ -192,7 +226,7 @@ Certificates will be created by the `test-data-generator` project through Maven 
 You can also invoke the generation of certificates separately by running the Maven build of `test-data-generator` until (and including) the `package` phase.   
 Since this tutorial comes with three preconfigured DSF instances, the only time you will need to interact with certificates
 is when you want to make requests to the DSF FHIR server. Either for access to the web frontend under https://instance-host-name/fhir/,
-or when [starting your process plugin](basic-concepts-and-lessons.md#starting-a-process-via-task-resources).  
+or when [starting your process plugin](basic-concepts-and-guides.md#starting-a-process-via-task-resources).  
 In case of the web frontend, you will need to add the CA certificate and client certificate of the DSF instance you want to access to your browser.
 Certificates can be found in `test-data-generator/cert`.  
 
@@ -203,22 +237,26 @@ to your browser's client certificates.
 
 **Important: Passwords for .p12 files are always "password"**
 
+***
+
 ### The Process Plugin Definition
 **First use in [exercise 1](exercise-1.md)**
 
 In order for the DSF BPE server to load your plugin you need to provide it with the following information:
-* A plugin [version](basic-concepts-and-lessons.md#about-versions)
+* A plugin [version](basic-concepts-and-guides.md#about-versions)
 * A release date
 * A plugin name
 * The BPMN model files
-* The FHIR resources grouped by BPMN process ID. Your plugin may have any number of BPMN models. Each has their own BPMN process ID and FHIR resources specific to that BPMN process (think [Tsak](basic-concepts-and-lessons.md#task) resources needed for messages specific to that BPMN model)
-* The Class holding your [Spring Configuration](basic-concepts-and-lessons.md#spring-integration)
+* The FHIR resources grouped by BPMN process ID. Your plugin may have any number of BPMN models. Each has their own BPMN process ID and FHIR resources specific to that BPMN process (think [Tsak](basic-concepts-and-guides.md#task) resources needed for messages specific to that BPMN model)
+* The Class holding your [Spring Configuration](basic-concepts-and-guides.md#spring-integration)
 
 You will provide this information by implementing the `dev.dsf.bpe.ProcessPluginDefinition` interface.
 The DSF BPE server then searches for classes implementing this interface using the
 Java [ServiceLoader](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html) mechanism. Therefore, you will have to register your interface implementation in the `src/main/resources/META-INF/services/dev.dsf.bpe.ProcessPluginDefinition` file.
 For this tutorial, the class implementing the `ProcessPluginDefinition` interface, `TutorialProcessPluginDefinition`,
 has already been added to the file. You can use it as a reference for later when you want to create your own plugin.
+
+***
 
 ### About Versions, Placeholders and URLs
 
@@ -237,8 +275,8 @@ the 4th number is reserved for bug-fixes and the 3rd number includes all other n
 #### Placeholders
 **First use in [exercise 2](exercise-2.md)**
 
-To avoid the need to specify the version and release date for each [CodeSystem](basic-concepts-and-lessons.md#codesystem),
-[Task](basic-concepts-and-lessons.md#task) profile and [ValueSet](basic-concepts-and-lessons.md#valueset) resource, 
+To avoid the need to specify the version and release date for each [CodeSystem](basic-concepts-and-guides.md#codesystem),
+[Task](basic-concepts-and-guides.md#task) profile and [ValueSet](basic-concepts-and-guides.md#valueset) resource, 
 the placeholders `#{version}` and `#{date}` can be used when creating FHIR resources or even in BPMN models. 
 They are replaced with the values returned by the methods `ProcessPluginDefinition#getResourceVersion` 
 and `ProcessPluginDefinition#getReleaseDate` respectively during deployment of a process plugin by the DSF BPE server.
@@ -250,7 +288,7 @@ BPMN models have an ID we call process definition key. The BPMN process definiti
 ```
 ^[-a-zA-Z0-9]+_[-a-zA-Z0-9]+$   Example: domainorg_processKey
 ```
-In addition, the BPMN model needs to specify a version. You should be using the ``#{version}`` [placeholder](basic-concepts-and-lessons.md#placeholders) 
+In addition, the BPMN model needs to specify a version. You should be using the ``#{version}`` [placeholder](basic-concepts-and-guides.md#placeholders) 
 for this as well. The DSF will use the process definition key and the version specified in the BPMN model to create a
 URL to refer to this specific process. Like this:
 ```
@@ -258,19 +296,21 @@ http://domain.org/bpe/Process/processKey|1.0
 ```
 
 As you can see, the version in the URL ``|1.0`` only uses the resource version and omits the code base version.
-As mentioned in [Version Pattern](basic-concepts-and-lessons.md#version-pattern), this means that only changes to the first two
+As mentioned in [Version Pattern](basic-concepts-and-guides.md#version-pattern), this means that only changes to the first two
 version numbers are significant to signal compatibility when communicating with other process plugin instances.
 
-You will use the above URL as your instantiatesCanonical value for [Task](basic-concepts-and-lessons.md#task) profiles. You will
-also use it as the URL value for your [ActivityDefinitions](basic-concepts-and-lessons.md#activitydefinition). In this case though, you
+You will use the above URL as your instantiatesCanonical value for [Task](basic-concepts-and-guides.md#task) profiles. You will
+also use it as the URL value for your [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition). In this case though, you
 have to split up the URL into two parts. You will separate the version (``|1.0``) from the URL and use it as a value for the
 `ActivityDefinition.version` element. Since it refers to the plugin's resource version, you should also use the `#{version}`
-[placeholder](basic-concepts-and-lessons.md#placeholders) here, instead. Going by the example from above, you will be left with a URL that looks
+[placeholder](basic-concepts-and-guides.md#placeholders) here, instead. Going by the example from above, you will be left with a URL that looks
 like this:
 ```
 http://domain.org/bpe/Process/processKey
 ```
 This will be the value for your `ActivityDefinition.url` element.
+
+***
 
 ### Spring Integration
 **First use in [exercise 1](exercise-1.md)**
@@ -287,15 +327,17 @@ have to provide [Spring Beans](https://docs.spring.io/spring-framework/reference
 A [Spring-Framework configuration class](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-java-basic-concepts) located in `spring/config` is expected to provide the Spring Beans. 
 For this tutorial, the `TutorialConfig` class will take this role.
 
+***
+
 ### Read Access Tag
 **First use in [exercise 2](exercise-2.md)**
 
-Axiomatically, nobody is allowed to write FHIR resources (except [Task](basic-concepts-and-lessons.md#task)) to the DSF FHIR server 
+Axiomatically, nobody is allowed to write FHIR resources (except [Task](basic-concepts-and-guides.md#task)) to the DSF FHIR server 
 unless it's your own organization. By default, the same applies to reading FHIR resources
-(again except [Task](basic-concepts-and-lessons.md#task)). But since the DSF is often used to offer medical data in form of
+(again except [Task](basic-concepts-and-guides.md#task)). But since the DSF is often used to offer medical data in form of
 FHIR resources, you will find yourself wanting other organizations to be allowed to read the resources you are offering.
 The `Resource.meta.tag` field is used define access rules for all FHIR resources in the DSF, with the
-exception of [Task](basic-concepts-and-lessons.md#task) resources. We will explain the reason shortly. 
+exception of [Task](basic-concepts-and-guides.md#task) resources. We will explain the reason shortly. 
 To allow read access for all organizations (the standard for metadata resources), 
 the following `read-access-tag` value can be written into this field:
 
@@ -308,21 +350,23 @@ the following `read-access-tag` value can be written into this field:
 </meta>
 ```
 
-The read access rules for [Task](basic-concepts-and-lessons.md#task) resources are defined through the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) in your plugin's
-[ActivityDefinitions](basic-concepts-and-lessons.md#activitydefinition). Therefore, no `read-access-tag` is needed.
+The read access rules for [Task](basic-concepts-and-guides.md#task) resources are defined through the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) in your plugin's
+[ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition). Therefore, no `read-access-tag` is needed.
 
 It is also possible to restrict read access of FHIR resources to organizations with 
 a specific role in a parent organization or a specific identifier.
 If you want to find out more, you may look at the [dsf-read-access-tag](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-read-access-tag-1.0.0.xml).
 
+***
+
 ### Process Access Control
 **First use in [exercise 1](exercise-1.md)**
 
-In order to manage who is allowed to request/process [Task](basic-concepts-and-lessons.md#task) resources in your BPMN process,
+In order to manage who is allowed to request/process [Task](basic-concepts-and-guides.md#task) resources in your BPMN process,
 you will use the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
-It is part of [Activity Definition](basic-concepts-and-lessons.md#activitydefinition) resources which are used to 
+It is part of [Activity Definition](basic-concepts-and-guides.md#activitydefinition) resources which are used to 
 advertise available DSF process plugins to other DSF instances. 
-The extension defines access rules for all [Task](basic-concepts-and-lessons.md#task) resources
+The extension defines access rules for all [Task](basic-concepts-and-guides.md#task) resources
 available to the BPMN process. Depending on your use-case
 the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) will look quite different once configured. 
 We will first look at the elements all permutations have in common and then show some example 
@@ -334,9 +378,9 @@ All extension permutations have these elements in common:
 * At least 1 `requester` element
 * At least 1 `recipient` element
 
-The `message-name` refers to the name of the [Message Event](basic-concepts-and-lessons.md#messaging) inside your BPMN model.
-The `task-profile` then references the [Task](basic-concepts-and-lessons.md#task) resource used for communicating this [Message Event](basic-concepts-and-lessons.md#messaging).  
-The `requester` and `recipient` elements specify how certain organizations or users are allowed to use the [Task](basic-concepts-and-lessons.md#task) resource
+The `message-name` refers to the name of the [Message Event](basic-concepts-and-guides.md#messaging) inside your BPMN model.
+The `task-profile` then references the [Task](basic-concepts-and-guides.md#task) resource used for communicating this [Message Event](basic-concepts-and-guides.md#messaging).  
+The `requester` and `recipient` elements specify how certain organizations or users are allowed to use the [Task](basic-concepts-and-guides.md#task) resource
 specified by `task-profile`.
 
 When you take a look at the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml), you will find a list of 
@@ -485,71 +529,78 @@ organization to be able to execute a BPMN process:
 ```
 </details>
 
-
-
+***
 
 ### BPMN Process Execution
 **First use in [exercise 1](exercise-1.md)**
 
 The BPMN process execution is the in-memory representation of a running BPMN process.
-It holds all the BPMN elements from the BPMN model as well as the [BPMN process variables](basic-concepts-and-lessons.md#bpmn-process-variables)
+It holds all the BPMN elements from the BPMN model as well as the [BPMN process variables](basic-concepts-and-guides.md#bpmn-process-variables)
 and exists from the time when a deployed process plugin gets started until the time it stops running.
-You have access to this representation in your Java code when overriding certain methods in [Service](basic-concepts-and-lessons.md#service-delegates) / [Message](basic-concepts-and-lessons.md#message-delegates) Delegates
+You have access to this representation in your Java code when overriding certain methods in [Service](basic-concepts-and-guides.md#service-delegates) / [Message](basic-concepts-and-guides.md#message-delegates) Delegates
 like `doExecute` or `getAdditionalInputParameters` through the `execution` parameter.
+
+***
 
 ### BPMN Process Variables
 **First use in [exercise 1](exercise-1.md)**
 
 BPMN process variables hold additional information which has to be available during BPMN process execution. 
-Variables can be directly related to BPMN elements like the boolean value for [Conditions](basic-concepts-and-lessons.md#conditions), but
+Variables can be directly related to BPMN elements like the boolean value for [Conditions](basic-concepts-and-guides.md#conditions), but
 don't have to be. BPMN process variables are stored as key-value pairs with the key being the variable name. 
-They are accessible during the entirety of the execution to all [Service](basic-concepts-and-lessons.md#service-delegates) / 
-[Message](basic-concepts-and-lessons.md#message-delegates) Delegates.
+They are accessible during the entirety of the execution to all [Service](basic-concepts-and-guides.md#service-delegates) / 
+[Message](basic-concepts-and-guides.md#message-delegates) Delegates.
 
-You can learn how to access to the BPMN process variables [here](basic-concepts-and-lessons.md#accessing-bpmn-process-variables).
+You can learn how to access to the BPMN process variables [here](basic-concepts-and-guides.md#accessing-bpmn-process-variables).
+
+***
 
 ### Service Delegates
 **First use in [exercise 1](exercise-1.md)**
 
-Service Delegates are the Java representation of the [Service Tasks](basic-concepts-and-lessons.md#service-tasks) in your BPMN model.
-You link a Service Delegate to a certain [Service Task](basic-concepts-and-lessons.md#service-tasks) by selecting the [Service Task](basic-concepts-and-lessons.md#service-tasks)
+Service Delegates are the Java representation of the [Service Tasks](basic-concepts-and-guides.md#service-tasks) in your BPMN model.
+You link a Service Delegate to a certain [Service Task](basic-concepts-and-guides.md#service-tasks) by selecting the [Service Task](basic-concepts-and-guides.md#service-tasks)
 in the [Camunda Modeler](https://camunda.com/download/modeler/) and adding a Java class to the `Implementation` field.
 Make sure you use the fully qualified class name. Like this: 
 ```
 org.package.myClass
 ```
 All that's left is for your Java class to extend `AbstractServiceDelegate` and override the `doExecute` method. 
-This is the place where you can put your actual business logic. The method will be called when the [BPMN process execution](basic-concepts-and-lessons.md#bpmn-process-execution)
-arrives at the [Service Task](basic-concepts-and-lessons.md#service-tasks) your Service Delegate is linked to.
+This is the place where you can put your actual business logic. The method will be called when the [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution)
+arrives at the [Service Task](basic-concepts-and-guides.md#service-tasks) your Service Delegate is linked to.
+
+***
 
 ### Message Delegates
 **First use in [exercise 3](exercise-3.md)**
 
-Message Delegates are the Java representation of the [Message Events](basic-concepts-and-lessons.md#messaging) in your BPMN model.
-You link a Message Delegate to a certain [Message Event](basic-concepts-and-lessons.md#messaging) by selecting the Message Event
+Message Delegates are the Java representation of the [Message Events](basic-concepts-and-guides.md#messaging) in your BPMN model.
+You link a Message Delegate to a certain [Message Event](basic-concepts-and-guides.md#messaging) by selecting the Message Event
 in the [Camunda Modeler](https://camunda.com/download/modeler/) and adding a Java class to the `Implementation` field.
 Make sure you use the fully qualified class name. Like this:
 ```
 org.package.myClass
 ```
 
-You will only need Message Delegates for [Message Send Events](basic-concepts-and-lessons.md#messaging). Incoming messages will 
-be resolved to the correct [BPMN process execution](basic-concepts-and-lessons.md#bpmn-process-execution) automatically using [Message Correlation](basic-concepts-and-lessons.md#message-correlation)
-and the message inputs will be added to that execution's [process variables](basic-concepts-and-lessons.md#bpmn-process-variables).  
+You will only need Message Delegates for [Message Send Events](basic-concepts-and-guides.md#messaging). Incoming messages will 
+be resolved to the correct [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution) automatically using [Message Correlation](basic-concepts-and-guides.md#message-correlation)
+and the message inputs will be added to that execution's [process variables](basic-concepts-and-guides.md#bpmn-process-variables).  
 
-To make a Message Delegate for [Message Send Events](basic-concepts-and-lessons.md#messaging), your Java class needs to extend
+To make a Message Delegate for [Message Send Events](basic-concepts-and-guides.md#messaging), your Java class needs to extend
 `AbstractTaskMessageSend`. Most of the time, you won't be adding any processing logic to your Message Delegates, therefore you usually won't be overwriting
-the `doExecute` method like with [Service Delegates](basic-concepts-and-lessons.md#service-delegates). Instead, you most likely want to 
+the `doExecute` method like with [Service Delegates](basic-concepts-and-guides.md#service-delegates). Instead, you most likely want to 
 aggregate the information you processed in earlier steps and attach it to a message. For this you need to overwrite the 
 `getAdditionalInputParamters` method. The DSF translates BPMN messages 
-into FHIR [Task](basic-concepts-and-lessons.md#task) resources to execute the communication modeled by your BPMN diagrams. The information
-you are sending to another BPMN process is specified in the Task.input elements a.k.a. [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters),
+into FHIR [Task](basic-concepts-and-guides.md#task) resources to execute the communication modeled by your BPMN diagrams. The information
+you are sending to another BPMN process is specified in the Task.input elements a.k.a. [Input Parameters](basic-concepts-and-guides.md#task-input-parameters),
 hence the name of the method.
+
+***
 
 ### Environment Variables
 **First use in [exercise 2](exercise-2.md)**
 
-Environment variables offer a way to make configuration data available at the start of a [BPMN process execution](basic-concepts-and-lessons.md#bpmn-process-execution).
+Environment variables offer a way to make configuration data available at the start of a [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution).
 They are the same for all running process instances. They can be defined by adding a member variable with 
 the [Spring-Framework @Value](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-value-annotations) annotation to the configuration class `TutorialConfig`. The value of the annotation uses 
 the `${..}` notation and follows the form `${some.property:defaultValue}`, where each dot in the property name corresponds
@@ -562,16 +613,19 @@ You simply have to add [dsf-tools-documentation-generator](https://mvnrepository
 You can take a look at the `pom.xml` for the `tutorial-process` submodule to see how you can add it to your own project. 
 Keep in mind to point the `<workingPackage>` field to the package you want documentation for.
 
+***
+
 ### DSF Process API Package
 
 The [DSF Process API package](https://mvnrepository.com/artifact/dev.dsf/dsf-bpe-process-api-v1) consists of a set of utility classes designed to provide easy access to solutions for common problems.
-This includes for example the `Variables` class, which provides access to the [BPMN process variables](basic-concepts-and-lessons.md#bpmn-process-variables).
+This includes for example the `Variables` class, which provides access to the [BPMN process variables](basic-concepts-and-guides.md#bpmn-process-variables).
 
 #### Process Plugin Api
-When creating [Service Delegates](basic-concepts-and-lessons.md#service-delegates) or [MessageDelegates](basic-concepts-and-lessons.md#message-delegates) you will 
+When creating [Service Delegates](basic-concepts-and-guides.md#service-delegates) or [MessageDelegates](basic-concepts-and-guides.md#message-delegates) you will 
 notice that you need to provide a constructor which expects a `ProcessPluginApi` object and forward it to the superclasses' constructor.
 This API instance provides a variety of utility classes. We will explicitly explore some on them in the tutorial.
 
+***
 
 ### Message Correlation
 **First use in [exercise 5](exercise-5.md)**
@@ -584,17 +638,19 @@ This identifier is called the `business-key`. The `business-key` will get attach
   
 It's possible that the `business-key` is insufficient to map messages to the correct process instance. This happens
 when you use subprocesses in your BPMN model which all expect messages to be sent to them, not the parent process.
-To solve this issue, [Task](basic-concepts-and-lessons.md#task) resources also come with an [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) called `correlation-key`.
+To solve this issue, [Task](basic-concepts-and-guides.md#task) resources also come with an [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) called `correlation-key`.
 This is a secondary identifier you can attach to all messages if you need them to arrive at a specific subprocess.
 You can learn more about how `correlation-keys` are used by studying the [Ping-Pong Process](https://github.com/datasharingframework/dsf-process-ping-pong).
+
+***
 
 ### Draft Task Resources
 **First use in [exercise 1](exercise-1.md)**
 
-[Task](basic-concepts-and-lessons.md#task) resources with status `draft` are used to create the DSF FHIR server's functionality
+[Task](basic-concepts-and-guides.md#task) resources with status `draft` are used to create the DSF FHIR server's functionality
 of starting processes via its web interface. They are stored in `.../tutorial-process/src/main/resources/fhir/Task`.
-Compared to regular [Task](basic-concepts-and-lessons.md#task) resources used to
-start BPMN processes, this type of [Task](basic-concepts-and-lessons.md#task) resource requires the status `draft` instead the usual `requested`.
+Compared to regular [Task](basic-concepts-and-guides.md#task) resources used to
+start BPMN processes, this type of [Task](basic-concepts-and-guides.md#task) resource requires the status `draft` instead the usual `requested`.
 It also replaces the value for `authoredOn` with the placeholder `#{date}`, the values of organization
 identifiers with the placeholder `#{organization}` and all instances of version numbers with `#{version}`. 
 Additionally, it requires setting the `Task.identifier`
@@ -606,50 +662,56 @@ element. It should look something like this:
      <value value="http://dsf.dev/bpe/Process/processKey/#{version}/task-name" />
 </identifier>
 ```
-`processKey` should be the same one used in [URLs](basic-concepts-and-lessons.md#urls).  
+`processKey` should be the same one used in [URLs](basic-concepts-and-guides.md#urls).  
 `task-name` can be any String you wish to identify this task with. You can use the file name for example. 
 
 For a complete example you can take a look at the Draft Task Resource in one of the solution branches
-and compare it to the one needed for cURL. The [Task](basic-concepts-and-lessons.md#task) resource created
+and compare it to the one needed for cURL. The [Task](basic-concepts-and-guides.md#task) resource created
 for cURL can be found at `.../tutorial-process/src/main/resources/example-task.xml`.  
 
-You might also want to check out [this guide](basic-concepts-and-lessons.md#creating-task-resources-based-on-a-definition) 
-if you don't know how to create [Task](basic-concepts-and-lessons.md#task) resources in general.
+You might also want to check out [this guide](basic-concepts-and-guides.md#creating-task-resources-based-on-a-definition) 
+if you don't know how to create [Task](basic-concepts-and-guides.md#task) resources in general.
 
+***
 
-## Lessons
+## Guides
+
+***
 
 ### Accessing BPMN Process Variables
 **First use in [exercise 1](exercise-1.md)**
 
-After creating a [Service Delegate](basic-concepts-and-lessons.md#service-delegates) or [Message Delegate](basic-concepts-and-lessons.md#message-delegates), you might want to
-retrieve data from or store data in the [BPMN process variables](basic-concepts-and-lessons.md#bpmn-process-variables).
-You can achieve this either through the [BPMN process execution](basic-concepts-and-lessons.md#bpmn-process-execution) or via the `Variables` class.  
+After creating a [Service Delegate](basic-concepts-and-guides.md#service-delegates) or [Message Delegate](basic-concepts-and-guides.md#message-delegates), you might want to
+retrieve data from or store data in the [BPMN process variables](basic-concepts-and-guides.md#bpmn-process-variables).
+You can achieve this either through the [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution) or via the `Variables` class.  
 *It's very much recommended you use the latter method*. The `Variables` class provides lots of utility methods to read or write certain types
-of [BPMN process variables](basic-concepts-and-lessons.md#bpmn-process-variables). If for some reason you need to fall back on the [BPMN process execution](basic-concepts-and-lessons.md#bpmn-process-execution)
+of [BPMN process variables](basic-concepts-and-guides.md#bpmn-process-variables). If for some reason you need to fall back on the [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution)
 to solve your problem, we would like to learn how the current API of the `Variables` class is limiting you. Contact us, and we might turn it into a feature request ([Contribute](https://dsf.dev/stable/contribute)).
+
+***
 
 ### Accessing Task Resources During Execution
 **First use in [exercise 2](exercise-2.md)**
 
-If you want access to the [Task](basic-concepts-and-lessons.md#task) resources in your [Service](basic-concepts-and-lessons.md#service-delegates) / [Message](basic-concepts-and-lessons.md#message-delegates) Delegates, the `Variables` class will 
-provide methods which return certain kinds of [Task](basic-concepts-and-lessons.md#task) resources. The most commonly used ones are
-the start [Task](basic-concepts-and-lessons.md#task), referring to the [Task](basic-concepts-and-lessons.md#task) / [Message Start Event](basic-concepts-and-lessons.md#message-start-event) responsible for starting the process,
-and the latest [Task](basic-concepts-and-lessons.md#task), referring to most recently received [Task](basic-concepts-and-lessons.md#task) / Message.  
-In principle, this is sufficient to access all information in a [Task](basic-concepts-and-lessons.md#task) resource, since you have 
-the [Task](basic-concepts-and-lessons.md#task) resource's Java object, but very cumbersome.
-Instead of navigating the [Task](basic-concepts-and-lessons.md#task) resource's element tree,
-you should first try to use the [ProcessPluginApi's](basic-concepts-and-lessons.md#process-plugin-api) `TaskHelper` in conjunction with the method above. The `TaskHelper` class
-offers specific methods related to [Task](basic-concepts-and-lessons.md#task) resources.  
-The most common use-case for this is retrieving data from a [Task's](basic-concepts-and-lessons.md#task) [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) or creating a new [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters)
-for a [Message Delegate's](basic-concepts-and-lessons.md#message-delegates) `getAdditionalInputParameters` method.  
-When retrieving data from a [Task's](basic-concepts-and-lessons.md#task) Input Parameter you first have to get to the [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) you are looking to extract
-data from. You can use one of the `TaskHelper's` getters for [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters) to find the right one. The methods will try to match
-the provided [CodeSystem](basic-concepts-and-lessons.md#codesystem) and Code to any [Input Parameter](basic-concepts-and-lessons.md#task-input-parameters) of the provided [Task](basic-concepts-and-lessons.md#task) resource.
+If you want access to the [Task](basic-concepts-and-guides.md#task) resources in your [Service](basic-concepts-and-guides.md#service-delegates) / [Message](basic-concepts-and-guides.md#message-delegates) Delegates, the `Variables` class will 
+provide methods which return certain kinds of [Task](basic-concepts-and-guides.md#task) resources. The most commonly used ones are
+the start [Task](basic-concepts-and-guides.md#task), referring to the [Task](basic-concepts-and-guides.md#task) / [Message Start Event](basic-concepts-and-guides.md#message-start-event) responsible for starting the process,
+and the latest [Task](basic-concepts-and-guides.md#task), referring to most recently received [Task](basic-concepts-and-guides.md#task) / Message.  
+In principle, this is sufficient to access all information in a [Task](basic-concepts-and-guides.md#task) resource, since you have 
+the [Task](basic-concepts-and-guides.md#task) resource's Java object, but very cumbersome.
+Instead of navigating the [Task](basic-concepts-and-guides.md#task) resource's element tree,
+you should first try to use the [ProcessPluginApi's](basic-concepts-and-guides.md#process-plugin-api) `TaskHelper` in conjunction with the method above. The `TaskHelper` class
+offers specific methods related to [Task](basic-concepts-and-guides.md#task) resources.  
+The most common use-case for this is retrieving data from a [Task's](basic-concepts-and-guides.md#task) [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) or creating a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters)
+for a [Message Delegate's](basic-concepts-and-guides.md#message-delegates) `getAdditionalInputParameters` method.  
+When retrieving data from a [Task's](basic-concepts-and-guides.md#task) Input Parameter you first have to get to the [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) you are looking to extract
+data from. You can use one of the `TaskHelper's` getters for [Input Parameters](basic-concepts-and-guides.md#task-input-parameters) to find the right one. The methods will try to match
+the provided [CodeSystem](basic-concepts-and-guides.md#codesystem) and Code to any [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) of the provided [Task](basic-concepts-and-guides.md#task) resource.
 Depending on the method you chose you will for example receive all matches or just the first one.  
-To create new [Input Parameters](basic-concepts-and-lessons.md#task-input-parameters) to attach to a [Task](basic-concepts-and-lessons.md#task) resource, you may invoke the `TaskHelper#createInput` method. This
-is most often used when overriding the `getAdditionalInputParamters` method of you [Message Delegate](basic-concepts-and-lessons.md#message-delegates).
+To create new [Input Parameters](basic-concepts-and-guides.md#task-input-parameters) to attach to a [Task](basic-concepts-and-guides.md#task) resource, you may invoke the `TaskHelper#createInput` method. This
+is most often used when overriding the `getAdditionalInputParamters` method of you [Message Delegate](basic-concepts-and-guides.md#message-delegates).
 
+***
 
 ### Setting Targets For Message Events
 **First use in [exercise 3](exercise-3.md)**
@@ -665,18 +727,20 @@ since there is enough complexity to warrant putting it into a separate BPMN [Ser
 
 In both cases you can access methods to create and set `targets` through the `Variables` instance.
 
+***
+
 ### Managing Multiple Incoming Messages And Missing Messages
 **First use in [exercise 5](exercise-5.md)**
 
-If an already running process instance is waiting for a message from another organization, the corresponding FHIR [Task](basic-concepts-and-lessons.md#task) may never arrive.
-Either because the other organization decides to never send the message or because some technical problem prohibits the [Task](basic-concepts-and-lessons.md#task) resource from being posted to the DSF FHIR server.
+If an already running process instance is waiting for a message from another organization, the corresponding FHIR [Task](basic-concepts-and-guides.md#task) may never arrive.
+Either because the other organization decides to never send the message or because some technical problem prohibits the [Task](basic-concepts-and-guides.md#task) resource from being posted to the DSF FHIR server.
 This would result in stale process instances that never finish.
 
 At the same time, you might also expect to receive one out of a number of different message types at once.
 
-In order to solve both problems we can add an [Event Based Gateway](basic-concepts-and-lessons.md#event-based-gateway) to the process waiting 
-for a response and then either handle a [Task](basic-concepts-and-lessons.md#task) resource with the response and finish the process in a success 
-state or trigger a [Timer Intermediate Catching Event](basic-concepts-and-lessons.md#timer-intermediate-catching-events) after a defined wait period and finish the process in an error state. 
+In order to solve both problems we can add an [Event Based Gateway](basic-concepts-and-guides.md#event-based-gateway) to the process waiting 
+for a response and then either handle a [Task](basic-concepts-and-guides.md#task) resource with the response and finish the process in a success 
+state or trigger a [Timer Intermediate Catching Event](basic-concepts-and-guides.md#timer-intermediate-catching-events) after a defined wait period and finish the process in an error state. 
 The following BPMN collaboration diagram shows how the process at the first organization would look like if we wanted to react to multiple different messages 
 or missing messages:
 
@@ -686,31 +750,33 @@ or missing messages:
   <img alt="BPMN collaboration diagram with an Event Based Gateway" src="figures/exercise5_event_based_gateway.svg">
 </picture>
 
+***
+
 ### Starting A Process Via Task Resources
 **First use in [exercise 1](exercise-1.md)**
 
-To start a BPMN process, you need to create new a [Task](basic-concepts-and-lessons.md#task) resource in the DSF FHIR server
+To start a BPMN process, you need to create new a [Task](basic-concepts-and-guides.md#task) resource in the DSF FHIR server
 by sending an HTTP request according to the [FHIR RESTful API](https://www.hl7.org/fhir/R4/http.html). Specifically, you need to [create](https://www.hl7.org/fhir/R4/http.html#create)
-a resource for the first time. Also, remember that the [Task](basic-concepts-and-lessons.md#task)
-resource you are sending needs to comply to the [Task](basic-concepts-and-lessons.md#task) profile of the process you 
-want to start and the [ActivityDefinition's](basic-concepts-and-lessons.md#activitydefinition) authorization rules.   
+a resource for the first time. Also, remember that the [Task](basic-concepts-and-guides.md#task)
+resource you are sending needs to comply to the [Task](basic-concepts-and-guides.md#task) profile of the process you 
+want to start and the [ActivityDefinition's](basic-concepts-and-guides.md#activitydefinition) authorization rules.   
 In this tutorial, there are two ways making this HTTP request:
 1. Using cURL
 2. Using the DSF FHIR server's web interface
 
 #### Using cURL
-But since cURL requires the actual [Task](basic-concepts-and-lessons.md#task) payload as an XML, it will prove useful to
-gain more insight in how actual [Task](basic-concepts-and-lessons.md#task) resources look like and how they relate to
-your [Task](basic-concepts-and-lessons.md#task) profiles and [ActivityDefinitions](basic-concepts-and-lessons.md#activitydefinition). You will have to create
-an appropriate [Task](basic-concepts-and-lessons.md#task) resource for this. 
+But since cURL requires the actual [Task](basic-concepts-and-guides.md#task) payload as an XML, it will prove useful to
+gain more insight in how actual [Task](basic-concepts-and-guides.md#task) resources look like and how they relate to
+your [Task](basic-concepts-and-guides.md#task) profiles and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition). You will have to create
+an appropriate [Task](basic-concepts-and-guides.md#task) resource for this. 
 There already is a file called `example-task.xml` located in `tutorial-process/src/main/resources/fhir`.
-You can use this as your starting point. You can try to follow [this guide](basic-concepts-and-lessons.md#creating-task-resources-based-on-a-definition),
+You can use this as your starting point. You can try to follow [this guide](basic-concepts-and-guides.md#creating-task-resources-based-on-a-definition),
 or you can check the solution branches for this 
 file if you need ideas on how to fill it out properly.
 
 Below are some cURL command skeletons. Replace all <>-Placeholders with appropriate values. Host name depends on the
-instance you want to address. For this tutorial this is either one of `dic`, `cos` or `hrp`. [Certificates](basic-concepts-and-lessons.md#certificates) can be found in 
-`test-data-generator/cert`. Client [certificates](basic-concepts-and-lessons.md#certificates) and private keys can be found 
+instance you want to address. For this tutorial this is either one of `dic`, `cos` or `hrp`. [Certificates](basic-concepts-and-guides.md#certificates) can be found in 
+`test-data-generator/cert`. Client [certificates](basic-concepts-and-guides.md#certificates) and private keys can be found 
 in the folder of their respective instance e.g. `test-data-generator/cert/dic-client` for the `dic` instance.
 
 ##### Linux:
@@ -740,29 +806,31 @@ variable. Git's cURL is usually situated in C:\Program Files\Git\mingw64\bin.*
 #### Using The DSF FHIR Server's Web Interface
 
 When visiting the web interface of a DSF FHIR server instance (e.g. https://instance-name/fhir), you
-can query the DSF FHIR server using the FHIR RESTful API to return a list of all [Draft Task Resources](basic-concepts-and-lessons.md#draft-task-resources).
-These [Task](basic-concepts-and-lessons.md#draft-task-resources) resources act like a template you can use to 
-instantiate [Task](basic-concepts-and-lessons.md#task) resources which start BPMN processes.  
+can query the DSF FHIR server using the FHIR RESTful API to return a list of all [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources).
+These [Task](basic-concepts-and-guides.md#draft-task-resources) resources act like a template you can use to 
+instantiate [Task](basic-concepts-and-guides.md#task) resources which start BPMN processes.  
 Instead of querying the DSF FHIR server manually, you can use a predefined bookmark
 to navigate to the query URL. You can find a list of Bookmarks in the top right corner of
 the web interface. Simply select the bookmark referencing `?_sort=_profile,identifier&status=draft` under 
-the `Task` section, and you will be taken to the list of all [Draft Task Resources](basic-concepts-and-lessons.md#draft-task-resources).  
+the `Task` section, and you will be taken to the list of all [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources).  
 Once there, you can select the one which starts your BPMN process. It will take you to a detailed view
-of the resource where you will also have the chance to fill any [Task Input Parameters](basic-concepts-and-lessons.md#task-input-parameters)
+of the resource where you will also have the chance to fill any [Task Input Parameters](basic-concepts-and-guides.md#task-input-parameters)
 you might need to specify.  
 If everything is filled out correctly, you may start your process by clicking `Start Process`.  
-Keep in mind that, for [Draft Task Resources](basic-concepts-and-lessons.md#draft-task-resources) to be 
+Keep in mind that, for [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources) to be 
 available, you need to include them in your mapping for your BPMN process ID in `ProcessPluginDefinition#getFhirResourcesByProcessId`. 
-Take a look at [the Process Plugin Definition](basic-concepts-and-lessons.md#the-process-plugin-definition) if you need a reminder.
+Take a look at [the Process Plugin Definition](basic-concepts-and-guides.md#the-process-plugin-definition) if you need a reminder.
+
+***
 
 ### Creating Task Resources Based On A Definition
 
-This short guide should help you understand how you can create [Task](basic-concepts-and-lessons.md#task)
-resources for use in [Starting A Process Via Task Resources](basic-concepts-and-lessons.md#starting-a-process-via-task-resources).
+This short guide should help you understand how you can create [Task](basic-concepts-and-guides.md#task)
+resources for use in [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources).
 We will employ the use of the free version of [Forge](https://simplifier.net/forge?utm_source=firely-forge) to help 
 with visualization. You are invited to create a free account and follow along, but remember that the free 
 version of Forge [mustn't be used commercially](https://simplifier.net/pricing).  
-As an example, we will create a [Task](basic-concepts-and-lessons.md#task) resource from the `task-hello-dic.xml` profile.
+As an example, we will create a [Task](basic-concepts-and-guides.md#task) resource from the `task-hello-dic.xml` profile.
 
 #### 1st Step: Removing Placeholders
 `task-hello-dic.xml` includes placeholders for the `version` and `date` elements. For the duration of this guide, 
@@ -771,14 +839,14 @@ would result in an error and Forge won't load the file.
 
 #### 2nd Step: Differential Chain
 If the resource profile is only available as a [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot), like in our
-case, we have to aggregate the changes made to the base resource (in this case [Task](basic-concepts-and-lessons.md#task)) by all profiles to make
+case, we will want to aggregate the changes made to the base resource (in this case [Task](basic-concepts-and-guides.md#task)) by all profiles to make
 it more readable.
 To do this, we first need all the profiles involved. We already have `task-hello-dic.xml` in our `StructureDefinition` folder.
 It lists a resource called `task-base` in its `baseDefinition` element. This resource is part of the DSF and can be
 found [here](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
 Put it into the `StructureDefinition` folder. Since `task-base` has the original FHIR Task as its `baseDefinition`
 element, we are done with this chain.
-In forge, you should now be able to open the `StructureDefinition` folder and open the `task-hello-dic.xml` profile.
+In forge, you should now be able to open the `StructureDefinition` folder and select the `task-hello-dic.xml` profile.
 It should look something like this:  
 
 ![Forge overview](figures/forge_overview.png)
@@ -787,13 +855,13 @@ You can also calculate the [snapshot](https://www.hl7.org/fhir/R4/profiling.html
 by reading the XML. If you know how to do this, you probably have no need for this guide.
 
 #### 3rd Step: Building The Task Resource
-We will now go through each element one by one and include it into our [Task](basic-concepts-and-lessons.md#task)
-resource, if it is mandatory (cardinality at least 1..1) according to the profile. It's important to know
+We will now go through each element one by one and include it into our [Task](basic-concepts-and-guides.md#task)
+resource, if it is mandatory (cardinality at least `1..1`) according to the profile. It's important 
 that you not use any placeholders like `#{version}` for resources not read by the DSF BPE server. This is the case
-if we want a [Task](basic-concepts-and-lessons.md#task) resource for use with [cURL](basic-concepts-and-lessons.md#using-curl).
-But, placeholders have to be used in [Draft Task Resources](basic-concepts-and-lessons.md#draft-task-resources) instead of actual values whenever possible, 
-since those are read by the DSF BPE server. This guide will create a [Task](basic-concepts-and-lessons.md#task) resource without placeholders.  
-We'll start out with the base element for all [Task](basic-concepts-and-lessons.md#task) resources:  
+if we want a [Task](basic-concepts-and-guides.md#task) resource for use with [cURL](basic-concepts-and-guides.md#using-curl).
+But, placeholders have to be used in [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources) instead of actual values whenever possible, 
+since those are read by the DSF BPE server. This guide will create a [Task](basic-concepts-and-guides.md#task) resource without placeholders.  
+We'll start out with the base element for all [Task](basic-concepts-and-guides.md#task) resources:  
 ```xml
 <Task xmlns="http://hl7.org/fhir">
 
@@ -812,7 +880,7 @@ it in the element tree. It should look like this:
 ```
 
 The first element which can be found in the element tree is the `instantiatesCanonical` element. To add it, we
-will create an XML element with the same name and the value according to [URLs](basic-concepts-and-lessons.md#urls): 
+will create an XML element with the same name and the value according to [URLs](basic-concepts-and-guides.md#urls): 
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
@@ -828,7 +896,7 @@ Let's look at a more complex element like the `requester` element:
 
 ![Forge requester view](figures/forge_requester_view.png)
 
-By now your [Task](basic-concepts-and-lessons.md#task) resources should look something like this:
+By now your [Task](basic-concepts-and-guides.md#task) resources should look something like this:
 <details>
 <summary>Suggested solution</summary>
 
@@ -901,8 +969,8 @@ Next, we'll add the `identifier` element and its primitive sub-elements just lik
 to be by clicking on the `system` element in Forge or looking at the XML for the right Task profile. The right side will have all information about that element, including
 the actual value for `Fixed value`.*
 
-You should now be able to fill out all elements in your [Task](basic-concepts-and-lessons.md#task) resource until you reach
-the [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing) for `Task.input`. Your [Task](basic-concepts-and-lessons.md#task)
+You should now be able to fill out all elements in your [Task](basic-concepts-and-guides.md#task) resource until you reach
+the [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing) for `Task.input`. Your [Task](basic-concepts-and-guides.md#task)
 resource should look something like this:  
 <details>
 <summary>Suggested solution</summary>
@@ -942,7 +1010,7 @@ slice `message-name`:
 
 ![Forge slice message name](figures/forge_slice_message_name.png)
 
-If we were to continue including slices to the [Task](basic-concepts-and-lessons.md#task) resource like we did so far,
+If we were to continue including slices to the [Task](basic-concepts-and-guides.md#task) resource like we did so far,
 we would add a `message-name` element to our XML like this:  
 
 ```xml
@@ -957,7 +1025,7 @@ we would add a `message-name` element to our XML like this:
 ```
 
 This approach however, would not work. FHIR processors don't use the name of the slice to map entries in
-your [Task](basic-concepts-and-lessons.md#task) resource to the correct slice. They use [discriminators](https://www.hl7.org/fhir/R4/profiling.html#discriminator).
+your [Task](basic-concepts-and-guides.md#task) resource to the correct slice. They use [discriminators](https://www.hl7.org/fhir/R4/profiling.html#discriminator).
 Discriminators define the elements a processor needs to distinguish slices by. You can see
 how the discriminator is configured by selecting the `input` element in Forge. In our case, a processor 
 would look at the values for `input.type.coding.system` and `input.type.coding.code` to determine which
@@ -980,7 +1048,7 @@ All this means is that we effectively ignore the name of the slice as an element
 </Task>
 ```
 
-Now you should be able to add all remaining mandatory elements to your [Task](basic-concepts-and-lessons.md#task) 
+Now you should be able to add all remaining mandatory elements to your [Task](basic-concepts-and-guides.md#task) 
 resource on your own. In the end, it should look something like this:  
 <details>
 <summary>Suggested solution</summary>
@@ -1022,3 +1090,359 @@ resource on your own. In the end, it should look something like this:
 </Task>
 ```
 </details>
+
+**Don't forget to restore the version and date placeholders in `task-hello-dic.xml`!**
+
+***
+
+### Adding Task Input Parameters To Task Profiles
+
+When adding a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) to a [Task](basic-concepts-and-guides.md#task)
+profile, you are essentially adding a new slice to `Task.input`. [Slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing) is part
+of [profiling](https://www.hl7.org/fhir/R4/profiling.html) in FHIR. Profiling lets you create your own
+FHIR definitions based on pre-existing FHIR definitions. A slicing defines constraints on element lists
+like `Task.input` e.g. by only allowing the elements to be of certain types. For example, you 
+might have a list of fruits in a `FruitBasket` resource. Constraining that list to only include
+fruits of type `Apple`, `Banana` and `Orange` would be considered [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing).  
+This guide will not cover how slicing works in general, only for the case presented by the DSF FHIR resource
+context. Our goal will be to add a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters)
+of type `example-input` to the `task-hello-dic.xml` profile which will be used to submit `integer` values to our `helloDic` process.
+
+Let's start out by adding a slice to `task-hello-dic.xml`. Since there is already a slicing defined
+on `Task.input` by `task-hello-dic.xml`'s `baseDefinition`, we have to check out this resource first.
+You can look at it [here](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml). As a part of the [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot) statement, slicing also uses [Element Definitions](https://www.hl7.org/fhir/R4/elementdefinition.html). 
+The slicing for `Task.input` is defined in this part of the `baseDefinition`:  
+```xml
+<element id="Task.input">
+    <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Parameter" />
+    </extension>
+    <path value="Task.input" />
+    <slicing>
+        <discriminator>
+            <type value="value" />
+            <path value="type.coding.system" />
+        </discriminator>
+        <discriminator>
+            <type value="value" />
+            <path value="type.coding.code" />
+        </discriminator>
+        <rules value="openAtEnd" />
+    </slicing>
+    <min value="1" />
+</element>
+```
+We will only need to take a look at the `discrimitator` tag for now.
+Discriminators define the elements a FHIR processor needs to distinguish slices by. In our case, a processor
+would look at the values for `type.coding.system` and `type.coding.code` to determine which
+slice this element belongs to. The discriminator type `value` implies that `type.coding.system` and `type.coding.code`
+have to be present in all slices and need to have a fixed value. 
+You can learn more about discriminators [here](https://www.hl7.org/fhir/R4/profiling.html#discriminator).
+
+Let's go back to `task-hello-dic.xml` and start adding a slice called `example-input` to it:  
+```xml
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    ...
+    <differential>
+        ...
+        <element id="Task.input:example-input">
+            <path value="Task.input" />
+            <sliceName value="example-input" />
+            <min value="1" />
+            <max value="1" />
+        </element>
+    </differential>
+</StructureDefinition>
+```
+*Unnecessary elements for this guide are hidden by ... placeholders.*
+
+We have now defined a slice on `Task.input` with the name and id of `example-input` and cardinality of `1..1`. You might
+want a different cardinality for your use-case. We recommend you also take a look at the documentation for [ElementDefinition.id](https://www.hl7.org/fhir/R4/elementdefinition.html#id)
+and [ElementDefinition.path](https://www.hl7.org/fhir/R4/elementdefinition.html#path). They explain how to create the proper
+values for these elements. Cardinality is also part of the [Element Definition](https://www.hl7.org/fhir/R4/elementdefinition.html)
+hierarchy (see [ElementDefinition.min](https://www.hl7.org/fhir/R4/elementdefinition-definitions.html#ElementDefinition.min) and [ElementDefinition.max](https://www.hl7.org/fhir/R4/elementdefinition-definitions.html#ElementDefinition.max)).
+
+Next up, we need to define the binding for `Task.input:example-input.type`. Because `Task.input.type`
+is a `CodeableConcept` which uses codings from a [ValueSet](basic-concepts-and-guides.md#valueset),
+the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires us to use `required` as the binding strength:  
+```xml
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    ...
+    <differential>
+        ...
+        <element id="Task.input:example-input">
+            <path value="Task.input" />
+            <sliceName value="example-input" />
+            <min value="1" />
+            <max value="1" />
+        </element>
+        <element id="Task.input:example-input.type">
+            <path value="Task.input.type" />
+            <binding>
+                <strength value="required"/>
+                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
+            </binding>
+        </element>
+    </differential>
+</StructureDefinition>
+```
+As you can see, we referenced a [ValueSet](basic-concepts-and-guides.md#valueset) in this binding. 
+When adding an actual slice for your use-case, you will have to reference an existing [ValueSet](basic-concepts-and-guides.md#valueset) resource or create a new 
+a new one. A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-valuesets-for-dsf-processes).
+
+Since the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires 
+`Task.input.coding.code` and `Task.input.coding.system` to be present, we will make `Task.input.coding` mandatory as well:  
+```xml
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    ...
+    <differential>
+        ...
+        <element id="Task.input:example-input">
+            <path value="Task.input" />
+            <sliceName value="example-input" />
+            <min value="1" />
+            <max value="1" />
+        </element>
+        <element id="Task.input:example-input.type">
+            <path value="Task.input.type" />
+            <binding>
+                <strength value="required"/>
+                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
+            </binding>
+        </element>
+        <element id="Task.input:example-input.type.coding">
+            <path value="Task.input.type.coding"/>
+            <min value="1" />
+        </element>
+    </differential>
+</StructureDefinition>
+```
+
+In the beginning we mentioned how `Task.input.type.coding.system` and `Task.input.type.coding.code`
+have to use fixed values. Here is how we accomplish this: 
+
+```xml
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    ...
+    <differential>
+        ...
+        <element id="Task.input:example-input">
+            <path value="Task.input" />
+            <sliceName value="example-input" />
+            <min value="1" />
+            <max value="1" />
+        </element>
+        <element id="Task.input:example-input.type">
+            <path value="Task.input.type" />
+            <binding>
+                <strength value="required"/>
+                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
+            </binding>
+        </element>
+        <element id="Task.input:example-input.type.coding">
+            <path value="Task.input.type.coding"/>
+            <min value="1" />
+        </element>
+        <element id="Task.input:example-input.type.coding.system">
+            <path value="Task.input.type.coding.system"/>
+            <min value="1"/>
+            <fixedUri value="http://dsf.dev/fhir/CodeSystem/example"/>
+        </element>
+        <element id="Task.input:example-input.type.coding.code">
+            <path value="Task.input.type.coding.code"/>
+            <min value="1"/>
+            <fixedCode value="example-input" />
+        </element>
+    </differential>
+</StructureDefinition>
+```
+*Notice that we also made the two elements mandatory because they are required by the discriminator.*
+
+For the `type.coding.system` element we referenced a [CodeSystem](basic-concepts-and-guides.md#codesystem). 
+The `type.coding.code` element uses a code from this [CodeSystem](basic-concepts-and-guides.md#codesystem) called `example-input`.
+This is the mechanism by which you actually "name" your [Input Parameter](basic-concepts-and-guides.md#task-input-parameters). The
+`type.coding.code` value will identify your [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) when you use
+it in an actual [Task](basic-concepts-and-guides.md#task) resource. Here is how this would look like: 
+
+```xml
+<Task xmlns="http://hl7.org/fhir">
+    ...
+    <input>
+        <type>
+            <coding>
+                <system value="http://dsf.dev/fhir/CodeSystem/example"/>
+                <code value="example-input" />
+            </coding>
+        </type>
+     ...
+    </input>
+</Task>
+```
+
+When adding an actual slice for your use-case, you will also need to reference an existing [CodeSystem](basic-concepts-and-guides.md#codesystem) resource or create a new one to reference.
+A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-codesystems-for-the-dsf-processes).
+
+`Task.input.value[x]` is the actual value you will submit using your Input Parameter. You can make it
+any of [these](https://www.hl7.org/fhir/R4/datatypes.html#open) data types. This is because `Type.input.value[x]`  
+refers to `*` instead of any particular type in its [definition](https://www.hl7.org/fhir/R4/task-definitions.html#Task.input.value_x_). Let's define it as an `integer` type`:
+
+```xml
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    ...
+    <differential>
+        ...
+        <element id="Task.input:example-input">
+            <path value="Task.input" />
+            <sliceName value="example-input" />
+            <min value="1" />
+            <max value="1" />
+        </element>
+        <element id="Task.input:example-input.type">
+            <path value="Task.input.type" />
+            <binding>
+                <strength value="required"/>
+                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
+            </binding>
+        </element>
+        <element id="Task.input:example-input.type.coding">
+            <path value="Task.input.type.coding"/>
+            <min value="1" />
+        </element>
+        <element id="Task.input:example-input.type.coding.system">
+            <path value="Task.input.type.coding.system"/>
+            <min value="1"/>
+            <fixedUri value="http://dsf.dev/fhir/CodeSystem/example"/>
+        </element>
+        <element id="Task.input:example-input.type.coding.code">
+            <path value="Task.input.type.coding.code"/>
+            <min value="1"/>
+            <fixedCode value="example-input" />
+        </element>
+        <element id="Task.input:example-input.value[x]">
+            <path value="Task.input.value[x]"/>
+            <type>
+                <code value="integer"/>
+            </type>
+        </element>
+    </differential>
+</StructureDefinition>
+```
+
+Now we have a new Input Parameter of type `example-input` which accepts any `integer` as its value.
+
+***
+
+### Creating ValueSets For DSF Processes
+
+You might find yourself in the situation where you need to create a [ValueSet](basic-concepts-and-guides.md#valueset).
+For example, when adding [Input Parameters](basic-concepts-and-guides.md#task-input-parameters) to DSF [Task](basic-concepts-and-guides.md#task)
+resources, you will also have to reference a [ValueSet](basic-concepts-and-guides.md#valueset) resource in your 
+binding for `Task.input.type` to be able to set the type of your [Input Parameter](basic-concepts-and-guides.md#task-input-parameters).
+[ValueSets](basic-concepts-and-guides.md#valueset) for the DSF differ from regular [ValueSets](basic-concepts-and-guides.md#valueset)
+in that some element's values are managed by the DSF BPE server. You can use the following template for your
+[ValueSet](basic-concepts-and-guides.md#valueset):  
+```xml
+<ValueSet xmlns="http://hl7.org/fhir">
+    <meta>
+        <tag>
+            <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
+            <code value="ALL" />
+        </tag> 
+    </meta>
+    <url value="http://dsf.dev/fhir/ValueSet/my-value-set"/>
+    <!-- version managed by bpe -->
+    <version value="#{version}" />
+    <name value="My ValueSet"/>
+    <title value="My ValueSet Title"/>
+    <!-- status managed by bpe -->
+    <status value="unknown" />
+    <experimental value="false"/>
+    <!-- date managed by bpe -->
+    <date value="#{date}"/>
+    <publisher value="DSF"/>
+    <description value="ValueSet with all codes from my-code-system"/>
+    <immutable value="true"/>
+    <compose>
+        <include>
+            <system value="http://dsf.dev/fhir/CodeSystem/my-code-system"/>
+            <version value="#{version}"/>   
+        </include>  
+    </compose>
+</ValueSet> 
+```
+Replace appropriate values as you see fit. Don't change elements managed by the DSF BPE server.  
+The `compose` element defines the codes included in this [ValueSet](basic-concepts-and-guides.md#valueset).
+It holds at least one `include` element. Each `include` element refers to a [CodeSystem](basic-concepts-and-guides.md#codesystem)
+and contains a list of `concept` elements which in turn contain the actual `code` element.
+Using one code from `my-code-system` and one code from `my-other-code-system` would result in the following `compose` element:  
+```xml
+<ValueSet xmlns="http://hl7.org/fhir">
+    ...
+    <compose>
+        <include>
+            <system value="http://dsf.dev/fhir/CodeSystem/my-code-system"/>
+            <version value="#{version}"/>   
+            <concept>
+                <code value="my-code"/>
+            </concept>
+        </include>  
+        <include>
+            <system value="http://dsf.dev/fhir/CodeSystem/my-other-code-system"/>
+            <version value="#{version}"/>
+            <concept>
+                <code value="my-other-code"/>
+            </concept>
+        </include>
+    </compose>
+</ValueSet>
+```
+The DSF BPE server will read your [ValueSet](basic-concepts-and-guides.md#valueset) from
+`tutorial-process/src/main/resources/fhir/ValueSet`.
+
+You might also want to check out [this guide](basic-concepts-and-guides.md#creating-codesystems-for-the-dsf-processes)
+on how to create [CodeSystems](basic-concepts-and-guides.md#codesystem).
+
+***
+
+### Creating CodeSystems For The DSF Processes
+
+You might find yourself in a situation where you need to create a [CodeSystem](basic-concepts-and-guides.md#codesystem).
+For example, when defining the type of an [Input Parameter](basic-concepts-and-guides.md#task-input-parameters).
+[CodeSystems](basic-concepts-and-guides.md#codesystem) for the DSF differ from regular [CodeSystems](basic-concepts-and-guides.md#codesystem)
+in that some element's values are managed by the DSF BPE server. You can use the following XML as a template:  
+```xml
+<CodeSystem xmlns="http://hl7.org/fhir">
+    <meta>
+        <tag>
+            <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
+            <code value="ALL" />    
+        </tag>  
+    </meta>
+    <url value="http://dsf.dev/fhir/CodeSystem/my-code-system" />
+    <!-- version managed by bpe -->
+    <version value="#{version}" />
+    <name value="My CodeSystem" />
+    <title value="My CodeSystem Title" />
+    <!-- status managed by bpe -->
+    <status value="unknown" />
+    <experimental value="false" />
+    <!-- date managed by bpe -->
+    <date value="#{date}" />
+    <publisher value="DSF" />
+    <description value="CodeSystem with codes for me" />
+    <caseSensitive value="true" />
+    <hierarchyMeaning value="grouped-by" />
+    <versionNeeded value="false" />
+    <content value="complete" />
+    <concept>
+        <code value="my-code" />
+        <display value="My Code" />
+        <definition value="My code used for myself" />
+    </concept>
+</CodeSystem> 
+```
+Replace appropriate values as you see fit. Don't change elements managed by the DSF BPE server.  
+You can add as many codes as you like by defining more `concept` elements.
+
+The DSF BPE server will read your [CodeSystem](basic-concepts-and-guides.md#codesystem) from
+`tutorial-process/src/main/resources/fhir/CodeSystem`.

@@ -5,14 +5,14 @@ ___
 Different execution paths in a process based on the state of process variables can be achieved using Exclusive Gateways. In Exercise 4 we will examine how this can be implemented by modifying the `dsfdev_helloDic` process.
 
 In order to solve this exercise, you should have solved Exercise 3 and read the topics on
-[Exclusive Gateways](basic-concepts-and-lessons.md#exclusive-gateways)
-and [Conditions](basic-concepts-and-lessons.md#conditions).
+[Exclusive Gateways](basic-concepts-and-guides.md#exclusive-gateways)
+and [Conditions](basic-concepts-and-guides.md#conditions).
 
 Solutions to this exercise are found on the branch `solutions/exercise-4`.
 
 ## Exercise Tasks
-1. In the `HelloDic` class, write an algorithm which decides whether the `dsfdev_helloCos` process should be started based on the start Task's input parameter `tutorial-input`.
-2. Add a boolean variable to the process execution variables storing the decision.
+1. In the `HelloDic` class, create a boolean variable which decides whether the `dsfdev_helloCos` process should be started based on the start Task's input parameter `tutorial-input`.
+2. Add the boolean variable to the process execution variables storing the decision.
 3. Add an exclusive gateway to the `dsfdev_helloDic` process model and two outgoing sequence flows - the first starting process `dsfdev_helloDic`, the second stopping process `dsfdev_helloDic` without starting process `dsfdev_helloCos`.
 4. Add condition expressions to each outgoing sequence flow based on the previously stored execution variable.
 
@@ -53,7 +53,7 @@ To verify the `dsfdev_helloDic` and `dsfdev_helloCos` processes can be executed 
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_helloCos` process. 
 
-5. Start the `dsfdev_helloDic` process by posting a specific FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-lessons.md#starting-a-process-via-task-resources) again if you are unsure.
+5. Start the `dsfdev_helloDic` process by posting a specific FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.
 
    Verify that the `dsfdev_helloDic` process was executed successfully by the `Test_DIC` DSF BPE server and possibly the `dsfdev_helloCos` process by the `Test_COS` DSF BPE server, depending on whether decision of your algorithm based on the input parameter allowed to start the `dsfdev_helloDic` process.
 

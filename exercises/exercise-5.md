@@ -6,8 +6,8 @@ In the final exercise we will look at message flow between three organizations a
 With this exercise we will add a third process and complete a message loop from `Test_DIC` to `Test_COR` to `Test_HRP` back to `Test_DIC`.
 
 In order to solve this exercise, you should have solved exercise 4 and read the topics on 
-[Managing Multiple Incoming Messages And Missing Messages](basic-concepts-and-lessons.md#managing-multiple-incoming-messages-and-missing-messages)
-and [Message Correlation](basic-concepts-and-lessons.md#message-correlation).
+[Managing Multiple Incoming Messages And Missing Messages](basic-concepts-and-guides.md#managing-multiple-incoming-messages-and-missing-messages)
+and [Message Correlation](basic-concepts-and-guides.md#message-correlation).
 
 Solutions to this exercise are found on the branch `solutions/exercise-5`.
 
@@ -24,7 +24,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-5`.
         1. An [Intermediate Message Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-intermediate-catching-event) to catch the `goodbyDic` message from the `dsfdev_helloHrp` process.
         1. An [Intermediate Timer Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event) to end the process if no message is sent by the `dsfdev_helloHrp` process after two minutes.
         Make sure both cases finish with a process [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/).
-    * Add a new process authorization extension element to the ActivityDefinition for `dsfdev_helloDic` using [scenario 3](basic-concepts-and-lessons.md#scenario-3) where
+    * Add a new process authorization extension element to the ActivityDefinition for `dsfdev_helloDic` using [scenario 3](basic-concepts-and-guides.md#scenario-3) where
    only organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
    organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
       <details>
@@ -84,7 +84,7 @@ in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_cert
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_helloHrp` process. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain a three [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](http://hl7.org/fhir/R4/task.html) profile was created.
 
-7. Start the `dsfdev_helloDic` process by posting a specific FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-lessons.md#starting-a-process-via-task-resources) again if you are unsure.
+7. Start the `dsfdev_helloDic` process by posting a specific FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.
 
    Verify that the FHIR [Task](http://hl7.org/fhir/R4/task.html) resource was created at the DSF FHIR server and the `dsfdev_helloDic` process was executed by the DSF BPE server of the `Test_DIC` organization. The DSF BPE server of the `Test_DIC` organization should print a message showing that a [Task](http://hl7.org/fhir/R4/task.html) resource to start the `dsfdev_helloCos` process was sent to the `Test_COS` organization.  
    Verify that a FHIR [Task](http://hl7.org/fhir/R4/task.html) resource was created at the DSF FHIR server of the `Test_COS` organization and the `dsfdev_helloCos` process was executed by the DSF BPE server of the `Test_COS` organization. The DSF BPE server of the `Test_COS` organization should print a message showing that a [Task](http://hl7.org/fhir/R4/task.html) resource to start the `dsfdev_helloHrp` process was send to the `Test_HRP` organization.  
