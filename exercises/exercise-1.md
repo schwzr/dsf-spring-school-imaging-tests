@@ -19,7 +19,7 @@ In order to solve this exercise, you need to have read the topics on [FHIR Task]
 [BPMN Process Execution](basic-concepts-and-guides.md#bpmn-process-execution), [BPMN Process Variables](basic-concepts-and-guides.md#bpmn-process-variables), 
 [Accessing BPMN Process Variables](basic-concepts-and-guides.md#accessing-bpmn-process-variables),
 [Process Access Control](basic-concepts-and-guides.md#process-access-control) 
-and [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources).
+and [Starting a Process via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources).
 
 Solutions to this exercise are found on the branch `solutions/exercise-1`.
 

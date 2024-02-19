@@ -11,7 +11,7 @@ In order to solve this exercise, you should have solved exercise 2 and read the 
 [Message Delegates](basic-concepts-and-guides.md#message-delegates),
 [Version Pattern](basic-concepts-and-guides.md#version-pattern),
 [URLs](basic-concepts-and-guides.md#urls) 
-and [Setting Targets For Message Events](basic-concepts-and-guides.md#setting-targets-for-message-events).
+and [Setting Targets for Message Events](basic-concepts-and-guides.md#setting-targets-for-message-events).
 
 Solutions to this exercise are found on the branch `solutions/exercise-3`.
 

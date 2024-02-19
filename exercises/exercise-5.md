@@ -6,7 +6,7 @@ In the final exercise we will look at message flow between three organizations a
 With this exercise we will add a third process and complete a message loop from `Test_DIC` to `Test_COR` to `Test_HRP` back to `Test_DIC`.
 
 In order to solve this exercise, you should have solved exercise 4 and read the topics on 
-[Managing Multiple Incoming Messages And Missing Messages](basic-concepts-and-guides.md#managing-multiple-incoming-messages-and-missing-messages)
+[Managing Multiple Incoming Messages and Missing Messages](basic-concepts-and-guides.md#managing-multiple-incoming-messages-and-missing-messages)
 and [Message Correlation](basic-concepts-and-guides.md#message-correlation).
 
 Solutions to this exercise are found on the branch `solutions/exercise-5`.
