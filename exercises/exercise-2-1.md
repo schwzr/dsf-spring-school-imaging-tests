@@ -10,11 +10,11 @@ with access to all DSF installations using [OpenID Connect](https://openid.net/d
 
 In order to solve this exercise, you need to have read the DSF documentation on [Access Control](https://dsf.dev/stable/maintain/fhir/access-control.html) 
 and [OpenID Connect](https://dsf.dev/stable/maintain/fhir/oidc.html) for the DSF FHIR server and look at the required [environment variables](https://dsf.dev/stable/maintain/bpe/configuration.html)
-for the DSF BPE server related to OpenID connect.
+for the DSF BPE server related to OpenID connect. 
 
 ## Exercise Tasks
 
-1. Add a new user to the [docker-compose.yml](../dev-setup/docker-compose.yml) named `Webbrowser`
+1. Add a new role to the [docker-compose.yml](../dev-setup/docker-compose.yml) 
 
 ## Solution Verification
 ### Maven Build and Automated Tests
