@@ -15,11 +15,14 @@ Exercise 1.1 looks at how to use the Java debugger of your IDE to remote debug t
 ## Exercise 2 - Input Parameters
 In order to configure processes that are packaged as process plugins, we will take a look at two possibilities on how to pass parameters into a process. For more details see the [exercise 2 description](exercises/exercise-2.md).
 
-## Exercise 3 - Message Events
-Communication between organizations is modeled using message flow events in BPMN processes. The third exercise shows you how a process at one organization can trigger a process at another organization. For more details see the [exercise 3 description](exercises/exercise-3.md).
+## Exercise 3 - DSF User Authentication and Authorization
+This exercise looks at how DSF 
 
-## Exercise 4 - Exclusive Gateways
-Different execution paths in a process based on the state of process variables can be achieved using exclusive gateways. In exercise 4 we will examine how this can be implemented. For more details see the [exercise 4 description](exercises/exercise-4.md).
+## Exercise 4 - Message Events
+Communication between organizations is modeled using message flow events in BPMN processes. The third exercise shows you how a process at one organization can trigger a process at another organization. For more details see the [exercise 4 description](exercises/exercise-5.md).
 
-## Exercise 5 - Event Based Gateways and Intermediate Events
-In the final exercise we will look at message flows between three organizations as well as how to continue a waiting process, if no return message arrives. For more details see the [exercise 5 description](exercises/exercise-5.md).
+## Exercise 5 - Exclusive Gateways
+Different execution paths in a process based on the state of process variables can be achieved using exclusive gateways. In exercise 5 we will examine how this can be implemented. For more details see the [exercise 5 description](exercises/exercise-6.md).
+
+## Exercise 6 - Event Based Gateways and Intermediate Events
+In the final exercise we will look at message flows between three organizations as well as how to continue a waiting process, if no return message arrives. For more details see the [exercise 6 description](exercises/exercise-6.md).

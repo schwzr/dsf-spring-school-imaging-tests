@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.exercise_5.profile;
+package dev.dsf.process.tutorial.exercise_6.profile;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_GOODBYE_DIC;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_GOODBYE_DIC_MESSAGE_NAME;

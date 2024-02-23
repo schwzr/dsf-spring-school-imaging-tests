@@ -25,16 +25,17 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.constants.NamingSystems;
+import dev.dsf.bpe.v1.service.FhirWebserviceClientProvider;
 import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
-import dev.dsf.bpe.variables.TargetImpl;
 import dev.dsf.fhir.authorization.read.ReadAccessHelper;
 import dev.dsf.process.tutorial.service.HelloDic;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloDicServiceTest
 {
+	@Mock
+	private FhirWebserviceClientProvider clientProvider;
 
 	@Mock
 	private TaskHelper taskHelper;
@@ -70,7 +71,6 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicConstructorWithAdditionalBooleanParameterExists() throws Exception
 	{
-
 		Optional<Constructor<HelloDic>> constructor = getConstructor(ProcessPluginApi.class, boolean.class);
 
 		if (constructor.isEmpty())
@@ -111,10 +111,6 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicServiceDoExecute() throws Exception
 	{
-		final String orgIdValue = "Test_COS";
-		final String endpointIdValue = "Test_COS_Endpoint";
-		final String endpointAddress = "https://cos/fhir";
-
 		Optional<HelloDic> optService = getInstance(Arrays.asList(ProcessPluginApi.class, boolean.class), api, true);
 		if (optService.isEmpty())
 			optService = getInstance(Arrays.asList(boolean.class, ProcessPluginApi.class), true, api);
@@ -127,8 +123,6 @@ public class HelloDicServiceTest
 		Mockito.when(variables.getStartTask()).thenReturn(task);
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
 				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
-		Mockito.when(variables.createTarget(orgIdValue, endpointIdValue, endpointAddress))
-				.thenReturn(new TargetImpl(orgIdValue, endpointIdValue, endpointAddress, null));
 
 		optService.get().execute(execution);
 
@@ -136,22 +130,8 @@ public class HelloDicServiceTest
 		Mockito.verify(taskHelper).getFirstInputParameterStringValue(captor.capture(),
 				eq("http://dsf.dev/fhir/CodeSystem/tutorial"), eq("tutorial-input"));
 		Mockito.verify(variables, atLeastOnce()).getStartTask();
+
 		assertEquals(task, captor.getValue());
-
-		ArgumentCaptor<String> orgIdValueCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<String> endpointIdValueCaptor = ArgumentCaptor.forClass(String.class);
-		ArgumentCaptor<String> endpointAddressCaptor = ArgumentCaptor.forClass(String.class);
-		Mockito.verify(variables).createTarget(orgIdValueCaptor.capture(), endpointIdValueCaptor.capture(),
-				endpointAddressCaptor.capture());
-		assertEquals(orgIdValue, orgIdValueCaptor.getValue());
-		assertEquals(endpointIdValue, endpointIdValueCaptor.getValue());
-		assertEquals(endpointAddress, endpointAddressCaptor.getValue());
-
-		ArgumentCaptor<Target> targetArgumentCaptor = ArgumentCaptor.forClass(Target.class);
-		Mockito.verify(variables).setTarget(targetArgumentCaptor.capture());
-		assertEquals(orgIdValue, targetArgumentCaptor.getValue().getOrganizationIdentifierValue());
-		assertEquals(endpointIdValue, targetArgumentCaptor.getValue().getEndpointIdentifierValue());
-		assertEquals(endpointAddress, targetArgumentCaptor.getValue().getEndpointUrl());
 	}
 
 	private Task getTask()

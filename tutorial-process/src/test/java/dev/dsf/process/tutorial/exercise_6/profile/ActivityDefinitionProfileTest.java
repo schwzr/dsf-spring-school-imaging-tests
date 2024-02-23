@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.exercise_5.profile;
+package dev.dsf.process.tutorial.exercise_6.profile;
 
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;

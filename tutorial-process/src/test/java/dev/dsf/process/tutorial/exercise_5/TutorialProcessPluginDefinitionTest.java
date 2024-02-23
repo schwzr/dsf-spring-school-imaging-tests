@@ -1,32 +1,35 @@
 package dev.dsf.process.tutorial.exercise_5;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI;
+import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER;
+import static dev.dsf.process.tutorial.ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER;
+import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeNotNull;
-import static org.junit.Assume.assumeTrue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.EndEvent;
-import org.camunda.bpm.model.bpmn.instance.EventBasedGateway;
 import org.camunda.bpm.model.bpmn.instance.ExtensionElements;
-import org.camunda.bpm.model.bpmn.instance.IntermediateCatchEvent;
-import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent;
 import org.camunda.bpm.model.bpmn.instance.MessageEventDefinition;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
-import org.camunda.bpm.model.bpmn.instance.TimerEventDefinition;
+import org.camunda.bpm.model.bpmn.instance.StartEvent;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CodeSystem;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.hl7.fhir.r4.model.Task;
@@ -34,201 +37,16 @@ import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.Test;
 
 import dev.dsf.bpe.plugin.ProcessIdAndVersion;
+import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
-import dev.dsf.process.tutorial.message.HelloHrpMessage;
-import dev.dsf.process.tutorial.service.HelloCos;
+import dev.dsf.process.tutorial.message.HelloCosMessage;
+import dev.dsf.process.tutorial.service.HelloDic;
 
 public class TutorialProcessPluginDefinitionTest
 {
-	private TutorialProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-
-	@Test
-	public void testGetBpmnFiles() throws Exception
-	{
-		var bpmnFiles = definition.getProcessModels();
-		assertNotNull(bpmnFiles);
-		assertEquals(3, bpmnFiles.size());
-	}
-
-	@Test
-	public void testGetBpmnFilesCos() throws Exception
-	{
-		var bpmnFiles = definition.getProcessModels();
-		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-cos.bpmn"::equals));
-	}
-
-	@Test
-	public void testGetBpmnFilesDic() throws Exception
-	{
-		var bpmnFiles = definition.getProcessModels();
-		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-dic.bpmn"::equals));
-	}
-
-	@Test
-	public void testGetBpmnFilesHrp() throws Exception
-	{
-		var bpmnFiles = definition.getProcessModels();
-		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-hrp.bpmn"::equals));
-	}
-
-	private List<Resource> getResources(String processKey, String processOrgIdentifier)
-	{
-		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		processPlugin.initializeAndValidateResources(processOrgIdentifier);
-		assumeNotNull(processPlugin);
-
-		return processPlugin.getFhirResources()
-				.get(new ProcessIdAndVersion(processKey, ConstantsTutorial.RESOURCE_VERSION));
-	}
-
-	@Test
-	public void testGetResourceProviderCos() throws Exception
-	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
-				ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
-		assertNotNull(resources);
-		assertEquals(4, resources.size());
-
-		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloCos".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
-				.count();
-		assertEquals(1, aCount);
-
-		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
-				.count();
-		assertEquals(1, cCount);
-
-		long tCount = resources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
-				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
-				.count();
-		assertEquals(1, tCount);
-
-		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
-				.count();
-		assertEquals(1, vCount);
-	}
-
-	@Test
-	public void testGetResourceProviderDic() throws Exception
-	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
-				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
-		assertNotNull(resources);
-		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
-		int numExpectedResources = 5;
-
-		if(draftTaskExists(draftTaskFile))
-		{
-			numExpectedResources  = 6;
-			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, resources.stream().filter(r -> r instanceof Task)
-					.count()
-			);
-		}
-
-		assertEquals(numExpectedResources, resources.size());
-
-		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
-				.count();
-		assertEquals(1, aCount);
-
-		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
-				.count();
-		assertEquals(1, cCount);
-
-		long t1Count = resources.stream().filter(r -> r instanceof StructureDefinition)
-				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
-				.count();
-		assertEquals(1, t1Count);
-
-		long t2Count = resources.stream().filter(r -> r instanceof StructureDefinition)
-				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-dic".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
-				.count();
-		assertEquals(1, t2Count);
-
-		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
-				.count();
-		assertEquals(1, vCount);
-	}
-
-	private boolean draftTaskExists(String draftTaskFile){
-		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
-	}
-
-	@Test
-	public void testGetResourceProviderDicActivityDefinitionHelloDic() throws Exception
-	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
-				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
-		assumeNotNull(resources);
-
-		var aOpt = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
-				.findFirst();
-		assumeTrue(aOpt.isPresent());
-
-		var a = aOpt.get();
-		var pAuthExts = a.getExtensionsByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
-		assertNotNull(pAuthExts);
-		assertEquals(2, pAuthExts.size());
-	}
-
-	@Test
-	public void testGetResourceProviderHrp() throws Exception
-	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_HRP,
-				ConstantsTutorial.TUTORIAL_HRP_ORGANIZATION_IDENTIFIER);
-		assertNotNull(resources);
-		assertEquals(4, resources.size());
-
-		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloHrp".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
-				.count();
-		assertEquals(1, aCount);
-
-		long cCount = resources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
-				.count();
-		assertEquals(1, cCount);
-
-		long tCount = resources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
-				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
-				.count();
-		assertEquals(1, tCount);
-
-		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
-				.count();
-		assertEquals(1, vCount);
-	}
-
 	@Test
 	public void testHelloDicBpmnProcessFile() throws Exception
 	{
@@ -243,75 +61,10 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(p -> processId.equals(p.getId())).collect(Collectors.toList());
 		assertEquals(1, processes.size());
 
-		List<MessageEventDefinition> intermediateMessageThrowEvent = processes.get(0)
-				.getChildElementsByType(IntermediateThrowEvent.class).stream().filter(Objects::nonNull)
-				.flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream().filter(Objects::nonNull))
-				.collect(Collectors.toList());
-
-		String errorIntermediateMessageThrowEvent = "Process '" + processId + "' in file '" + filename
-				+ "' is missing an IntermediateMessageThrowEvent";
-		assertEquals(errorIntermediateMessageThrowEvent, 1, intermediateMessageThrowEvent.size());
-
-		String errorIntermediateMessageThrowEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a IntermediateMessageThrowEvent with message name 'helloCos'";
-		assertEquals(errorIntermediateMessageThrowEventMessageName, "helloCos",
-				intermediateMessageThrowEvent.get(0).getMessage().getName());
-
-		long eventBasedGatewayCount = processes.get(0).getChildElementsByType(EventBasedGateway.class).stream()
-				.filter(Objects::nonNull).count();
-		String errorEventBasedGatewayCount = "Process '" + processId + "' in file '" + filename
-				+ "' is missing an EventBasedGateway";
-		assertEquals(errorEventBasedGatewayCount, 1, eventBasedGatewayCount);
-
-		List<MessageEventDefinition> intermediateMessageCatchEvent = processes.get(0)
-				.getChildElementsByType(IntermediateCatchEvent.class).stream().filter(Objects::nonNull)
-				.flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream().filter(Objects::nonNull))
-				.collect(Collectors.toList());
-
-		String errorIntermediateMessageCatchEvent = "Process '" + processId + "' in file '" + filename
-				+ "' is missing an IntermediateMessageCatchEvent";
-		assertEquals(errorIntermediateMessageCatchEvent, 1, intermediateMessageCatchEvent.size());
-
-		String errorIntermediateMessageCatchEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a IntermediateMessageCatchEvent with message name 'goodbyeDic'";
-		assertEquals(errorIntermediateMessageCatchEventMessageName, "goodbyeDic",
-				intermediateMessageCatchEvent.get(0).getMessage().getName());
-
-		List<TimerEventDefinition> intermediateTimerCatchEvent = processes.get(0)
-				.getChildElementsByType(IntermediateCatchEvent.class).stream().filter(Objects::nonNull)
-				.flatMap(e -> e.getChildElementsByType(TimerEventDefinition.class).stream().filter(Objects::nonNull))
-				.collect(Collectors.toList());
-
-		String errorIntermediateTimerCatchEvent = "Process '" + processId + "' in file '" + filename
-				+ "' is missing an IntermediateTimerCatchEvent";
-		assertEquals(errorIntermediateTimerCatchEvent, 1, intermediateTimerCatchEvent.size());
-
-		assertNotNull(intermediateTimerCatchEvent.get(0).getTimeDuration());
-		assertNotNull(intermediateTimerCatchEvent.get(0).getTimeDuration().getTextContent());
-		String errorIntermediateTimerCatchEventTimerDefinition = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a IntermediateTimerCatchEvent with timer definition";
-		assertTrue(errorIntermediateTimerCatchEventTimerDefinition,
-				intermediateTimerCatchEvent.get(0).getTimeDuration().getTextContent().startsWith("P"));
-	}
-
-	@Test
-	public void testHelloCosBpmnProcessFile() throws Exception
-	{
-		String filename = "bpe/hello-cos.bpmn";
-		String processId = "dsfdev_helloCos";
-
-		BpmnModelInstance model = Bpmn
-				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
-		assertNotNull(model);
-
-		List<Process> processes = model.getModelElementsByType(Process.class).stream()
-				.filter(p -> processId.equals(p.getId())).collect(Collectors.toList());
-		assertEquals(1, processes.size());
-
 		String errorServiceTask = "Process '" + processId + "' in file '" + filename
-				+ "' is missing implementation of class '" + HelloCos.class.getName() + "'";
+				+ "' is missing implementation of class '" + HelloDic.class.getName() + "'";
 		assertTrue(errorServiceTask, processes.get(0).getChildElementsByType(ServiceTask.class).stream()
-				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(HelloCos.class.getName()::equals));
+				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(HelloDic.class.getName()::equals));
 
 		List<MessageEventDefinition> messageEndEvent = processes.get(0).getChildElementsByType(EndEvent.class).stream()
 				.filter(Objects::nonNull)
@@ -323,8 +76,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorMessageEndEvent, 1, messageEndEvent.size());
 
 		String errorMessageEndEventImplementation = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageEndEvent java implementation class '" + HelloHrpMessage.class.getName() + "'";
-		assertEquals(errorMessageEndEventImplementation, HelloHrpMessage.class.getName(),
+				+ "' is missing a MessageEndEvent java implementation class '" + HelloCosMessage.class.getName() + "'";
+		assertEquals(errorMessageEndEventImplementation, HelloCosMessage.class.getName(),
 				messageEndEvent.get(0).getCamundaClass());
 
 		List<CamundaField> camundaFields = processes.get(0).getChildElementsByType(EndEvent.class).stream().findAny()
@@ -339,31 +92,103 @@ public class TutorialProcessPluginDefinitionTest
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent field injection with name 'instantiatesCanonical' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "|#{version}'";
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}'";
 		assertTrue(errorMessageEndEventInputUri,
 				camundaFields.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
-						&& (PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
+						&& (PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent field injection with name 'messageName' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME + "'";
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME + "'";
 		assertTrue(errorMessageEndEventMessageName,
 				camundaFields.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
-						&& PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME.equals(i.getTextContent())));
+						&& PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME.equals(i.getTextContent())));
 
 		String errorMessageEndEventProfile = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent field injection with name 'profile' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_HRP + "|#{version}'";
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS + "|#{version}'";
 		assertTrue(errorMessageEndEventProfile,
 				camundaFields.stream().anyMatch(i -> "profile".equals(i.getCamundaName())
-						&& (PROFILE_TUTORIAL_TASK_HELLO_HRP + "|#{version}").equals(i.getTextContent())));
+						&& (PROFILE_TUTORIAL_TASK_HELLO_COS + "|#{version}").equals(i.getTextContent())));
 	}
 
 	@Test
-	public void testHelloHrpBpmnProcessFile() throws Exception
+	public void testHelloDicResources() throws Exception
 	{
-		String filename = "bpe/hello-hrp.bpmn";
-		String processId = "dsfdev_helloHrp";
+		String codeSystemUrl = "http://dsf.dev/fhir/CodeSystem/tutorial";
+		String codeSystemCode = "tutorial-input";
+		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
+
+		String codeSystemFile = "fhir/CodeSystem/tutorial.xml";
+		String valueSetFile = "fhir/CodeSystem/tutorial.xml";
+		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+
+		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		processPlugin.initializeAndValidateResources(TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+
+		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
+
+		Map<String, List<String>> helloDic = definition.getFhirResourcesByProcessId();
+
+		int numberEntries = helloDic.size();
+		String errorTooManyEntries = "Too many processes in Map. Got " + numberEntries + " entries. Expected 1.";
+		assertEquals(errorTooManyEntries, 2, numberEntries);
+
+		String dicProcessKey = helloDic.keySet().stream().filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC)).findFirst().get();
+		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
+				+ ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + dicProcessKey + "'";
+		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, dicProcessKey);
+
+		String errorCodeSystem = "Process is missing CodeSystem with file name '" + codeSystemFile + "'";
+		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+				.filter(r -> codeSystemFile.equals(r)).count());
+
+		String errorValueSet = "Process is missing ValueSet with file name '" + valueSetFile + "'";
+		assertEquals(errorValueSet, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+				.filter(r -> valueSetFile.equals(r)).count());
+
+		errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
+				+ codeSystemCode + "' with type 'string'";
+		assertEquals(errorCodeSystem, 1, helloDicResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
+				.filter(c -> codeSystemUrl.equals(c.getUrl()))
+				.filter(c -> c.getConcept().stream().anyMatch(con -> codeSystemCode.equals(con.getCode()))).count());
+
+		errorValueSet = "Process is missing ValueSet with url '" + valueSetUrl + "'";
+		assertEquals(errorValueSet, 1, helloDicResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
+				.filter(v -> valueSetUrl.equals(v.getUrl()))
+				.filter(v -> v.getCompose().getInclude().stream().anyMatch(i -> codeSystemUrl.equals(i.getSystem())))
+				.count());
+
+		int numExpectedResources = 4;
+
+		if(draftTaskExists(draftTaskFile))
+		{
+			numExpectedResources  = 5;
+			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
+			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task)
+					.count()
+			);
+		}
+
+		assertEquals(numExpectedResources, helloDicResources.size());
+	}
+
+	private boolean draftTaskExists(String draftTaskFile){
+		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
+	}
+
+	@Test
+	public void testHelloCosBpmnProcessFile() throws Exception
+	{
+		String filename = "bpe/hello-cos.bpmn";
+		String processId = "dsfdev_helloCos";
+
+		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getProcessModels().stream()
+				.anyMatch(f -> filename.equals(f));
+		assertTrue("Process '" + processId + "' from file '" + filename + "' not configured in "
+				+ TutorialProcessPluginDefinition.class.getSimpleName(), cosProcessConfigured);
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -371,13 +196,80 @@ public class TutorialProcessPluginDefinitionTest
 
 		List<Process> processes = model.getModelElementsByType(Process.class).stream()
 				.filter(p -> processId.equals(p.getId())).collect(Collectors.toList());
+		assertEquals(1, processes.size());
 
-		String errorProcessDefinitionKey = "Process in file '" + filename + "' is missing process definition key '"
-				+ processId + "'";
-		assertEquals(errorProcessDefinitionKey, 1, processes.size());
+		List<MessageEventDefinition> messageStartEvent = processes.get(0).getChildElementsByType(StartEvent.class)
+				.stream().filter(Objects::nonNull)
+				.flatMap(e -> e.getChildElementsByType(MessageEventDefinition.class).stream().filter(Objects::nonNull))
+				.collect(Collectors.toList());
 
-		String errorProcessVersion = "Process '" + processId + "' in file '" + filename
-				+ "' is missing version tag '#{version}'";
-		assertEquals(errorProcessVersion, "#{version}", processes.get(0).getCamundaVersionTag());
+		String errorStartEvent = "Process '" + processId + "' in file '" + filename
+				+ "' is missing a MessageStartEvent";
+		assertEquals(errorStartEvent, 1, messageStartEvent.size());
+
+		String errorStartEventMessageName = "Process '" + processId + "' in file '" + filename
+				+ "' is missing a MessageStartEvent with message name 'helloCos'";
+		assertEquals(errorStartEventMessageName, "helloCos", messageStartEvent.get(0).getMessage().getName());
+	}
+
+	@Test
+	public void testHelloCosResources() throws Exception
+	{
+		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
+
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
+		processPlugin.initializeAndValidateResources(TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
+		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, definition.getResourceVersion()));
+
+		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
+		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
+				.map(r -> (ActivityDefinition) r).filter(a -> processUrl.equals(a.getUrl()))
+				.filter(a -> RESOURCE_VERSION.equals(a.getVersion())).collect(Collectors.toList());
+
+		String errorActivityDefinition = "Process is missing ActivityDefinition with url '" + processUrl
+				+ "' and version '" + VERSION + "'";
+		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
+
+		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '"
+				+ RESOURCE_VERSION + "' is missing expected requester extension";
+		assertEquals(errorMessageRequester, 1, activityDefinitions.get(0).getExtension().stream()
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
+						.equals(e.getUrl()))
+				.flatMap(e -> e.getExtension().stream()).filter(e -> "requester".equals(e.getUrl()))
+				.map(Extension::getValue).filter(v -> v instanceof Coding).map(v -> (Coding) v)
+				.filter(c -> "http://dsf.dev/fhir/CodeSystem/process-authorization".equals(c.getSystem()))
+				.filter(c -> "REMOTE_ORGANIZATION".equals(c.getCode())).flatMap(c -> c.getExtension().stream())
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization"
+						.equals(e.getUrl()))
+				.map(Extension::getValue).filter(v -> v instanceof Identifier).map(i -> (Identifier) i)
+				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
+				.filter(i -> "Test_DIC".equals(i.getValue())).count());
+
+		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '"
+				+ RESOURCE_VERSION + "' is missing expected recipient extension";
+		assertEquals(errorMessageRecipient, 1, activityDefinitions.get(0).getExtension().stream()
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
+						.equals(e.getUrl()))
+				.flatMap(e -> e.getExtension().stream()).filter(e -> "recipient".equals(e.getUrl()))
+				.map(Extension::getValue).filter(v -> v instanceof Coding).map(v -> (Coding) v)
+				.filter(c -> "http://dsf.dev/fhir/CodeSystem/process-authorization".equals(c.getSystem()))
+				.filter(c -> "LOCAL_ORGANIZATION".equals(c.getCode())).flatMap(c -> c.getExtension().stream())
+				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization"
+						.equals(e.getUrl()))
+				.map(Extension::getValue).filter(v -> v instanceof Identifier).map(i -> (Identifier) i)
+				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
+				.filter(i -> "Test_COS".equals(i.getValue())).count());
+
+		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
+		List<StructureDefinition> structureDefinitions = helloCos.stream().filter(r -> r instanceof StructureDefinition)
+				.map(r -> (StructureDefinition) r).filter(s -> taskHelloCosUrl.equals(s.getUrl()))
+				.filter(s -> RESOURCE_VERSION.equals(s.getVersion())).collect(Collectors.toList());
+
+		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + taskHelloCosUrl
+				+ "' and version '" + RESOURCE_VERSION + "'";
+		assertEquals(errorStructureDefinition, 1, structureDefinitions.size());
+
+		assertEquals(2, helloCos.size());
 	}
 }
