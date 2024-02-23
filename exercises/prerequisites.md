@@ -37,6 +37,7 @@ The following entries are required in the `hosts` file of your computer so that 
 127.0.0.1	dic
 127.0.0.1	cos
 127.0.0.1	hrp
+127.0.0.1   keycloak
 ```
 
 ## Java IDE
