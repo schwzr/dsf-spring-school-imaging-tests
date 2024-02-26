@@ -22,7 +22,7 @@ public interface ConstantsTutorial
 
 	String TUTORIAL_DIC_ORGANIZATION_IDENTIFIER = "Test_DIC";
 
-	// The HELLO_COS constants are only needed for exercise 3 and above
+	// The HELLO_COS constants are only needed for exercise 4 and above
 	String PROCESS_NAME_HELLO_COS = "helloCos";
 	String PROCESS_NAME_FULL_HELLO_COS = "dsfdev_" + PROCESS_NAME_HELLO_COS;
 
@@ -36,7 +36,7 @@ public interface ConstantsTutorial
 
 	String TUTORIAL_COS_ORGANIZATION_IDENTIFIER = "Test_COS";
 
-	// The HELLO_HRP constants are only needed for exercise 5 and above
+	// The HELLO_HRP constants are only needed for exercise 6 and above
 	String PROCESS_NAME_HELLO_HRP = "helloHrp";
 	String PROCESS_NAME_FULL_HELLO_HRP = "dsfdev_" + PROCESS_NAME_HELLO_HRP;
 

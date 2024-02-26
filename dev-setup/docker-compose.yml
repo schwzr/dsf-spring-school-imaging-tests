@@ -47,6 +47,7 @@ services:
       POSTGRES_USER: liquibase_user
       POSTGRES_DB: postgres
     networks:
+      - db
       - cos-fhir-backend
       - dic-fhir-backend
       - hrp-fhir-backend
@@ -63,6 +64,54 @@ services:
         source: ./db/init-db.sh
         target: /docker-entrypoint-initdb.d/init-db.sh
         read_only: true
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: "no"
+    ports:
+      - 127.0.0.1:8880:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@dsf.dev
+      PGADMIN_DEFAULT_PASSWORD: password
+    networks:
+      - db
+      - internet
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.0
+    restart: "no"
+    ports:
+      - 127.0.0.1:8443:8443
+    environment:
+      TZ: Europe/Berlin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_USERNAME: liquibase_user
+      KC_DB_PASSWORD: NKb2D7ZCxgmhrddh4KNgCrBr49mSsqWUnQAQHgGPkYZ2k7W9VQCFevuGRFYeZg9p
+      KC_DB_URL: jdbc:postgresql://db/keycloak
+    secrets:
+      - keycloak_certificate.pem
+      - keycloak_certificate_private_key.pem
+      - keycloak_trust_store.jks
+    volumes:
+      - type: bind
+        source: ./keycloak
+        target: /opt/keycloak/data/import
+    networks:
+      - internet
+      - db
+    command: >-
+      start
+      --hostname keycloak
+      --import-realm
+      --https-certificate-file=/run/secrets/keycloak_certificate.pem
+      --https-certificate-key-file=/run/secrets/keycloak_certificate_private_key.pem
+      --spi-truststore-file-file=/run/secrets/keycloak_trust_store.jks
+      --spi-truststore-file-password=password
+      --spi-truststore-file-hostname-verification-policy=STRICT
+    depends_on:
+      - db
 
   cos-fhir:
     image: ghcr.io/datasharingframework/fhir:1.4.0
@@ -105,6 +154,14 @@ services:
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_COS
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${COS_BUNDLE_USER_THUMBPRINT}
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/cos
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: cos-fhir
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: P7XhxzBixIf9vPdprItkbOXZwtSX2JNt
+
     networks:
       cos-fhir-frontend:
         ipv4_address: 172.20.0.99
@@ -113,6 +170,7 @@ services:
     depends_on:
       - db
       - proxy
+      - keycloak
   cos-bpe:
     image: ghcr.io/datasharingframework/bpe:1.4.0
     restart: "no"
@@ -159,13 +217,22 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: cos_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://cos/fhir
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/cos
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: cos-bpe
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: 5GtUIUfoXnQVcsRfd0Hg4EGv14iAknGq
     networks:
       cos-bpe-frontend:
+        ipv4_address: 172.20.0.147
       cos-bpe-backend:
       internet:
     depends_on:
       - db
       - cos-fhir
+      - keycloak
 
   dic-fhir:
     image: ghcr.io/datasharingframework/fhir:1.4.0
@@ -207,6 +274,25 @@ services:
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_DIC
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${DIC_BUNDLE_USER_THUMBPRINT}
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/dic
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-fhir
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: mF0GEtjFoyWIM3in4VCwifGI3azb4DTn
+      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
+        - tutorial_user:
+          token-role: admin
+          dsf-role:
+            - CREATE
+            - READ
+            - UPDATE
+            - DELETE
+            - SEARCH
+            - HISTORY
+          practitioner-role:
+            - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.67
@@ -215,6 +301,7 @@ services:
     depends_on:
       - db
       - proxy
+      - keycloak
   dic-bpe:
     image: ghcr.io/datasharingframework/bpe:1.4.0
     restart: "no"
@@ -261,13 +348,22 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: dic_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://dic/fhir
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/dic
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-bpe
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: ytqFCErw9GfhVUrrM8xc0Grbu4r7qGig
     networks:
       dic-bpe-frontend:
+        ipv4_address: 172.20.0.115
       dic-bpe-backend:
       internet:
     depends_on:
       - db
       - dic-fhir
+      - keycloak
 
   hrp-fhir:
     image: ghcr.io/datasharingframework/fhir:1.4.0
@@ -309,6 +405,13 @@ services:
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: Test_HRP
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${HRP_BUNDLE_USER_THUMBPRINT}
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/hrp
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: hrp-fhir
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: 9i9WRfIedG7N3QoL5WuGM8hCoySblAhK
     networks:
       hrp-fhir-frontend:
         ipv4_address: 172.20.0.83
@@ -317,6 +420,7 @@ services:
     depends_on:
       - db
       - proxy
+      - keycloak
 
   hrp-bpe:
     image: ghcr.io/datasharingframework/bpe:1.4.0
@@ -364,13 +468,22 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: hrp_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://hrp/fhir
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/hrp
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: hrp-bpe
+      DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: VGTQD3WWH4uGUMz408NWNzcHF1MsfV0l
     networks:
       hrp-bpe-frontend:
+        ipv4_address: 172.20.0.131
       hrp-bpe-backend:
       internet:
     depends_on:
       - db
       - hrp-fhir
+      - keycloak
 
 secrets:
   proxy_certificate_and_int_cas.pem:
@@ -382,6 +495,13 @@ secrets:
 
   db_liquibase.password:
     file: ./secrets/db_liquibase.password
+
+  keycloak_certificate.pem:
+    file: ./secrets/keycloak_certificate_and_int_cas.pem
+  keycloak_certificate_private_key.pem:
+    file: ./secrets/keycloak_certificate_private_key.pem
+  keycloak_trust_store.jks:
+    file: ./secrets/keycloak_trust_store.jks
 
   db_dic_fhir_user.password:
     file: ./secrets/db_dic_fhir_user.password
@@ -446,6 +566,11 @@ networks:
         - subnet: 172.20.0.64/28
   dic-fhir-backend:
   dic-bpe-frontend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.112/28
   dic-bpe-backend:
   hrp-fhir-frontend:
     driver: bridge
@@ -455,6 +580,11 @@ networks:
         - subnet: 172.20.0.80/28
   hrp-fhir-backend:
   hrp-bpe-frontend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.128/28
   hrp-bpe-backend:
   cos-fhir-frontend:
     driver: bridge
@@ -464,7 +594,13 @@ networks:
         - subnet: 172.20.0.96/28
   cos-fhir-backend:
   cos-bpe-frontend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.144/28
   cos-bpe-backend:
+  db:
 
 
 volumes:

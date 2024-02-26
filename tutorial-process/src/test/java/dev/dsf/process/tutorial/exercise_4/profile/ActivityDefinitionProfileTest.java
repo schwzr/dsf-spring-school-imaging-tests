@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.exercise_3.profile;
+package dev.dsf.process.tutorial.exercise_4.profile;
 
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
@@ -48,9 +48,9 @@ public class ActivityDefinitionProfileTest
 					"dsf-coding-process-authorization-remote-all-1.0.0.xml",
 					"dsf-coding-process-authorization-remote-parent-organization-role-1.0.0.xml",
 					"dsf-coding-process-authorization-remote-organization-1.0.0.xml"),
-			Arrays.asList("dsf-process-authorization-1.0.0.xml", "dsf-read-access-tag-1.0.0.xml"),
-			Arrays.asList("dsf-process-authorization-recipient-1.0.0.xml",
-					"dsf-process-authorization-requester-1.0.0.xml", "dsf-read-access-tag-1.0.0.xml"));
+			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-process-authorization-1.0.0.xml"),
+			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-process-authorization-recipient-1.0.0.xml",
+					"dsf-process-authorization-requester-1.0.0.xml"));
 
 	private final ResourceValidator resourceValidator = new ResourceValidatorImpl(validationRule.getFhirContext(),
 			validationRule.getValidationSupport());
@@ -70,7 +70,23 @@ public class ActivityDefinitionProfileTest
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
 		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
-				orgIdentifier -> true, orgRole -> true));
+				orgIdentifier -> true, role -> true));
+	}
+
+	@Test
+	public void testHelloCosValid() throws Exception
+	{
+		ActivityDefinition ad = validationRule
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-cos.xml"));
+
+		ValidationResult result = resourceValidator.validate(ad);
+		ValidationSupportRule.logValidationMessages(logger, result);
+
+		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
+				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
+
+		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
+				orgIdentifier -> true, role -> true));
 	}
 
 	@Test
