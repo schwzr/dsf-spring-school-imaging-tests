@@ -5,18 +5,22 @@ ___
 
 In [Exercise 1](exercise-1.md), you added a client certificate to your browser in order to be allowed to access the DIC FHIR
 server. In later exercises we will also use some of the DSF installations like the COS or HRP. You could add a 
-client certificate to your browser for each one, which is very cumbersome, or you could configure yourself a specific DSF user
-with access to all DSF installations using [OpenID Connect](https://openid.net/developers/how-connect-works/).
+client certificate to your browser for each one, or you could configure yourself a specific DSF user
+with access to all DSF installations using [OpenID Connect](https://openid.net/developers/how-connect-works/).  
+The tutorial project provides a keycloak instance for this purpose with the administration console accessible under https://keycloak:8443.
+Credentials for administrator access are `username: admin` and `password: admin`.
 
-In order to solve this exercise, you need to have read the DSF documentation on [Access Control](https://dsf.dev/stable/maintain/fhir/access-control.html) 
-and the documentation on [Process Access Control](basic-concepts-and-guides.md#process-access-control).
+In order to solve this exercise, you need to have read the documentation on [Access Control](https://dsf.dev/stable/maintain/fhir/access-control.html) 
+and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
 
 ## Exercise Tasks
 
-1. 
-2. Add a new role to the `DEV_DSF_FHIR_SERVER_ROLECONFIG` for all FHIR instances in [docker-compose.yml](../dev-setup/docker-compose.yml). It should match any user with `token-role` equal to
-   `tutorial` and have `dsf-roles` `CREATE`, `READ`, `UPDATE`, `DELETE`, `SEARCH` and `HISTORY`. Finally, it should also
-   
+1. In the Keycloak administrator console, create a new realm role called `tutorial` in the `cos`, `dic` and `hrp` realms.
+2. In the Keycloak administrator console, create a new user in the `cos`, `dic` and `hrp` realms with the new `tutorial` role. 
+   This will be your credentials to access all DSF FHIR server instances.
+3. Add a new role to the `DEV_DSF_FHIR_SERVER_ROLECONFIG` for all FHIR server instances in [docker-compose.yml](../dev-setup/docker-compose.yml). It should match any user with `token-role` equal to
+   `tutorial` and have `dsf-roles` `CREATE`, `READ`, `UPDATE`, `DELETE`, `SEARCH` and `HISTORY`. Finally, the role should also have the practitioner role `DSF_ADMIN`.
+4. Change the `requester` element in the ActivityDefinition `hello-dic.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `helloDic` messages.
    
 
 ## Solution Verification
