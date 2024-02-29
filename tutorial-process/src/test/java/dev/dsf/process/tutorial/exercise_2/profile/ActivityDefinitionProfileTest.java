@@ -83,35 +83,14 @@ public class ActivityDefinitionProfileTest
 				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
 		assertNotNull(processAuthorization);
 
-		List<Extension> requesters = processAuthorization.getExtensionsByUrl("requester");
-		assertNotNull(requesters);
+		Extension requester = processAuthorization.getExtensionByUrl("requester");
+		assertNotNull(requester);
 
-		List<Type> values = requesters.stream().map(extension -> extension.getValue()).toList();
-		values.stream().forEach(value -> assertTrue(value instanceof Coding));
+		Type value = requester.getValue();
+		assertTrue(value instanceof Coding);
 
-		List<Coding> codings = values.stream().map(value -> (Coding) value).toList();
-
-		assertTrue(matchesForCodings(codings) > 0);
-	}
-
-	private int matchesForCodings(List<Coding> codings)
-	{
-		int matches = 0;
-
-		for (Coding coding : codings)
-		{
-			if (coding.getSystem().equals("http://dsf.dev/fhir/CodeSystem/process-authorization"))
-			{
-				if (coding.getCode().equals("LOCAL_ALL"))
-					matches++;
-				if (coding.getCode().equals("LOCAL_ALL_PRACTITIONER") && ((Coding) coding
-						.getExtensionByUrl(
-								"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner")
-						.getValue()).getCode().equals("DSF_ADMIN"))
-					matches++;
-			}
-		}
-
-		return matches;
+		Coding coding = (Coding) value;
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
+		assertEquals("LOCAL_ALL", coding.getCode());
 	}
 }

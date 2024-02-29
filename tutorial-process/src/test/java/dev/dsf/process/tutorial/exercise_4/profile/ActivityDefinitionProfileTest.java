@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.exercise_1.profile;
+package dev.dsf.process.tutorial.exercise_4.profile;
 
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
@@ -13,6 +13,7 @@ import java.util.List;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Type;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -70,7 +71,23 @@ public class ActivityDefinitionProfileTest
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
 		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
-				orgIdentifier -> true, orgRole -> true));
+				orgIdentifier -> true, role -> true));
+	}
+
+	@Test
+	public void testHelloCosValid() throws Exception
+	{
+		ActivityDefinition ad = validationRule
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-cos.xml"));
+
+		ValidationResult result = resourceValidator.validate(ad);
+		ValidationSupportRule.logValidationMessages(logger, result);
+
+		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
+				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
+
+		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
+				orgIdentifier -> true, role -> true));
 	}
 
 	@Test
@@ -83,14 +100,45 @@ public class ActivityDefinitionProfileTest
 				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");
 		assertNotNull(processAuthorization);
 
-		Extension requester = processAuthorization.getExtensionByUrl("requester");
-		assertNotNull(requester);
+		List<Extension> requesters = processAuthorization.getExtensionsByUrl("requester");
+		assertTrue(requesters.size() == 2);
 
-		Type value = requester.getValue();
+		Extension localAllPractitionerRequester = requesters.stream().filter(r -> ((Coding)r.getValue()).getCode().equals("LOCAL_ALL_PRACTITIONER")).findFirst().get();
+
+		Type value = localAllPractitionerRequester.getValue();
 		assertTrue(value instanceof Coding);
 
 		Coding coding = (Coding) value;
 		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
-		assertEquals("LOCAL_ALL", coding.getCode());
+		assertEquals("LOCAL_ALL_PRACTITIONER", coding.getCode());
+
+		Extension practitioner = coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner");
+		assertNotNull(practitioner);
+
+		value = practitioner.getValue();
+		assertTrue(value instanceof Coding);
+
+		coding = (Coding) value;
+		assertEquals("http://dsf.dev/fhir/CodeSystem/practitioner-role", coding.getSystem());
+		assertEquals("DSF_ADMIN", coding.getCode());
+
+		Extension localOrganizationRequester = requesters.stream().filter(r -> ((Coding)r.getValue()).getCode().equals("LOCAL_ORGANIZATION")).findFirst().get();
+
+		value = localOrganizationRequester.getValue();
+		assertTrue(value instanceof Coding);
+
+		coding = (Coding) value;
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
+		assertEquals("LOCAL_ORGANIZATION", coding.getCode());
+
+		Extension organization = coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization");
+		assertNotNull(organization);
+
+		value = organization.getValue();
+		assertTrue(value instanceof Identifier);
+
+		Identifier identifier = (Identifier) value;
+		assertEquals("http://dsf.dev/sid/organization-identifier", identifier.getSystem());
+		assertEquals("Test_DIC", identifier.getValue());
 	}
 }

@@ -4,9 +4,6 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_H
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_PROCESS_URI;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
-import static dev.dsf.process.tutorial.ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER;
-import static dev.dsf.process.tutorial.ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER;
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -125,10 +122,10 @@ public class TutorialProcessPluginDefinitionTest
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		processPlugin.initializeAndValidateResources(TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+		boolean initialized = processPlugin
+				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 
-		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
+		assertEquals(true, initialized);
 
 		Map<String, List<String>> helloDic = definition.getFhirResourcesByProcessId();
 
@@ -148,6 +145,9 @@ public class TutorialProcessPluginDefinitionTest
 		String errorValueSet = "Process is missing ValueSet with file name '" + valueSetFile + "'";
 		assertEquals(errorValueSet, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
 				.filter(r -> valueSetFile.equals(r)).count());
+
+		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
 		errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
@@ -218,7 +218,11 @@ public class TutorialProcessPluginDefinitionTest
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		processPlugin.initializeAndValidateResources(TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
+		boolean initialized = processPlugin
+				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
+
+		assertEquals(true, initialized);
+
 		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, definition.getResourceVersion()));
 
@@ -228,7 +232,7 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(a -> RESOURCE_VERSION.equals(a.getVersion())).collect(Collectors.toList());
 
 		String errorActivityDefinition = "Process is missing ActivityDefinition with url '" + processUrl
-				+ "' and version '" + VERSION + "'";
+				+ "' and version '" + RESOURCE_VERSION + "'";
 		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
 
 		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '"

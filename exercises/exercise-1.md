@@ -1,4 +1,4 @@
-[Prerequisites](prerequisites.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
+[Prerequisites](prerequisites.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
 ___
 ## Disclaimer
 The concept of `Tasks` exists in both the FHIR and BPMN domains. For this tutorial `Task resource` always refers
@@ -17,8 +17,7 @@ In order to solve this exercise, you need to have read the topics on [FHIR Task]
 [Spring Integration](basic-concepts-and-guides.md#spring-integration), [Service Tasks](basic-concepts-and-guides.md#service-tasks), 
 [Service Delegates](basic-concepts-and-guides.md#service-delegates),
 [BPMN Process Execution](basic-concepts-and-guides.md#bpmn-process-execution), [BPMN Process Variables](basic-concepts-and-guides.md#bpmn-process-variables), 
-[Accessing BPMN Process Variables](basic-concepts-and-guides.md#accessing-bpmn-process-variables),
-[Process Access Control](basic-concepts-and-guides.md#process-access-control) 
+[Accessing BPMN Process Variables](basic-concepts-and-guides.md#accessing-bpmn-process-variables)
 and [Starting a Process via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources).
 
 Solutions to this exercise are found on the branch `solutions/exercise-1`.
@@ -46,14 +45,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
 
 2. Register the `HelloDic` class as a prototype bean in the `TutorialConfig` class.
 3. Set the `HelloDic` class as the service implementation of the appropriate service task within the `hello-dic.bpmn` process model.
-4. Modify the ActivityDefinition for the `dsfdev_helloDic` process to only allow local clients to instantiate the process via a `helloDic` message.
-
-    <details>
-        <summary>Can't find the right code?</summary>
-    
-    Take a look at the [dsf-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-process-authorization-1.0.0.xml) CodeSystem.
-    </details>
-5. In order to start your process you need to either create a regular [Task](basic-concepts-and-guides.md#task) resource
+4. In order to start your process you need to either create a regular [Task](basic-concepts-and-guides.md#task) resource
     or a [Draft Task Resource](basic-concepts-and-guides.md#draft-task-resources). Based on whether you would like
     to use cURL or the DSF FHIR server's web interface for starting processes you can do one of the following
     assignments (although we invite you to do both):
@@ -107,4 +99,4 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
     Verify that the `dsfdev_helloDic` process was executed by the DSF BPE server. The BPE server should print a message showing that the process was started, print the log message you added to the `HelloDic` class and end with a message showing that the process finished.
 
 ___
-[Prerequisites](prerequisites.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
+[Prerequisites](prerequisites.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)

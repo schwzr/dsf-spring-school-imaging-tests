@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 
@@ -30,6 +29,7 @@ import dev.dsf.bpe.v1.service.TaskHelper;
 import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
 import dev.dsf.bpe.variables.TargetImpl;
+import dev.dsf.fhir.authorization.read.ReadAccessHelper;
 import dev.dsf.process.tutorial.service.HelloDic;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,6 +38,9 @@ public class HelloDicServiceTest
 
 	@Mock
 	private TaskHelper taskHelper;
+
+	@Mock
+	private ReadAccessHelper readAccessHelper;
 
 	@Mock
 	private DelegateExecution execution;
@@ -67,6 +70,7 @@ public class HelloDicServiceTest
 	@Test
 	public void testHelloDicConstructorWithAdditionalBooleanParameterExists() throws Exception
 	{
+
 		Optional<Constructor<HelloDic>> constructor = getConstructor(ProcessPluginApi.class, boolean.class);
 
 		if (constructor.isEmpty())
@@ -148,8 +152,6 @@ public class HelloDicServiceTest
 		assertEquals(orgIdValue, targetArgumentCaptor.getValue().getOrganizationIdentifierValue());
 		assertEquals(endpointIdValue, targetArgumentCaptor.getValue().getEndpointIdentifierValue());
 		assertEquals(endpointAddress, targetArgumentCaptor.getValue().getEndpointUrl());
-
-		Mockito.verify(variables).setBoolean(anyString(), any());
 	}
 
 	private Task getTask()
