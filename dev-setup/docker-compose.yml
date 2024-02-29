@@ -86,18 +86,17 @@ services:
       TZ: Europe/Berlin
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_DB: postgres
-      KC_DB_USERNAME: liquibase_user
-      KC_DB_PASSWORD: NKb2D7ZCxgmhrddh4KNgCrBr49mSsqWUnQAQHgGPkYZ2k7W9VQCFevuGRFYeZg9p
-      KC_DB_URL: jdbc:postgresql://db/keycloak
     secrets:
       - keycloak_certificate.pem
       - keycloak_certificate_private_key.pem
       - keycloak_trust_store.jks
     volumes:
       - type: bind
-        source: ./keycloak
+        source: ./keycloak/import
         target: /opt/keycloak/data/import
+      - type: bind
+        source: ./keycloak/data/h2
+        target: /opt/keycloak/data/h2
     networks:
       - internet
       - db
@@ -281,18 +280,6 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: mF0GEtjFoyWIM3in4VCwifGI3azb4DTn
-      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
-        - tutorial_user:
-          token-role: admin
-          dsf-role:
-            - CREATE
-            - READ
-            - UPDATE
-            - DELETE
-            - SEARCH
-            - HISTORY
-          practitioner-role:
-            - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.67
