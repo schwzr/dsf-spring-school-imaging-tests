@@ -280,18 +280,6 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: mF0GEtjFoyWIM3in4VCwifGI3azb4DTn
-      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
-        - tutorial_user:
-          token-role: admin
-          dsf-role:
-            - CREATE
-            - READ
-            - UPDATE
-            - DELETE
-            - SEARCH
-            - HISTORY
-          practitioner-role:
-            - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.67
