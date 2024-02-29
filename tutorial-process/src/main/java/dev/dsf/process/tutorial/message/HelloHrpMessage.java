@@ -11,7 +11,7 @@ import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
 import dev.dsf.bpe.v1.variables.Variables;
 
-// Only needed for exercise 5 and above
+// Only needed for exercise 6 and above
 public class HelloHrpMessage extends AbstractTaskMessageSend
 {
 	public HelloHrpMessage(ProcessPluginApi api)

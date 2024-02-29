@@ -13,6 +13,7 @@ import java.util.List;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Type;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -48,9 +49,9 @@ public class ActivityDefinitionProfileTest
 					"dsf-coding-process-authorization-remote-all-1.0.0.xml",
 					"dsf-coding-process-authorization-remote-parent-organization-role-1.0.0.xml",
 					"dsf-coding-process-authorization-remote-organization-1.0.0.xml"),
-			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-process-authorization-1.0.0.xml"),
-			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-process-authorization-recipient-1.0.0.xml",
-					"dsf-process-authorization-requester-1.0.0.xml"));
+			Arrays.asList("dsf-process-authorization-1.0.0.xml", "dsf-read-access-tag-1.0.0.xml"),
+			Arrays.asList("dsf-process-authorization-recipient-1.0.0.xml",
+					"dsf-process-authorization-requester-1.0.0.xml", "dsf-read-access-tag-1.0.0.xml"));
 
 	private final ResourceValidator resourceValidator = new ResourceValidatorImpl(validationRule.getFhirContext(),
 			validationRule.getValidationSupport());
@@ -70,23 +71,7 @@ public class ActivityDefinitionProfileTest
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 
 		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
-				orgIdentifier -> true, role -> true));
-	}
-
-	@Test
-	public void testHelloCosValid() throws Exception
-	{
-		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-cos.xml"));
-
-		ValidationResult result = resourceValidator.validate(ad);
-		ValidationSupportRule.logValidationMessages(logger, result);
-
-		assertEquals(0, result.getMessages().stream().filter(m -> ResultSeverityEnum.ERROR.equals(m.getSeverity())
-				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
-
-		assertTrue(processAuthorizationHelper.isValid(ad, taskProfile -> true, practitionerRole -> true,
-				orgIdentifier -> true, role -> true));
+				orgIdentifier -> true, orgRole -> true));
 	}
 
 	@Test
@@ -100,34 +85,44 @@ public class ActivityDefinitionProfileTest
 		assertNotNull(processAuthorization);
 
 		List<Extension> requesters = processAuthorization.getExtensionsByUrl("requester");
-		assertNotNull(requesters);
+		assertTrue(requesters.size() == 2);
 
-		List<Type> values = requesters.stream().map(extension -> extension.getValue()).toList();
-		values.stream().forEach(value -> assertTrue(value instanceof Coding));
+		Extension localAllPractitionerRequester = requesters.stream().filter(r -> ((Coding)r.getValue()).getCode().equals("LOCAL_ALL_PRACTITIONER")).findFirst().get();
 
-		List<Coding> codings = values.stream().map(value -> (Coding) value).toList();
+		Type value = localAllPractitionerRequester.getValue();
+		assertTrue(value instanceof Coding);
 
-		assertTrue(matchesForCodings(codings) > 0);
-	}
+		Coding coding = (Coding) value;
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
+		assertEquals("LOCAL_ALL_PRACTITIONER", coding.getCode());
 
-	private int matchesForCodings(List<Coding> codings)
-	{
-		int matches = 0;
+		Extension practitioner = coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner");
+		assertNotNull(practitioner);
 
-		for (Coding coding : codings)
-		{
-			if (coding.getSystem().equals("http://dsf.dev/fhir/CodeSystem/process-authorization"))
-			{
-				if (coding.getCode().equals("LOCAL_ALL"))
-					matches++;
-				if (coding.getCode().equals("LOCAL_ALL_PRACTITIONER") && ((Coding) coding
-						.getExtensionByUrl(
-								"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner")
-						.getValue()).getCode().equals("DSF_ADMIN"))
-					matches++;
-			}
-		}
+		value = practitioner.getValue();
+		assertTrue(value instanceof Coding);
 
-		return matches;
+		coding = (Coding) value;
+		assertEquals("http://dsf.dev/fhir/CodeSystem/practitioner-role", coding.getSystem());
+		assertEquals("DSF_ADMIN", coding.getCode());
+
+		Extension localOrganizationRequester = requesters.stream().filter(r -> ((Coding)r.getValue()).getCode().equals("LOCAL_ORGANIZATION")).findFirst().get();
+
+		value = localOrganizationRequester.getValue();
+		assertTrue(value instanceof Coding);
+
+		coding = (Coding) value;
+		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
+		assertEquals("LOCAL_ORGANIZATION", coding.getCode());
+
+		Extension organization = coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization");
+		assertNotNull(organization);
+
+		value = organization.getValue();
+		assertTrue(value instanceof Identifier);
+
+		Identifier identifier = (Identifier) value;
+		assertEquals("http://dsf.dev/sid/organization-identifier", identifier.getSystem());
+		assertEquals("Test_DIC", identifier.getValue());
 	}
 }

@@ -1,4 +1,4 @@
-**Prerequisites** • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
+**Prerequisites** • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
 ___
 
 # Prerequisites
@@ -37,6 +37,7 @@ The following entries are required in the `hosts` file of your computer so that 
 127.0.0.1	dic
 127.0.0.1	cos
 127.0.0.1	hrp
+127.0.0.1   keycloak
 ```
 
 ## Java IDE
@@ -56,4 +57,4 @@ relies on Camunda 7 which is incompatible with Camunda 8.
 The minimum hardware requirements to run all simulated organizations as part of the Docker dev-setup is 16 GB of RAM.
 
 ___
-**Prerequisites** • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md)
+**Prerequisites** • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
