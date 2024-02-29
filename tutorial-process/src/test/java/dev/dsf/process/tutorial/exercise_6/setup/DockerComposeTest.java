@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.exercise_3.setup;
+package dev.dsf.process.tutorial.exercise_6.setup;
 
 import static org.junit.Assert.assertEquals;
 
