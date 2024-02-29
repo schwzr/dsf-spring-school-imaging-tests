@@ -32,16 +32,12 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
    You can base this [Task](http://hl7.org/fhir/R4/task.html) profile off the `StructureDefinition/task-hello-dic.xml` resource. Then look for elements that need to be added, changed or can be omitted.
     </details>
 1. Create a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource for the `dsfdev_helloCos` process and configure the authorization extension to allow the `Test_DIC` organization as the requester and the `Test_COS` organization as the recipient.
-    <details>
+   <details>
    <summary>Don't know how to get started?</summary>
 
    You can base this ActivityDefinition off the `ActivityDefinition/hello-dic.xml` resource. Then look for elements that need to be added, changed or can be omitted.
-    </details>
-    <details>
-       <summary>Don't know how to create a proper authorization extension?</summary>
-    
-    You can base the authorization extension off [scenario 2](basic-concepts-and-guides.md#scenario-2).
-    </details>
+   Or you can take a look at the [guide on creating ActivityDefinitions](basic-concepts-and-guides.md#creating-an-activitydefinition).
+   </details>
 1. Add the `dsfdev_helloCos` process and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `helloCos` process as the key and a List of associated FHIR resources as the value.
 1. Modify `HelloDic` service class to set the `target` process variable for the `Test_COS` organization.
 1. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
@@ -57,7 +53,7 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `dsfdev_helloDic` and `dsfdev_helloCos` processes can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_helloDic` process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 Don't forget that you will have to add the client certificate for the `COS` instance to your browser the same way you added it for the `DIC` instance
-in [exercise 1](exercise-1.md). Otherwise, you won't be able to access [https://cos/fhir](https://cos/fhir). You can find the client certificate
+in [exercise 1](exercise-1.md) or use the Keycloak user you created in [exercise 3](exercise-3.md) for the `cos` realm. Otherwise, you won't be able to access [https://cos/fhir](https://cos/fhir). You can find the client certificate
 in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_certificate.p12` (password: password).
 
 1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
