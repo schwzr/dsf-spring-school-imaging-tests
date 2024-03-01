@@ -28,11 +28,17 @@ public class DockerComposeTest
 	private final String TEST_HRP_FHIR_NAME = "hrp-fhir";
 
 	private final List<String> dsfInstances = List.of(TEST_COS_FHIR_NAME, TEST_DIC_FHIR_NAME, TEST_HRP_FHIR_NAME);
-	private final String ROLECONFIG_FINISHED_PATTERN = "(^\\s{4}\\w+:)|(^\\s*$)";	//Either starting the line with 4 whitespaces followed by a word ending with a colon or an "empty" line (line with no chars or only whitespaces)
+	private final String ROLECONFIG_FINISHED_PATTERN = "(^\\s{4}\\w+:)|(^\\s*$)"; // Either starting the line with 4
+																					// whitespaces followed by a word
+																					// ending with a colon or an "empty"
+																					// line (line with no chars or only
+																					// whitespaces)
 	private final int numRoleConfigs = dsfInstances.size();
+
 	private enum TestRole implements DsfRole
 	{
 		CREATE, READ, UPDATE, DELETE, SEARCH, HISTORY;
+
 		public static boolean isValid(String role)
 		{
 			return role != null && !role.isBlank() && Stream.of(values()).map(Enum::name).anyMatch(n -> n.equals(role));
@@ -45,13 +51,26 @@ public class DockerComposeTest
 		Map<String, RoleConfig> roleConfigs = getRoleConfigsByDsfInstance();
 		assertEquals(numRoleConfigs, roleConfigs.size());
 
-		int numTokenRolesValid = roleConfigs.entrySet().stream().filter(entry -> !entry.getValue().getDsfRolesForTokenRole("tutorial").isEmpty() && !entry.getValue().getPractitionerRolesForTokenRole("tutorial").isEmpty()).toList().size();
+		int numTokenRolesValid = roleConfigs.entrySet().stream()
+				.filter(entry -> !entry.getValue().getDsfRolesForTokenRole("tutorial").isEmpty()
+						&& !entry.getValue().getPractitionerRolesForTokenRole("tutorial").isEmpty())
+				.toList().size();
 		assertEquals(numRoleConfigs, numTokenRolesValid);
 
-		int numDsfRolesValid = roleConfigs.entrySet().stream().filter(entry -> entry.getValue().getDsfRolesForTokenRole("tutorial").stream().filter(dsfRole -> TestRole.isValid(dsfRole.name())).toList().size() == TestRole.values().length).toList().size();
+		int numDsfRolesValid = roleConfigs.entrySet().stream()
+				.filter(entry -> entry.getValue().getDsfRolesForTokenRole("tutorial").stream()
+						.filter(dsfRole -> TestRole.isValid(dsfRole.name())).toList()
+						.size() == TestRole.values().length)
+				.toList().size();
 		assertEquals(numRoleConfigs, numDsfRolesValid);
 
-		int numPractitionerRolesValid = roleConfigs.entrySet().stream().filter(entry -> entry.getValue().getPractitionerRolesForTokenRole("tutorial").stream().filter(practitionerRole -> practitionerRole.getSystem().equals("http://dsf.dev/fhir/CodeSystem/practitioner-role")  && practitionerRole.getCode().equals("DSF_ADMIN")).toList().size() == 1).toList().size();
+		int numPractitionerRolesValid = roleConfigs.entrySet().stream()
+				.filter(entry -> entry.getValue().getPractitionerRolesForTokenRole("tutorial").stream()
+						.filter(practitionerRole -> practitionerRole.getSystem()
+								.equals("http://dsf.dev/fhir/CodeSystem/practitioner-role")
+								&& practitionerRole.getCode().equals("DSF_ADMIN"))
+						.toList().size() == 1)
+				.toList().size();
 		assertEquals(numRoleConfigs, numPractitionerRolesValid);
 	}
 
@@ -71,20 +90,21 @@ public class DockerComposeTest
 			String finalLine = line;
 			Optional<String> optInstance = dsfInstances.stream().filter(i -> finalLine.contains(i + ":")).findFirst();
 			instance = optInstance.orElse(instance);
-			if(readRoleConfig)
+			if (readRoleConfig)
 			{
-				if(line.matches(ROLECONFIG_FINISHED_PATTERN))
+				if (line.matches(ROLECONFIG_FINISHED_PATTERN))
 				{
 					roleConfigsByDsfInstance.put(instance, getRoleConfig(roleConfigString));
 					readRoleConfig = false;
 					roleConfigString = "";
 					instance = null;
-				} else
+				}
+				else
 				{
 					roleConfigString += line + "\n";
 				}
 			}
-			if(Objects.nonNull(instance) && line.contains("DEV_DSF_FHIR_SERVER_ROLECONFIG: |") )
+			if (Objects.nonNull(instance) && line.contains("DEV_DSF_FHIR_SERVER_ROLECONFIG: |"))
 			{
 				readRoleConfig = true;
 			}
@@ -105,6 +125,7 @@ public class DockerComposeTest
 
 			return null;
 		};
-		return new RoleConfigReader().read(roleConfigString, s -> TestRole.isValid(s) ? TestRole.valueOf(s) : null, practitionerRoleFactory);
+		return new RoleConfigReader().read(roleConfigString, s -> TestRole.isValid(s) ? TestRole.valueOf(s) : null,
+				practitionerRoleFactory);
 	}
 }
