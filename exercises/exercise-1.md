@@ -12,7 +12,8 @@ the service within a simple demo process.
 
 We recommend you take a quick glance at all the topics in [Basic Concepts and Guides](basic-concepts-and-guides.md) to get a 
 feel for the scope of this Tutorial.  
-In order to solve this exercise, you need to have read the topics on [FHIR Task](basic-concepts-and-guides.md#task), 
+In order to solve this exercise, you need to have read the topics on [FHIR](basic-concepts-and-guides.md#fhir), 
+[FHIR Task](basic-concepts-and-guides.md#task), 
 [Tutorial Project](basic-concepts-and-guides.md#tutorial-project), [The Process Plugin Definition](basic-concepts-and-guides.md#the-process-plugin-definition), 
 [Spring Integration](basic-concepts-and-guides.md#spring-integration), [Service Tasks](basic-concepts-and-guides.md#service-tasks), 
 [Service Delegates](basic-concepts-and-guides.md#service-delegates),
