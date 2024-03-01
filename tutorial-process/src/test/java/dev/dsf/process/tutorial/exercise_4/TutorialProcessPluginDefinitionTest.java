@@ -133,7 +133,8 @@ public class TutorialProcessPluginDefinitionTest
 		String errorTooManyEntries = "Too many processes in Map. Got " + numberEntries + " entries. Expected 1.";
 		assertEquals(errorTooManyEntries, 2, numberEntries);
 
-		String dicProcessKey = helloDic.keySet().stream().filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC)).findFirst().get();
+		String dicProcessKey = helloDic.keySet().stream()
+				.filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC)).findFirst().get();
 		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
 				+ ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + dicProcessKey + "'";
 		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, dicProcessKey);
@@ -151,31 +152,30 @@ public class TutorialProcessPluginDefinitionTest
 
 		errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
-		assertEquals(errorCodeSystem, 1, helloDicResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> codeSystemUrl.equals(c.getUrl()))
+		assertEquals(errorCodeSystem, 1, helloDicResources.stream().filter(r -> r instanceof CodeSystem)
+				.map(r -> (CodeSystem) r).filter(c -> codeSystemUrl.equals(c.getUrl()))
 				.filter(c -> c.getConcept().stream().anyMatch(con -> codeSystemCode.equals(con.getCode()))).count());
 
 		errorValueSet = "Process is missing ValueSet with url '" + valueSetUrl + "'";
-		assertEquals(errorValueSet, 1, helloDicResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> valueSetUrl.equals(v.getUrl()))
+		assertEquals(errorValueSet, 1, helloDicResources.stream().filter(r -> r instanceof ValueSet)
+				.map(r -> (ValueSet) r).filter(v -> valueSetUrl.equals(v.getUrl()))
 				.filter(v -> v.getCompose().getInclude().stream().anyMatch(i -> codeSystemUrl.equals(i.getSystem())))
 				.count());
 
 		int numExpectedResources = 4;
 
-		if(draftTaskExists(draftTaskFile))
+		if (draftTaskExists(draftTaskFile))
 		{
-			numExpectedResources  = 5;
+			numExpectedResources = 5;
 			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task)
-					.count()
-			);
+			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task).count());
 		}
 
 		assertEquals(numExpectedResources, helloDicResources.size());
 	}
 
-	private boolean draftTaskExists(String draftTaskFile){
+	private boolean draftTaskExists(String draftTaskFile)
+	{
 		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
 	}
 

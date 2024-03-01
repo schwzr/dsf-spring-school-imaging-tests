@@ -258,16 +258,15 @@ public class CertificateGenerator
 				certificateType, keyPair, commonName, dnsNames);
 
 		Path certificatePemFile = createFolderIfNotExists(getCertPemPath(commonName));
-		X509Certificate certificate = signOrReadCertificate(certificatePemFile, certificateRequest,
-				commonName, certificateType);
+		X509Certificate certificate = signOrReadCertificate(certificatePemFile, certificateRequest, commonName,
+				certificateType);
 
 		return new CertificateFiles(commonName, keyPair, privateKeyFile, certificate,
 				calculateSha512CertificateThumbprint(certificate));
 	}
 
 	private X509Certificate signOrReadCertificate(Path certificateFile,
-			JcaPKCS10CertificationRequest certificateRequest, String commonName,
-			CertificateType certificateType)
+			JcaPKCS10CertificationRequest certificateRequest, String commonName, CertificateType certificateType)
 	{
 		if (Files.isReadable(certificateFile))
 		{
