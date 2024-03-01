@@ -23,7 +23,7 @@ public class TutorialExampleStarter
 	// Environment variable "DSF_CLIENT_CERTIFICATE_PASSWORD" or args[1]: the password of the client-certificate
 	// password
 
-	//TODO: Delete this file
+	// TODO: Delete this file
 	public static void main(String[] args) throws Exception
 	{
 		Task task = createStartResource();
