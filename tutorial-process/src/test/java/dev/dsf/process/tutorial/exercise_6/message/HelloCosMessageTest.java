@@ -73,7 +73,7 @@ public class HelloCosMessageTest
 				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
 
 		Mockito.when(taskHelper.createInput(any(Type.class), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
-						eq("tutorial-input")))
+				eq("tutorial-input")))
 				.thenReturn(new ParameterComponent(
 						new CodeableConcept(
 								new Coding("http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input", null)),

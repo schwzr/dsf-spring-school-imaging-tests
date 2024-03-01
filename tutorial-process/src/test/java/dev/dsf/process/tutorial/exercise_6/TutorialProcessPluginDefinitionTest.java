@@ -129,13 +129,11 @@ public class TutorialProcessPluginDefinitionTest
 		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
 		int numExpectedResources = 5;
 
-		if(draftTaskExists(draftTaskFile))
+		if (draftTaskExists(draftTaskFile))
 		{
-			numExpectedResources  = 6;
+			numExpectedResources = 6;
 			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, resources.stream().filter(r -> r instanceof Task)
-					.count()
-			);
+			assertEquals(errorDraftTask, 1, resources.stream().filter(r -> r instanceof Task).count());
 		}
 
 		assertEquals(numExpectedResources, resources.size());
@@ -173,7 +171,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, vCount);
 	}
 
-	private boolean draftTaskExists(String draftTaskFile){
+	private boolean draftTaskExists(String draftTaskFile)
+	{
 		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
 	}
 
