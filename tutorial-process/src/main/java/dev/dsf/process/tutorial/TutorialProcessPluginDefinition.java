@@ -52,8 +52,8 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 		String sTaskHelloCos = "fhir/StructureDefinition/task-hello-cos.xml";
 
 		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
-				List.of(aHelloDic, sTaskHelloDic, tTaskHelloDic, cTutorial, vTutorial), ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
-				List.of(aHelloCos, sTaskHelloCos));
+				List.of(aHelloDic, sTaskHelloDic, tTaskHelloDic, cTutorial, vTutorial),
+				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, List.of(aHelloCos, sTaskHelloCos));
 	}
 
 	@Override
