@@ -31,8 +31,8 @@ Sequence Flow exits one BPMN element and points at the next BPMN element to be p
 You will primarily use [Service Tasks](https://docs.camunda.org/manual/7.20/reference/bpmn20/tasks/service-task/) 
 when creating BPMN models. They are different from regular BPMN Tasks in that they offer the ability to 
 link an implementation to the [Service Task](https://docs.camunda.org/manual/7.20/reference/bpmn20/tasks/service-task/)
-which can be called and executed by a BPMN engine. This BPE (Business Process Engine) server of the DSF leverages
-this feature to execute your BPMN processes.
+which can be called and executed by a BPMN engine. The BPE (Business Process Engine) server of the DSF leverages
+this engine to execute your BPMN processes.
 
 ***
 
@@ -150,9 +150,10 @@ a [Task](basic-concepts-and-guides.md#task) resource complying to the profile de
 The `requester` and `recipient` elements define the organisation(s) or person(s) who are allowed to request or receive the message
 specified by `message-name`. The receiving DSF instance is the one who will execute the process connected to the message.
 
+You will have to create your own [ActivityDefinitions](http://hl7.org/fhir/R4/activitydefinition.html) when developing a process plugin.
 If you are fluent in reading XML FHIR definitions and translating them into XML resources, you can take a look at the 
 DSF's profile for ActivityDefinitions [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-activity-definition-1.0.0.xml). 
-You will also need the definitions referenced by the ActivityDefinition. Depending on the resource, you will find them in one of [these folders](https://github.com/datasharingframework/dsf/tree/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir).  
+ActivityDefinitions also reference other resource definitions. Depending on the resource, you will find them in one of [these folders](https://github.com/datasharingframework/dsf/tree/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir).  
 If you are not as comfortable with these requirements you might want to check out the guide on [creating ActivityDefinitions](basic-concepts-and-guides.md#creating-an-activitydefinition).
 
 You can also find examples for all possible `requester` and `recipient` elements [here](basic-concepts-and-guides.md#examples-for-requester-and-recipient-elements).
@@ -163,7 +164,7 @@ You can also find examples for all possible `requester` and `recipient` elements
 
 The [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource enables the DSF's distributed communication. 
 Whenever a BPMN process instance communicates with a different process instance, the DSF will create a Task resource 
-based on parameters you set in the BPMN model itself but also during execution. It will then 
+based on parameters you set in the BPMN model and during execution. It will then 
 automatically send the Task resource to the recipient to start or continue whatever process the Task resource referred to.
 All Task resources used in the DSF derive from the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
 This profile includes a splicing for `Task.input` with three additional [Input Parameters](basic-concepts-and-guides.md#task-input-parameters):  
@@ -186,8 +187,8 @@ If these instructions are insufficient you can check out the guide on [how to ad
 
 ### CodeSystem
 
-[CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) are usually represent a set of concepts which 
-can be assigned to a code (think LOINC). If you want to actually use a Code in a resource, you will have to include them in a 
+[CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) usually represent a set of concepts which 
+can be assigned to a code (think LOINC). If you want to use a Code in a resource, you will usually include them in a 
 [ValueSet](basic-concepts-and-guides.md#valueset).
 
 Plugin development for the DSF requires the use of [CodeSystems](https://www.hl7.org/fhir/R4/codesystem.html) in two major ways:
@@ -217,8 +218,8 @@ The tutorial project consists of three parts:
 during the maven build of the project. The certificates and FHIR resources are needed to start DSF instances which simulate
 installations at three different organizations. 
 2. The DSF instances are created using [Docker](https://www.docker.com/) and configured using
-a `docker-compose.yml` file in the `dev-setup` folder. The docker-compose test setup uses a single PostgreSQL database server,
-a single nginx reverse proxy as well as three separate DSF FHIR server instances and 3 separate DSF BPE server instances.
+a `docker-compose.yml` file in the `dev-setup` folder. The docker-compose dev setup uses a single PostgreSQL database server,
+a single nginx reverse proxy, a keycloak instance as well as three separate DSF FHIR server instances and 3 separate DSF BPE server instances.
 3. The `tutorial-process` project contains all resources (FHIR resources, BPMN models and Java code) for the actual
 DSF process plugin. Java code for the `tutorial-process` project is located at `src/main/java`, FHIR resources and
 BPMN process models at `src/main/resources` as well as prepared JUnit tests to verify your solution at `src/test/java`.
@@ -258,7 +259,7 @@ In order for the DSF BPE server to load your plugin you need to provide it with 
 * A release date
 * A plugin name
 * The BPMN model files
-* The FHIR resources grouped by BPMN process ID. Your plugin may have any number of BPMN models. Each has their own BPMN process ID and FHIR resources specific to that BPMN process (think [Tsak](basic-concepts-and-guides.md#task) resources needed for messages specific to that BPMN model)
+* The FHIR resources grouped by BPMN process ID. Your plugin may have any number of BPMN models. Each has their own BPMN process ID and FHIR resources specific to that BPMN process (think [Task](basic-concepts-and-guides.md#task) resources needed for messages specific to that BPMN model)
 * The Class holding your [Spring Configuration](basic-concepts-and-guides.md#spring-integration)
 
 You will provide this information by implementing the `dev.dsf.bpe.ProcessPluginDefinition` interface.
@@ -357,7 +358,7 @@ For example, allowing read access for all organizations, you would use the follo
 ```
 You can find all codes for the Read Access Tag in its [CodeSystem](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-read-access-tag-1.0.0.xml).
 
-The read access rules for [Task](basic-concepts-and-guides.md#task) resources are defined through the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) in your plugin's
+The read access rules for [Task](basic-concepts-and-guides.md#task) resources are defined through the `requester` and `recipient` elements of the  [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) in your plugin's
 [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition). Therefore, no `read-access-tag` is needed.
 
 It is also possible to restrict read access of FHIR resources to organizations with 
@@ -369,7 +370,8 @@ If you want to find out more, you may look at the [guide on configuring the Read
 ### Examples for Requester and Recipient Elements
 
 Below you will find a set of examples for each Coding used by `requester` and `recipient` elements from
-the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml). CodeSystems referenced in the examples can be found [here](https://github.com/datasharingframework/dsf/tree/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem).
+the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml). CodeSystems referenced in the examples can be found [here](https://github.com/datasharingframework/dsf/tree/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem). 
+Use this collection as a reference point when creating your own [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
 
 #### Requester
 The `requester` element uses one of the following Codings: 
@@ -696,7 +698,7 @@ Keep in mind to point the `<workingPackage>` field to the package you want docum
 
 ### DSF Process API Package
 
-The [DSF Process API package](https://mvnrepository.com/artifact/dev.dsf/dsf-bpe-process-api-v1) consists of a set of utility classes designed to provide easy access to solutions for common problems.
+The [DSF Process API package](https://mvnrepository.com/artifact/dev.dsf/dsf-bpe-process-api-v1) consists of a set of utility classes designed to provide easy access to solutions for process plugin use cases.
 This includes for example the `Variables` class, which provides access to the [BPMN process variables](basic-concepts-and-guides.md#bpmn-process-variables).
 
 #### Process Plugin Api
@@ -740,7 +742,7 @@ element. It should look something like this:
 </identifier>
 ```
 `processKey` should be the same one used in [URLs](basic-concepts-and-guides.md#urls).  
-`task-name` can be any String you wish to identify this task with. You can use the file name for example. 
+`task-name` can be any String you wish to identify this task with. E.g. you can use the file name of the Draft Task. 
 
 For a complete example you can take a look at the Draft Task Resource in one of the solution branches
 and compare it to the one needed for cURL. The [Task](basic-concepts-and-guides.md#task) resource created
@@ -760,7 +762,8 @@ if you do not know how to create [Task](basic-concepts-and-guides.md#task) resou
 After creating a [Service Delegate](basic-concepts-and-guides.md#service-delegates) or [Message Delegate](basic-concepts-and-guides.md#message-delegates), you might want to
 retrieve data from or store data in the [BPMN process variables](basic-concepts-and-guides.md#bpmn-process-variables).
 You can achieve this either through the [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution) or via the `Variables` class.  
-*It is very much recommended you use the latter method*. The `Variables` class provides lots of utility methods to read or write certain types
+*It is very much recommended you use the latter method*.   
+The `Variables` class provides lots of utility methods to read or write certain types
 of [BPMN process variables](basic-concepts-and-guides.md#bpmn-process-variables). If for some reason you need to fall back on the [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution)
 to solve your problem, we would like to learn how the current API of the `Variables` class is limiting you. Contact us, and we might turn it into a feature request ([Contribute](https://dsf.dev/stable/contribute)).
 
@@ -791,8 +794,8 @@ is most often used when overriding the `getAdditionalInputParamters` method of y
 ### Setting Targets for Message Events
 
 Setting a target for a message event requires a `Target` object. To create one, you require a target's organization identifier, endpoint identifier and endpoint address.
-You can find these values by visiting the DSF FHIR server's webinterface. In the top right corner, click
-the `Show Bookmarks` button, then select `Endpoint`. You will be taken to a list of all Endpoint available to the FHIR server.  
+You can find these values by visiting the DSF FHIR server's web interface. In the top right corner, click
+the `Show Bookmarks` button, then select `Endpoint`. You will be taken to a list of all Endpoints available to the FHIR server.  
 There are two ways of adding `targets` to the BPMN execution variables:
 #### 1. Adding the target in the message event implementation
 In your message event implementation (the class extending `AbstractTaskMessageSend`), you can override `AbstractTaskMessageSend#doExecute`,
@@ -834,12 +837,13 @@ by sending an HTTP request according to the [FHIR RESTful API](https://www.hl7.o
 a resource for the first time. Also, remember that the [Task](basic-concepts-and-guides.md#task)
 resource you are sending needs to comply to the [Task](basic-concepts-and-guides.md#task) profile of the process you 
 want to start and the [ActivityDefinition's](basic-concepts-and-guides.md#activitydefinition) authorization rules.   
-In this tutorial, there are two ways making this HTTP request:
+There are two major ways of making this HTTP request:
 1. Using cURL
 2. Using the DSF FHIR server's web interface
 
 #### Using cURL
-But since cURL requires the actual [Task](basic-concepts-and-guides.md#task) payload as an XML, it will prove useful to
+Using cURL probably isn't as "pretty",
+but since cURL requires the actual [Task](basic-concepts-and-guides.md#task) payload as an XML, it will prove useful to
 gain more insight in how actual [Task](basic-concepts-and-guides.md#task) resources look like and how they relate to
 your [Task](basic-concepts-and-guides.md#task) profiles and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition). You will have to create
 an appropriate [Task](basic-concepts-and-guides.md#task) resource for this. 
@@ -880,7 +884,7 @@ variable. Git's cURL is usually situated in C:\Program Files\Git\mingw64\bin.*
 #### Using the DSF FHIR Server's Web Interface
 
 When visiting the web interface of a DSF FHIR server instance (e.g. https://instance-name/fhir), you
-can query the DSF FHIR server using the FHIR RESTful API to return a list of all [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources).
+can query the DSF FHIR server using the [FHIR RESTful API](https://www.hl7.org/fhir/R4/http.html) to return a list of all [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources).
 These [Task](basic-concepts-and-guides.md#draft-task-resources) resources act like a template you can use to 
 instantiate [Task](basic-concepts-and-guides.md#task) resources which start BPMN processes.  
 Instead of querying the DSF FHIR server manually, you can use a predefined bookmark
@@ -966,10 +970,6 @@ will create an XML element with the same name and the value according to [URLs](
 We can continue this process for all primitive elements like these. Just make sure you pay attention to use the correct
 data type (e.g. proper coding value for elements with `coding` type).
 
-Let us look at a more complex element like the `requester` element:  
-
-![Forge requester view](figures/forge_requester_view.png)
-
 By now your [Task](basic-concepts-and-guides.md#task) resources should look something like this:
 <details>
 <summary>Suggested solution</summary>
@@ -986,6 +986,10 @@ By now your [Task](basic-concepts-and-guides.md#task) resources should look some
 </Task>
 ```
 </details>
+
+Let us look at a more complex element like the `requester` element:  
+
+![Forge requester view](figures/forge_requester_view.png)
 
 We will start the same way we started with primitive elements, by adding the `requester` element:  
 ```xml
@@ -1478,7 +1482,7 @@ on how to create [CodeSystems](basic-concepts-and-guides.md#codesystem).
 
 ***
 
-### Creating CodeSystems for The DSF Processes
+### Creating CodeSystems for DSF Processes
 
 You might find yourself in a situation where you need to create a [CodeSystem](basic-concepts-and-guides.md#codesystem).
 For example, when defining the type of an [Input Parameter](basic-concepts-and-guides.md#task-input-parameters).
@@ -1521,6 +1525,8 @@ You can add as many codes as you like by defining more `concept` elements.
 The DSF BPE server will read your [CodeSystem](basic-concepts-and-guides.md#codesystem) from
 `tutorial-process/src/main/resources/fhir/CodeSystem`.
 
+***
+
 ### Creating an ActivityDefinition
 
 This guide will teach you how to create an ActivityDefinition based on the [dsf-activity-definition](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-activity-definition-1.0.0.xml) profile for your process plugin. 
@@ -1532,7 +1538,7 @@ It is divided into steps for each of the main components of ActivityDefinitions:
 
 *Regular elements* are all elements not part of the first 3 main components.
 
-*We will assume you know how to convert [ElementDefinitions](https://www.hl7.org/fhir/R4/elementdefinition.html) to actual elements in a FHIR resource. 
+*We will assume you know how to translate [ElementDefinitions](https://www.hl7.org/fhir/R4/elementdefinition.html) to actual elements in a FHIR resource. 
 If you do not, you might want to check out the guide on [creating Task resources](basic-concepts-and-guides.md#creating-task-resources-based-on-a-definition) first.*
 
 #### 1. Read Access Tag
@@ -1919,9 +1925,9 @@ Let us look at its `differential` element in the extension file to see how we ne
 </differential>
 ```
 
-This extension does not reference any other files. This means we reached the "deepest" level. So now we can start working our way back up again from here, by converting this
-definition into actual extension elements, then inserting it into the Coding we selected, convert the rest of the element
-definitions from the Coding resource and add everything to our [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition).
+This extension does not reference any other files. This means we reached the "deepest" level. So now we can start working our way back up again from here, by translating this
+definition into actual extension elements, then inserting it into the Coding we selected, translating the rest of the element
+definitions from the Coding resource and adding everything to our [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition).
 
 We will start with the `Extension.url` element, since the `Extension` element is the parent element for all slices on the `Extension.extension` elements:
 ```xml
@@ -2539,7 +2545,7 @@ Next up is the first slice called `parentOrganization`:
 
 The first element defines a slice called `parentOrganization` on the `Extension.extension` element with cardinality `1..1`.
 The second element defines the url attribute of the `parentOrganization` slice to be fixed to the value `parent-organization`.
-With this information we can add the next element to `meta.tag`. Since it iw defined on `Extension.extension` we will add it to 
+With this information we can add the next element to `meta.tag`. Since it is defined on `Extension.extension` we will add it to 
 `meta.tag.extension.extension` like this:
 ```xml
 <meta>
@@ -2575,10 +2581,10 @@ to note, that should the value in the code element be lowercase, you will have m
 </meta>
 ```
 
-The last two elements define a `system` element with a fixed value and `value` element we can fill in on our own, since it is defined as a `string` type in the [Identifier definition](https://www.hl7.org/fhir/r4/datatypes.html#Identifier). Notice that
+The last two elements define a `system` element with a fixed value and `value` element we can fill in on our own, since it does not have any constraints applied. Notice that
 the element definition still uses `value[x].system` and `value[x].value`. The replacement mentioned earlier does not happen in
 the element definition, but since `value[x]` is defined to have the type `Identifier` it is inferred that we mean to reference `Identifier.system`
-and `Identifier.value`. If you are curious, you can find all available elements for `Identifier` [here](https://www.hl7.org/fhir/R4/datatypes.html#Identifier).  
+and `Identifier.value`.  
 We will choose an arbitrary `Idenfier` value, but you should be using an actual organization identifier depending on who you want to allow read access to the resource.
 
 ```xml
