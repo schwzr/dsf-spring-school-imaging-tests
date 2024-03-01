@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -64,19 +63,18 @@ public class TutorialProcessPluginDefinitionTest
 
 		int numExpectedResources = 2;
 
-		if(draftTaskExists(draftTaskFile))
+		if (draftTaskExists(draftTaskFile))
 		{
-			numExpectedResources  = 3;
+			numExpectedResources = 3;
 			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task)
-					.count()
-			);
+			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task).count());
 		}
 
 		assertEquals(numExpectedResources, helloDicResources.size());
 	}
 
-	private boolean draftTaskExists(String draftTaskFile){
+	private boolean draftTaskExists(String draftTaskFile)
+	{
 		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
 	}
 }
