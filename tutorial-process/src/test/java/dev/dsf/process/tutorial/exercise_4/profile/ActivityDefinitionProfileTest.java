@@ -103,7 +103,8 @@ public class ActivityDefinitionProfileTest
 		List<Extension> requesters = processAuthorization.getExtensionsByUrl("requester");
 		assertTrue(requesters.size() == 2);
 
-		Extension localAllPractitionerRequester = requesters.stream().filter(r -> ((Coding)r.getValue()).getCode().equals("LOCAL_ALL_PRACTITIONER")).findFirst().get();
+		Extension localAllPractitionerRequester = requesters.stream()
+				.filter(r -> ((Coding) r.getValue()).getCode().equals("LOCAL_ALL_PRACTITIONER")).findFirst().get();
 
 		Type value = localAllPractitionerRequester.getValue();
 		assertTrue(value instanceof Coding);
@@ -112,7 +113,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
 		assertEquals("LOCAL_ALL_PRACTITIONER", coding.getCode());
 
-		Extension practitioner = coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner");
+		Extension practitioner = coding.getExtensionByUrl(
+				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner");
 		assertNotNull(practitioner);
 
 		value = practitioner.getValue();
@@ -122,7 +124,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals("http://dsf.dev/fhir/CodeSystem/practitioner-role", coding.getSystem());
 		assertEquals("DSF_ADMIN", coding.getCode());
 
-		Extension localOrganizationRequester = requesters.stream().filter(r -> ((Coding)r.getValue()).getCode().equals("LOCAL_ORGANIZATION")).findFirst().get();
+		Extension localOrganizationRequester = requesters.stream()
+				.filter(r -> ((Coding) r.getValue()).getCode().equals("LOCAL_ORGANIZATION")).findFirst().get();
 
 		value = localOrganizationRequester.getValue();
 		assertTrue(value instanceof Coding);
@@ -131,7 +134,8 @@ public class ActivityDefinitionProfileTest
 		assertEquals("http://dsf.dev/fhir/CodeSystem/process-authorization", coding.getSystem());
 		assertEquals("LOCAL_ORGANIZATION", coding.getCode());
 
-		Extension organization = coding.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization");
+		Extension organization = coding.getExtensionByUrl(
+				"http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization");
 		assertNotNull(organization);
 
 		value = organization.getValue();
