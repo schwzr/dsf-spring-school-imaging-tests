@@ -97,7 +97,7 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
       implementation.
     * Print a message showing that the process finished.
     
-  Check that you can disable logging of you message by modifying the `docker-compose.yml` file and configuring your environment variable with the value `"false"` or removing the environment variable.  
+  Check that you can disable logging of your message by modifying the `docker-compose.yml` file and configuring your environment variable with the value `"false"` or removing the environment variable.  
   _Note: Changes to environment variable require recreating the docker container._
   
   Also check that modification to the [Task](http://hl7.org/fhir/R4/task.html) input parameter specified in the `TutorialExampleStarter` class, have the appropriate effect on your log message.
