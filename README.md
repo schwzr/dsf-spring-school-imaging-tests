@@ -16,9 +16,9 @@ Exercise 1.1 looks at how to use the Java debugger of your IDE to remote debug t
 In order to configure processes that are packaged as process plugins, we will take a look at two possibilities on how to pass parameters into a process. For more details see the [exercise 2 description](exercises/exercise-2.md).
 
 ## Exercise 3 - DSF User Authentication and Authorization
-This exercise looks at how DSF 
+This exercise looks at how to set authorization rules for DSF users and process plugins. For more details see the [exercise 3 description](exercises/exercise-3.md).
 
-## Exercise 4 - Message Events
+## Exercise 4 - Messaging
 Communication between organizations is modeled using message flow events in BPMN processes. The third exercise shows you how a process at one organization can trigger a process at another organization. For more details see the [exercise 4 description](exercises/exercise-5.md).
 
 ## Exercise 5 - Exclusive Gateways

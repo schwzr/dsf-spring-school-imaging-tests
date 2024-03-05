@@ -12,7 +12,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-5`.
 
 ## Exercise Tasks
 1. In the `HelloDic` class, create a boolean variable which decides whether the `dsfdev_helloCos` process should be started based on the start Task's input parameter `tutorial-input`.
-2. Add the boolean variable to the process execution variables storing the decision.
+2. Add the boolean variable to the process execution variables, storing the decision.
 3. Add an exclusive gateway to the `dsfdev_helloDic` process model and two outgoing sequence flows - the first starting process `dsfdev_helloDic`, the second stopping process `dsfdev_helloDic` without starting process `dsfdev_helloCos`.
 4. Add condition expressions to each outgoing sequence flow based on the previously stored execution variable.
 
