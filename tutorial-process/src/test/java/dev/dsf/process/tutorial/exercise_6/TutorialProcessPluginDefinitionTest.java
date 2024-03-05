@@ -39,7 +39,7 @@ import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
-import dev.dsf.process.tutorial.service.HelloCos;
+import dev.dsf.process.tutorial.service.CosTask;
 
 public class TutorialProcessPluginDefinitionTest
 {
@@ -177,7 +177,7 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testGetResourceProviderDicActivityDefinitionHelloDic() throws Exception
+	public void testGetResourceProviderDicActivityDefinitionDicProcess() throws Exception
 	{
 		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
@@ -229,7 +229,7 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloDicBpmnProcessFile() throws Exception
+	public void testDicProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-dic.bpmn";
 		String processId = "dsfdev_helloDic";
@@ -294,7 +294,7 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloCosBpmnProcessFile() throws Exception
+	public void testCosProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-cos.bpmn";
 		String processId = "dsfdev_helloCos";
@@ -308,9 +308,9 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, processes.size());
 
 		String errorServiceTask = "Process '" + processId + "' in file '" + filename
-				+ "' is missing implementation of class '" + HelloCos.class.getName() + "'";
+				+ "' is missing implementation of class '" + CosTask.class.getName() + "'";
 		assertTrue(errorServiceTask, processes.get(0).getChildElementsByType(ServiceTask.class).stream()
-				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(HelloCos.class.getName()::equals));
+				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(CosTask.class.getName()::equals));
 
 		List<MessageEventDefinition> messageEndEvent = processes.get(0).getChildElementsByType(EndEvent.class).stream()
 				.filter(Objects::nonNull)
@@ -359,7 +359,7 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloHrpBpmnProcessFile() throws Exception
+	public void testHrpProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hello-hrp.bpmn";
 		String processId = "dsfdev_helloHrp";

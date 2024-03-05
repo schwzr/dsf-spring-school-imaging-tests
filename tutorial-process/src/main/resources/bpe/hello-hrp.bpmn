@@ -32,7 +32,7 @@
     <bpmn:sequenceFlow id="Flow_0uum1dq" sourceRef="Gateway_0qeqwwo" targetRef="Event_1wvmkv4">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!sendResponse}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="HelloHrp" name="Hello Hrp" camunda:class="dev.dsf.process.tutorial.service.HelloHrp">
+    <bpmn:serviceTask id="HelloHrp" name="Hello Hrp" camunda:class="dev.dsf.process.tutorial.service.HrpTask">
       <bpmn:incoming>Flow_11zt459</bpmn:incoming>
       <bpmn:outgoing>Flow_1end5mr</bpmn:outgoing>
     </bpmn:serviceTask>

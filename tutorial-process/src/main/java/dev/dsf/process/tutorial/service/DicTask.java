@@ -6,9 +6,9 @@ import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
 import dev.dsf.bpe.v1.variables.Variables;
 
-public class HelloDic extends AbstractServiceDelegate
+public class DicTask extends AbstractServiceDelegate
 {
-	public HelloDic(ProcessPluginApi api)
+	public DicTask(ProcessPluginApi api)
 	{
 		super(api);
 	}
