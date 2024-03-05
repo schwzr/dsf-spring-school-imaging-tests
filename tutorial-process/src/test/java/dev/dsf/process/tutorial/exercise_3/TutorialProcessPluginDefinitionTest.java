@@ -33,7 +33,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-dic.bpmn";
+		String filename = "bpe/dic-process.bpmn";
 		String processId = "dsfdev_helloDic";
 
 		BpmnModelInstance model = Bpmn

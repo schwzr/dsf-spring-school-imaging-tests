@@ -58,7 +58,7 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-cos.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/cos-process.bpmn"::equals));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-dic.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/dic-process.bpmn"::equals));
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-hrp.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/hrp-process.bpmn"::equals));
 	}
 
 	private List<Resource> getResources(String processKey, String processOrgIdentifier)
@@ -231,7 +231,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-dic.bpmn";
+		String filename = "bpe/dic-process.bpmn";
 		String processId = "dsfdev_helloDic";
 
 		BpmnModelInstance model = Bpmn
@@ -296,7 +296,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testCosProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-cos.bpmn";
+		String filename = "bpe/cos-process.bpmn";
 		String processId = "dsfdev_helloCos";
 
 		BpmnModelInstance model = Bpmn
@@ -361,7 +361,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testHrpProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-hrp.bpmn";
+		String filename = "bpe/hrp-process.bpmn";
 		String processId = "dsfdev_helloHrp";
 
 		BpmnModelInstance model = Bpmn

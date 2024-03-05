@@ -34,7 +34,7 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	public List<String> getProcessModels()
 	{
 
-		return List.of("bpe/hello-dic.bpmn");
+		return List.of("bpe/dic-process.bpmn");
 	}
 
 	@Override

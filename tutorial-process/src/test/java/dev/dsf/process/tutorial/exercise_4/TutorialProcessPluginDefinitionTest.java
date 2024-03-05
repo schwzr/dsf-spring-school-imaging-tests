@@ -47,7 +47,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-dic.bpmn";
+		String filename = "bpe/dic-process.bpmn";
 		String processId = "dsfdev_helloDic";
 
 		BpmnModelInstance model = Bpmn
@@ -182,7 +182,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testCosProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-cos.bpmn";
+		String filename = "bpe/cos-process.bpmn";
 		String processId = "dsfdev_helloCos";
 
 		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getProcessModels().stream()
