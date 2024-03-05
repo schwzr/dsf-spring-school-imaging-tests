@@ -7,7 +7,7 @@
 	</meta>
 	<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
 		<extension url="message-name">
-			<valueString value="helloDic" />
+			<valueString value="startDicProcess" />
 		</extension>
 		<extension url="task-profile">
 			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|#{version}" />
@@ -25,12 +25,12 @@
 			</valueCoding>
 		</extension>
 	</extension>
-	<url value="http://dsf.dev/bpe/Process/helloDic" />
+	<url value="http://dsf.dev/bpe/Process/dicProcess" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
-	<name value="HelloDic" />
-	<title value="Hello DIC" />
-	<subtitle value="Hello DIC process for the DSF process implementation tutorial" />
+	<name value="DicProcess" />
+	<title value="DIC Process" />
+	<subtitle value="DIC process for the DSF process implementation tutorial" />
 	<!-- status managed by bpe -->
 	<status value="unknown" />
 	<experimental value="false" />

@@ -126,7 +126,7 @@ public class TutorialProcessPluginDefinitionTest
 		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
-		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
 		int numExpectedResources = 5;
 
 		if (draftTaskExists(draftTaskFile))

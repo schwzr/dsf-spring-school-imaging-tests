@@ -49,7 +49,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testDicProcessResources() throws Exception
 	{
-		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());

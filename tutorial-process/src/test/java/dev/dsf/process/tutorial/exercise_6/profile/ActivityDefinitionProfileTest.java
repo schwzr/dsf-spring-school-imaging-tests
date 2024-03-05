@@ -61,10 +61,10 @@ public class ActivityDefinitionProfileTest
 	private final ProcessAuthorizationHelper processAuthorizationHelper = new ProcessAuthorizationHelperImpl();
 
 	@Test
-	public void testHelloDicValid() throws Exception
+	public void testDicProcessValid() throws Exception
 	{
 		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-dic.xml"));
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/dic-process.xml"));
 
 		ValidationResult result = resourceValidator.validate(ad);
 		ValidationSupportRule.logValidationMessages(logger, result);
@@ -77,7 +77,7 @@ public class ActivityDefinitionProfileTest
 	}
 
 	@Test
-	public void testHelloCosValid() throws Exception
+	public void testCosProcessValid() throws Exception
 	{
 		ActivityDefinition ad = validationRule
 				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-cos.xml"));
@@ -93,10 +93,10 @@ public class ActivityDefinitionProfileTest
 	}
 
 	@Test
-	public void testHelloHrpValid() throws Exception
+	public void testHrpProcessValid() throws Exception
 	{
 		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-hrp.xml"));
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hrp-process.xml"));
 
 		ValidationResult result = resourceValidator.validate(ad);
 		ValidationSupportRule.logValidationMessages(logger, result);
@@ -109,10 +109,10 @@ public class ActivityDefinitionProfileTest
 	}
 
 	@Test
-	public void testHelloDicRequester() throws Exception
+	public void testDicProcessRequester() throws Exception
 	{
 		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-dic.xml"));
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/dic-process.xml"));
 
 		List<Extension> extensionsByUrl = ad
 				.getExtensionsByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");

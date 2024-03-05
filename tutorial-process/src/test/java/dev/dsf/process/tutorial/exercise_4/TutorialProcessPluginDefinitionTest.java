@@ -118,7 +118,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		String codeSystemFile = "fhir/CodeSystem/tutorial.xml";
 		String valueSetFile = "fhir/CodeSystem/tutorial.xml";
-		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());

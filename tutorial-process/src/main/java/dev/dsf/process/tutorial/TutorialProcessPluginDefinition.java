@@ -41,10 +41,10 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	public Map<String, List<String>> getFhirResourcesByProcessId()
 	{
 
-		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";
-		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";
+		String aDicProcess = "fhir/ActivityDefinition/dic-process.xml";
+		String sTaskDicProcess = "fhir/StructureDefinition/task-start-dic-process.xml";
 
-		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic));
+		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aDicProcess, sTaskDicProcess));
 	}
 
 	@Override
