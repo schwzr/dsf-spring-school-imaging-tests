@@ -1,6 +1,6 @@
 package dev.dsf.process.tutorial.spring.config;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_DIC;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,7 @@ public class TutorialConfig
 	private ProcessPluginApi api;
 
 	@Value("${dev.dsf.process.tutorial.loggingEnabled:false}")
-	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_HELLO_DIC)
+	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_DIC)
 	private boolean loggingEnabled;
 
 	@Bean
