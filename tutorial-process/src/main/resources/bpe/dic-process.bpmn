@@ -16,7 +16,7 @@
       <bpmn:messageEventDefinition messageRef="Message_1nn2wdw" />
     </bpmn:startEvent>
   </bpmn:process>
-  <bpmn:message id="Message_1nn2wdw" name="dicProcess" />
+  <bpmn:message id="Message_1nn2wdw" name="startDicProcess" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_dicProcess">
       <bpmndi:BPMNEdge id="SequenceFlow_0oyvmcd_di" bpmnElement="SequenceFlow_0oyvmcd">
