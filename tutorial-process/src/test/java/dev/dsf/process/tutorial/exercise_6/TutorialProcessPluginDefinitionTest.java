@@ -297,7 +297,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testCosProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/cos-process.bpmn";
-		String processId = "dsfdev_helloCos";
+		String processId = "dsfdev_cosProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));

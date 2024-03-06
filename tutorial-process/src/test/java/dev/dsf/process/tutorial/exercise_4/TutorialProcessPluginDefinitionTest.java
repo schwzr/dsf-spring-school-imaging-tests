@@ -183,7 +183,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testCosProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/cos-process.bpmn";
-		String processId = "dsfdev_helloCos";
+		String processId = "dsfdev_cosProcess";
 
 		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getProcessModels().stream()
 				.anyMatch(f -> filename.equals(f));
