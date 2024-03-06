@@ -198,7 +198,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderHrp() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_HRP,
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HRP,
 				ConstantsTutorial.TUTORIAL_HRP_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(4, resources.size());
