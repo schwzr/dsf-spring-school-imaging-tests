@@ -2,8 +2,8 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0">
   <bpmn:process id="dsfdev_cosProcess" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:extensionElements />
-    <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startHelloCos" targetRef="cosTask" />
-    <bpmn:sequenceFlow id="SequenceFlow_0oyvmcd" sourceRef="cosTask" targetRef="endHelloCos" />
+    <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startHelloCos" targetRef="CosTask" />
+    <bpmn:sequenceFlow id="SequenceFlow_0oyvmcd" sourceRef="CosTask" targetRef="endHelloCos" />
     <bpmn:endEvent id="endHelloCos">
       <bpmn:extensionElements />
       <bpmn:incoming>SequenceFlow_0oyvmcd</bpmn:incoming>
@@ -12,7 +12,7 @@
       <bpmn:outgoing>SequenceFlow_0bbhq2r</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0refdls" messageRef="Message_0bmy3hn" />
     </bpmn:startEvent>
-    <bpmn:task id="cosTask" name="Cos Task">
+    <bpmn:task id="CosTask" name="Cos Task">
       <bpmn:incoming>SequenceFlow_0bbhq2r</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0oyvmcd</bpmn:outgoing>
     </bpmn:task>
@@ -26,7 +26,7 @@
       <bpmndi:BPMNShape id="Event_159ms00_di" bpmnElement="startHelloCos">
         <dc:Bounds x="179" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05gdxtg_di" bpmnElement="cosTask">
+      <bpmndi:BPMNShape id="Activity_05gdxtg_di" bpmnElement="CosTask">
         <dc:Bounds x="280" y="81" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>

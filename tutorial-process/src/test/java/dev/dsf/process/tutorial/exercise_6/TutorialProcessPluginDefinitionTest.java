@@ -96,7 +96,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(4, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloCos".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/cosProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -252,8 +252,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorIntermediateMessageThrowEvent, 1, intermediateMessageThrowEvent.size());
 
 		String errorIntermediateMessageThrowEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a IntermediateMessageThrowEvent with message name 'helloCos'";
-		assertEquals(errorIntermediateMessageThrowEventMessageName, "helloCos",
+				+ "' is missing a IntermediateMessageThrowEvent with message name 'cosProcess'";
+		assertEquals(errorIntermediateMessageThrowEventMessageName, "cosProcess",
 				intermediateMessageThrowEvent.get(0).getMessage().getName());
 
 		long eventBasedGatewayCount = processes.get(0).getChildElementsByType(EventBasedGateway.class).stream()

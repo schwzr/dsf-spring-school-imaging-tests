@@ -208,8 +208,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorStartEvent, 1, messageStartEvent.size());
 
 		String errorStartEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageStartEvent with message name 'helloCos'";
-		assertEquals(errorStartEventMessageName, "helloCos", messageStartEvent.get(0).getMessage().getName());
+				+ "' is missing a MessageStartEvent with message name 'cosProcess'";
+		assertEquals(errorStartEventMessageName, "cosProcess", messageStartEvent.get(0).getMessage().getName());
 	}
 
 	@Test
@@ -223,11 +223,11 @@ public class TutorialProcessPluginDefinitionTest
 
 		assertEquals(true, initialized);
 
-		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+		List<Resource> cosProcess = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
 				ConstantsTutorial.PROCESS_NAME_FULL_COS, definition.getResourceVersion()));
 
-		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
-		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
+		String processUrl = "http://dsf.dev/bpe/Process/cosProcess";
+		List<ActivityDefinition> activityDefinitions = cosProcess.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> processUrl.equals(a.getUrl()))
 				.filter(a -> RESOURCE_VERSION.equals(a.getVersion())).collect(Collectors.toList());
 
@@ -266,7 +266,7 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(i -> "Test_COS".equals(i.getValue())).count());
 
 		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
-		List<StructureDefinition> structureDefinitions = helloCos.stream().filter(r -> r instanceof StructureDefinition)
+		List<StructureDefinition> structureDefinitions = cosProcess.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r).filter(s -> taskHelloCosUrl.equals(s.getUrl()))
 				.filter(s -> RESOURCE_VERSION.equals(s.getVersion())).collect(Collectors.toList());
 
@@ -274,6 +274,6 @@ public class TutorialProcessPluginDefinitionTest
 				+ "' and version '" + RESOURCE_VERSION + "'";
 		assertEquals(errorStructureDefinition, 1, structureDefinitions.size());
 
-		assertEquals(2, helloCos.size());
+		assertEquals(2, cosProcess.size());
 	}
 }
