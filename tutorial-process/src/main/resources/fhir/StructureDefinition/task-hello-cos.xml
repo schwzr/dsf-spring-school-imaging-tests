@@ -23,7 +23,7 @@
   <differential>
     <element id="Task.instantiatesUri">
       <path value="Task.instantiatesUri" />
-      <fixedUri value="http://dsf.dev/bpe/Process/helloCos/#{version}" />
+      <fixedUri value="http://dsf.dev/bpe/Process/cosProcess/#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">

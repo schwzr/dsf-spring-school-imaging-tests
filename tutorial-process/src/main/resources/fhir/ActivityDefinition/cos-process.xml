@@ -40,9 +40,9 @@
 	<url value="http://dsf.dev/bpe/Process/helloCos" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
-	<name value="HelloCos" />
-	<title value="Hello COS" />
-	<subtitle value="Hello COS process for the DSF process implementation tutorial" />
+	<name value="CosProcess" />
+	<title value="Cos Process" />
+	<subtitle value="COS process for the DSF process implementation tutorial" />
 	<!-- status managed by bpe -->
 	<status value="unknown" />
 	<experimental value="false" />
