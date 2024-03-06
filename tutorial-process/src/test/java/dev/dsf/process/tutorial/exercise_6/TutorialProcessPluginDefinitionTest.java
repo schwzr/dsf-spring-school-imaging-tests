@@ -90,7 +90,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderCos() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_COS,
 				ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(4, resources.size());
@@ -123,7 +123,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDic() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
@@ -179,7 +179,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDicActivityDefinitionDicProcess() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assumeNotNull(resources);
 

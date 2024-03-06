@@ -72,7 +72,7 @@ public class TutorialProcessPluginDefinitionTest
 		var fhirResources = processPlugin.getFhirResources();
 
 		List<Resource> dicProcessResources = fhirResources.get(new ProcessIdAndVersion(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
+				ConstantsTutorial.PROCESS_NAME_FULL_DIC, definition.getResourceVersion()));
 
 		Map<String, List<String>> dicProcess = definition.getFhirResourcesByProcessId();
 
@@ -81,17 +81,17 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorTooManyEntries, 1, numberEntries);
 
 		String dicProcessKey = dicProcess.keySet().stream()
-				.filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC)).findFirst().get();
+				.filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_DIC)).findFirst().get();
 		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
-				+ ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + dicProcessKey + "'";
-		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, dicProcessKey);
+				+ ConstantsTutorial.PROCESS_NAME_FULL_DIC + "' but got '" + dicProcessKey + "'";
+		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_DIC, dicProcessKey);
 
 		String errorCodeSystem = "Process is missing CodeSystem with file name '" + codeSystemFile + "'";
-		assertEquals(errorCodeSystem, 1, dicProcess.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+		assertEquals(errorCodeSystem, 1, dicProcess.get(ConstantsTutorial.PROCESS_NAME_FULL_DIC).stream()
 				.filter(r -> codeSystemFile.equals(r)).count());
 
 		String errorValueSet = "Process is missing ValueSet with file name '" + valueSetFile + "'";
-		assertEquals(errorValueSet, 1, dicProcess.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+		assertEquals(errorValueSet, 1, dicProcess.get(ConstantsTutorial.PROCESS_NAME_FULL_DIC).stream()
 				.filter(r -> valueSetFile.equals(r)).count());
 
 		errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
