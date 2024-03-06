@@ -12,6 +12,4 @@ public class TutorialConfig
 	@Autowired
 	private ProcessPluginApi api;
 
-	@Autowired
-	private ReadAccessHelper readAccessHelper;
 }
