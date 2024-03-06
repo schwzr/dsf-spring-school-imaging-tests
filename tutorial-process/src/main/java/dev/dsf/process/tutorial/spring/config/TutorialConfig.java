@@ -58,9 +58,9 @@ public class TutorialConfig
 
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public HelloHrp helloHrp()
+	public HrpTask helloHrp()
 	{
-		return new HelloHrp(api);
+		return new HrpTask(api);
 	}
 
 	@Bean
