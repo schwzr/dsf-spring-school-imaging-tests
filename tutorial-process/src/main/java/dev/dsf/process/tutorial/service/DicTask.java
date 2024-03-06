@@ -20,7 +20,7 @@ public class DicTask extends AbstractServiceDelegate
 
 	private final boolean loggingEnabled;
 
-	public DicTask(ProcessPluginApi api)
+	public DicTask(ProcessPluginApi api, boolean loggingEnabled)
 	{
 		super(api);
 		this.loggingEnabled = loggingEnabled;
