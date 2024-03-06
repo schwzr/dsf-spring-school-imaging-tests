@@ -37,7 +37,7 @@
 			</valueCoding>
 		</extension>
 	</extension>
-	<url value="http://dsf.dev/bpe/Process/helloCos" />
+	<url value="http://dsf.dev/bpe/Process/cosProcess" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
 	<name value="CosProcess" />
