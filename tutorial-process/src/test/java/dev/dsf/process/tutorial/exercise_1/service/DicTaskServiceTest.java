@@ -12,10 +12,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.constants.NamingSystems;
 import dev.dsf.bpe.v1.variables.Variables;
-import dev.dsf.process.tutorial.service.HelloDic;
+import dev.dsf.process.tutorial.service.DicTask;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HelloDicServiceTest
+public class DicTaskServiceTest
 {
 	@Mock
 	private DelegateExecution execution;
@@ -27,10 +27,10 @@ public class HelloDicServiceTest
 	private ProcessPluginApi api;
 
 	@InjectMocks
-	private HelloDic service;
+	private DicTask service;
 
 	@Test
-	public void testHelloDicServiceValid() throws Exception
+	public void testDicTaskServiceValid() throws Exception
 	{
 		Mockito.when(variables.getStartTask()).thenReturn(getTask());
 

@@ -13,9 +13,9 @@ import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
-import dev.dsf.process.tutorial.service.HelloCos;
-import dev.dsf.process.tutorial.service.HelloDic;
-import dev.dsf.process.tutorial.service.HelloHrp;
+import dev.dsf.process.tutorial.service.CosTask;
+import dev.dsf.process.tutorial.service.DicTask;
+import dev.dsf.process.tutorial.service.HrpTask;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;
 
 public class TutorialConfigTest
@@ -34,9 +34,9 @@ public class TutorialConfigTest
 	}
 
 	@Test
-	public void testHelloDicBeanDefined() throws Exception
+	public void testDicTaskBeanDefined() throws Exception
 	{
-		assertEquals(errorMessageBeanMethod(HelloDic.class), 1, countBeanMethods(HelloDic.class));
+		assertEquals(errorMessageBeanMethod(DicTask.class), 1, countBeanMethods(DicTask.class));
 	}
 
 	@Test
@@ -72,15 +72,15 @@ public class TutorialConfigTest
 	}
 
 	@Test
-	public void testHelloCosBeanDefined() throws Exception
+	public void testCosTaskBeanDefined() throws Exception
 	{
-		assertEquals(errorMessageBeanMethod(HelloCos.class), 1, countBeanMethods(HelloCos.class));
+		assertEquals(errorMessageBeanMethod(CosTask.class), 1, countBeanMethods(CosTask.class));
 	}
 
 	@Test
-	public void testHelloHrpBeanDefined() throws Exception
+	public void testHrpTaskBeanDefined() throws Exception
 	{
-		assertEquals(errorMessageBeanMethod(HelloHrp.class), 1, countBeanMethods(HelloHrp.class));
+		assertEquals(errorMessageBeanMethod(HrpTask.class), 1, countBeanMethods(HrpTask.class));
 	}
 
 	@Test

@@ -1,6 +1,6 @@
 package dev.dsf.process.tutorial.spring.config;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_DIC;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,9 +14,9 @@ import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
-import dev.dsf.process.tutorial.service.HelloCos;
-import dev.dsf.process.tutorial.service.HelloDic;
-import dev.dsf.process.tutorial.service.HelloHrp;
+import dev.dsf.process.tutorial.service.CosTask;
+import dev.dsf.process.tutorial.service.DicTask;
+import dev.dsf.process.tutorial.service.HrpTask;
 
 @Configuration
 public class TutorialConfig
@@ -25,14 +25,14 @@ public class TutorialConfig
 	private ProcessPluginApi api;
 
 	@Value("${dev.dsf.process.tutorial.loggingEnabled:false}")
-	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_HELLO_DIC)
+	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_DIC)
 	private boolean loggingEnabled;
 
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public HelloDic helloDic()
+	public DicTask dicTask()
 	{
-		return new HelloDic(api, loggingEnabled);
+		return new DicTask(api, loggingEnabled);
 	}
 
 	@Bean
@@ -44,9 +44,9 @@ public class TutorialConfig
 
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public HelloCos helloCos()
+	public CosTask cosTask()
 	{
-		return new HelloCos(api);
+		return new CosTask(api);
 	}
 
 	@Bean

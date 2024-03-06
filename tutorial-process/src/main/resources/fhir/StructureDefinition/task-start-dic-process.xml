@@ -5,10 +5,10 @@
       <code value="ALL" />
     </tag>
   </meta>
-  <url value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic" />
+  <url value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process" />
   <!-- version managed by bpe -->
   <version value="#{version}" />
-  <name value="HelloDicProcess" />
+  <name value="startDicProcess" />
   <!-- status managed by bpe -->
   <status value="unknown" />
   <experimental value="false" />
@@ -23,7 +23,7 @@
   <differential>
     <element id="Task.instantiatesCanonical">
       <path value="Task.instantiatesCanonical" />
-      <fixedCanonical value="http://dsf.dev/bpe/Process/helloDic|#{version}" />
+      <fixedCanonical value="http://dsf.dev/bpe/Process/dicProcess|#{version}" />
     </element>
     <element id="Task.requester.type">
       <path value="Task.requester.type"/>
@@ -50,7 +50,7 @@
     </element>
     <element id="Task.input:message-name.value[x]">
       <path value="Task.input.value[x]" />
-      <fixedString value="helloDic" />
+      <fixedString value="startDicProcess" />
     </element>
     <element id="Task.input:business-key">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">

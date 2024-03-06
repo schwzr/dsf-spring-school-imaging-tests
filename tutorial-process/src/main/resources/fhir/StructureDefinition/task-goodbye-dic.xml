@@ -8,7 +8,7 @@
   <url value="http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic" />
   <!-- version managed by bpe -->
   <version value="#{version}" />
-  <name value="GoodbyeDicProcess" />
+  <name value="goodbyeDic" />
   <!-- status managed by bpe -->
   <status value="unknown" />
   <experimental value="false" />
@@ -23,7 +23,7 @@
   <differential>
     <element id="Task.instantiatesCanonical">
       <path value="Task.instantiatesCanonical" />
-      <fixedCanonical value="http://dsf.dev/bpe/Process/helloDic|#{version}" />
+      <fixedCanonical value="http://dsf.dev/bpe/Process/dicProcess|#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
