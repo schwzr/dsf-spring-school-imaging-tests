@@ -34,18 +34,18 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	public List<String> getProcessModels()
 	{
 
-		return List.of("bpe/hello-dic.bpmn");
+		return List.of("bpe/dic-process.bpmn");
 	}
 
 	@Override
 	public Map<String, List<String>> getFhirResourcesByProcessId()
 	{
 
-		String aHelloDic = "fhir/ActivityDefinition/hello-dic.xml";
-		String sTaskHelloDic = "fhir/StructureDefinition/task-hello-dic.xml";
-		String tTaskHelloDic = "fhir/Task/task-hello-dic.xml";
+		String aDicProcess = "fhir/ActivityDefinition/dic-process.xml";
+		String sTaskDicProcess = "fhir/StructureDefinition/task-start-dic-process.xml";
+		String tTaskDicPrcess = "fhir/Task/task-start-dic-process.xml";
 
-		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, List.of(aHelloDic, sTaskHelloDic, tTaskHelloDic));
+		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_DIC, List.of(aDicProcess, sTaskDicProcess, tTaskDicPrcess));
 	}
 
 	@Override

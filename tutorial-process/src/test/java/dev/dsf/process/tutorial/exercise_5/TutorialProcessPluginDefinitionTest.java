@@ -43,15 +43,15 @@ import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
-import dev.dsf.process.tutorial.service.HelloDic;
+import dev.dsf.process.tutorial.service.DicTask;
 
 public class TutorialProcessPluginDefinitionTest
 {
 	@Test
-	public void testHelloDicBpmnProcessFile() throws Exception
+	public void testDicProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-dic.bpmn";
-		String processId = "dsfdev_helloDic";
+		String filename = "bpe/dic-process.bpmn";
+		String processId = "dsfdev_dicProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -62,9 +62,9 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, processes.size());
 
 		String errorServiceTask = "Process '" + processId + "' in file '" + filename
-				+ "' is missing implementation of class '" + HelloDic.class.getName() + "'";
+				+ "' is missing implementation of class '" + DicTask.class.getName() + "'";
 		assertTrue(errorServiceTask, processes.get(0).getChildElementsByType(ServiceTask.class).stream()
-				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(HelloDic.class.getName()::equals));
+				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(DicTask.class.getName()::equals));
 
 		List<MessageEventDefinition> messageEndEvent = processes.get(0).getChildElementsByType(EndEvent.class).stream()
 				.filter(Objects::nonNull)
@@ -113,7 +113,7 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloDicResources() throws Exception
+	public void testDicProcessResources() throws Exception
 	{
 		String codeSystemUrl = "http://dsf.dev/fhir/CodeSystem/tutorial";
 		String codeSystemCode = "tutorial-input";
@@ -121,43 +121,43 @@ public class TutorialProcessPluginDefinitionTest
 
 		String codeSystemFile = "fhir/CodeSystem/tutorial.xml";
 		String valueSetFile = "fhir/CodeSystem/tutorial.xml";
-		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 		processPlugin.initializeAndValidateResources(TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 
-		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
+		List<Resource> dicProcessResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_DIC, definition.getResourceVersion()));
 
-		Map<String, List<String>> helloDic = definition.getFhirResourcesByProcessId();
+		Map<String, List<String>> dicProcess = definition.getFhirResourcesByProcessId();
 
-		int numberEntries = helloDic.size();
+		int numberEntries = dicProcess.size();
 		String errorTooManyEntries = "Too many processes in Map. Got " + numberEntries + " entries. Expected 1.";
 		assertEquals(errorTooManyEntries, 2, numberEntries);
 
-		String dicProcessKey = helloDic.keySet().stream()
-				.filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC)).findFirst().get();
+		String dicProcessKey = dicProcess.keySet().stream()
+				.filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_DIC)).findFirst().get();
 		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
-				+ ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC + "' but got '" + dicProcessKey + "'";
-		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, dicProcessKey);
+				+ ConstantsTutorial.PROCESS_NAME_FULL_DIC + "' but got '" + dicProcessKey + "'";
+		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_DIC, dicProcessKey);
 
 		String errorCodeSystem = "Process is missing CodeSystem with file name '" + codeSystemFile + "'";
-		assertEquals(errorCodeSystem, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+		assertEquals(errorCodeSystem, 1, dicProcess.get(ConstantsTutorial.PROCESS_NAME_FULL_DIC).stream()
 				.filter(r -> codeSystemFile.equals(r)).count());
 
 		String errorValueSet = "Process is missing ValueSet with file name '" + valueSetFile + "'";
-		assertEquals(errorValueSet, 1, helloDic.get(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC).stream()
+		assertEquals(errorValueSet, 1, dicProcess.get(ConstantsTutorial.PROCESS_NAME_FULL_DIC).stream()
 				.filter(r -> valueSetFile.equals(r)).count());
 
 		errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
 				+ codeSystemCode + "' with type 'string'";
-		assertEquals(errorCodeSystem, 1, helloDicResources.stream().filter(r -> r instanceof CodeSystem)
+		assertEquals(errorCodeSystem, 1, dicProcessResources.stream().filter(r -> r instanceof CodeSystem)
 				.map(r -> (CodeSystem) r).filter(c -> codeSystemUrl.equals(c.getUrl()))
 				.filter(c -> c.getConcept().stream().anyMatch(con -> codeSystemCode.equals(con.getCode()))).count());
 
 		errorValueSet = "Process is missing ValueSet with url '" + valueSetUrl + "'";
-		assertEquals(errorValueSet, 1, helloDicResources.stream().filter(r -> r instanceof ValueSet)
+		assertEquals(errorValueSet, 1, dicProcessResources.stream().filter(r -> r instanceof ValueSet)
 				.map(r -> (ValueSet) r).filter(v -> valueSetUrl.equals(v.getUrl()))
 				.filter(v -> v.getCompose().getInclude().stream().anyMatch(i -> codeSystemUrl.equals(i.getSystem())))
 				.count());
@@ -168,10 +168,10 @@ public class TutorialProcessPluginDefinitionTest
 		{
 			numExpectedResources = 5;
 			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task).count());
+			assertEquals(errorDraftTask, 1, dicProcessResources.stream().filter(r -> r instanceof Task).count());
 		}
 
-		assertEquals(numExpectedResources, helloDicResources.size());
+		assertEquals(numExpectedResources, dicProcessResources.size());
 	}
 
 	private boolean draftTaskExists(String draftTaskFile)
@@ -180,9 +180,9 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloCosBpmnProcessFile() throws Exception
+	public void testCosProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-cos.bpmn";
+		String filename = "bpe/cos-process.bpmn";
 		String processId = "dsfdev_helloCos";
 
 		boolean cosProcessConfigured = new TutorialProcessPluginDefinition().getProcessModels().stream()
@@ -213,14 +213,14 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloCosResources() throws Exception
+	public void testCosProcessResources() throws Exception
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 		processPlugin.initializeAndValidateResources(TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
 		List<Resource> helloCos = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS, definition.getResourceVersion()));
+				ConstantsTutorial.PROCESS_NAME_FULL_COS, definition.getResourceVersion()));
 
 		String processUrl = "http://dsf.dev/bpe/Process/helloCos";
 		List<ActivityDefinition> activityDefinitions = helloCos.stream().filter(r -> r instanceof ActivityDefinition)
