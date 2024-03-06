@@ -208,8 +208,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorStartEvent, 1, messageStartEvent.size());
 
 		String errorStartEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageStartEvent with message name 'cosProcess'";
-		assertEquals(errorStartEventMessageName, "cosProcess", messageStartEvent.get(0).getMessage().getName());
+				+ "' is missing a MessageStartEvent with message name 'helloCos'";
+		assertEquals(errorStartEventMessageName, "helloCos", messageStartEvent.get(0).getMessage().getName());
 	}
 
 	@Test
