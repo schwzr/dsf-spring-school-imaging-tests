@@ -7,9 +7,9 @@ import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
 import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
 
-public class HelloCos extends AbstractServiceDelegate
+public class CosTask extends AbstractServiceDelegate
 {
-	public HelloCos(ProcessPluginApi api)
+	public CosTask(ProcessPluginApi api)
 	{
 		super(api);
 	}

@@ -1,8 +1,8 @@
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -29,7 +29,7 @@
                 <code value="message-name" />
             </coding>
         </type>
-        <valueString value="helloDic"/>
+        <valueString value="startDicProcess"/>
     </input>
     <input>
         <type>
