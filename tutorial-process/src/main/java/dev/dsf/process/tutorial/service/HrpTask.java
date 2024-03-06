@@ -11,11 +11,11 @@ import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
 import dev.dsf.bpe.v1.variables.Target;
 import dev.dsf.bpe.v1.variables.Variables;
 
-public class HelloHrp extends AbstractServiceDelegate
+public class HrpTask extends AbstractServiceDelegate
 {
-	private static final Logger logger = LoggerFactory.getLogger(HelloHrp.class);
+	private static final Logger logger = LoggerFactory.getLogger(HrpTask.class);
 
-	public HelloHrp(ProcessPluginApi api)
+	public HrpTask(ProcessPluginApi api)
 	{
 		super(api);
 	}

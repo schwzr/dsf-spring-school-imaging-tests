@@ -65,18 +65,6 @@ services:
         target: /docker-entrypoint-initdb.d/init-db.sh
         read_only: true
 
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: "no"
-    ports:
-      - 127.0.0.1:8880:80
-    environment:
-      PGADMIN_DEFAULT_EMAIL: test@dsf.dev
-      PGADMIN_DEFAULT_PASSWORD: password
-    networks:
-      - db
-      - internet
-
   keycloak:
     image: quay.io/keycloak/keycloak:21.0
     restart: "no"
@@ -99,7 +87,6 @@ services:
         target: /opt/keycloak/data/h2
     networks:
       - internet
-      - db
     command: >-
       start
       --hostname keycloak
@@ -109,11 +96,9 @@ services:
       --spi-truststore-file-file=/run/secrets/keycloak_trust_store.jks
       --spi-truststore-file-password=password
       --spi-truststore-file-hostname-verification-policy=STRICT
-    depends_on:
-      - db
 
   cos-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.4.0
+    image: ghcr.io/datasharingframework/fhir:1.5.0
     restart: "no"
     ports:
       - 127.0.0.1:5002:5002
@@ -171,7 +156,7 @@ services:
       - proxy
       - keycloak
   cos-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.4.0
+    image: ghcr.io/datasharingframework/bpe:1.5.0
     restart: "no"
     ports:
       - 127.0.0.1:5005:5005
@@ -234,7 +219,7 @@ services:
       - keycloak
 
   dic-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.4.0
+    image: ghcr.io/datasharingframework/fhir:1.5.0
     restart: "no"
     ports:
       - 127.0.0.1:5000:5000
@@ -290,7 +275,7 @@ services:
       - proxy
       - keycloak
   dic-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.4.0
+    image: ghcr.io/datasharingframework/bpe:1.5.0
     restart: "no"
     ports:
       - 127.0.0.1:5003:5003
@@ -355,7 +340,7 @@ services:
       - keycloak
 
   hrp-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.4.0
+    image: ghcr.io/datasharingframework/fhir:1.5.0
     restart: "no"
     ports:
       - 127.0.0.1:5001:5001
@@ -412,7 +397,7 @@ services:
       - keycloak
 
   hrp-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.4.0
+    image: ghcr.io/datasharingframework/bpe:1.5.0
     restart: "no"
     ports:
       - 127.0.0.1:5004:5004

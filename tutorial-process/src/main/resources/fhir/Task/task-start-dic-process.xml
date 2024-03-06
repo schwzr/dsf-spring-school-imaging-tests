@@ -1,12 +1,12 @@
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|#{version}"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|#{version}"/>
     </meta>
     <identifier>
         <system value="http://dsf.dev/sid/task-identifier" />
-        <value value="http://dsf.dev/bpe/Process/helloDic/#{version}/task-hello-dic" />
+        <value value="http://dsf.dev/bpe/Process/dicProcess/#{version}/task-start-dic-process" />
     </identifier>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|#{version}" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|#{version}" />
     <status value="draft"/>
     <intent value="order"/>
     <authoredOn value="#{date}" />
@@ -33,7 +33,7 @@
                 <code value="message-name" />
             </coding>
         </type>
-        <valueString value="helloDic"/>
+        <valueString value="startDicProcess"/>
     </input>
     <input>
         <type>

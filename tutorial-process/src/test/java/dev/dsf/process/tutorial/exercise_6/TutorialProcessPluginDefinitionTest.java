@@ -39,7 +39,7 @@ import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
-import dev.dsf.process.tutorial.service.HelloCos;
+import dev.dsf.process.tutorial.service.CosTask;
 
 public class TutorialProcessPluginDefinitionTest
 {
@@ -58,7 +58,7 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-cos.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/cos-process.bpmn"::equals));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-dic.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/dic-process.bpmn"::equals));
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		var bpmnFiles = definition.getProcessModels();
 		assumeNotNull(bpmnFiles);
-		assertTrue(bpmnFiles.stream().anyMatch("bpe/hello-hrp.bpmn"::equals));
+		assertTrue(bpmnFiles.stream().anyMatch("bpe/hrp-process.bpmn"::equals));
 	}
 
 	private List<Resource> getResources(String processKey, String processOrgIdentifier)
@@ -90,7 +90,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderCos() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_COS,
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_COS,
 				ConstantsTutorial.TUTORIAL_COS_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
 		assertEquals(4, resources.size());
@@ -123,10 +123,10 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDic() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
-		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
 		int numExpectedResources = 5;
 
 		if (draftTaskExists(draftTaskFile))
@@ -139,7 +139,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(numExpectedResources, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -159,7 +159,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		long t2Count = resources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-dic".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-start-dic-process".equals(c.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t2Count);
@@ -177,14 +177,14 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testGetResourceProviderDicActivityDefinitionHelloDic() throws Exception
+	public void testGetResourceProviderDicActivityDefinitionDicProcess() throws Exception
 	{
-		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC,
+		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assumeNotNull(resources);
 
 		var aOpt = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.findFirst();
 		assumeTrue(aOpt.isPresent());
@@ -204,7 +204,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(4, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloHrp".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/hrpProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -229,10 +229,10 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloDicBpmnProcessFile() throws Exception
+	public void testDicProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-dic.bpmn";
-		String processId = "dsfdev_helloDic";
+		String filename = "bpe/dic-process.bpmn";
+		String processId = "dsfdev_dicProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -294,9 +294,9 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloCosBpmnProcessFile() throws Exception
+	public void testCosProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-cos.bpmn";
+		String filename = "bpe/cos-process.bpmn";
 		String processId = "dsfdev_helloCos";
 
 		BpmnModelInstance model = Bpmn
@@ -308,9 +308,9 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, processes.size());
 
 		String errorServiceTask = "Process '" + processId + "' in file '" + filename
-				+ "' is missing implementation of class '" + HelloCos.class.getName() + "'";
+				+ "' is missing implementation of class '" + CosTask.class.getName() + "'";
 		assertTrue(errorServiceTask, processes.get(0).getChildElementsByType(ServiceTask.class).stream()
-				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(HelloCos.class.getName()::equals));
+				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(CosTask.class.getName()::equals));
 
 		List<MessageEventDefinition> messageEndEvent = processes.get(0).getChildElementsByType(EndEvent.class).stream()
 				.filter(Objects::nonNull)
@@ -359,10 +359,10 @@ public class TutorialProcessPluginDefinitionTest
 	}
 
 	@Test
-	public void testHelloHrpBpmnProcessFile() throws Exception
+	public void testHrpProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-hrp.bpmn";
-		String processId = "dsfdev_helloHrp";
+		String filename = "bpe/hrp-process.bpmn";
+		String processId = "dsfdev_hrpProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));

@@ -4,7 +4,7 @@ ___
 # Exercise 2 - Environment Variables and Input Parameters
 BPMN processes might require additional information during execution, e.g. for configuration purposes. 
 We will take a look at two possibilities on how to pass additional information to a BPMN process: Environment Variables and Input Parameters.   
-The goal of this exercise is to enhance the `dsfdev_helloDic` process by trying them both. 
+The goal of this exercise is to enhance the `dsfdev_dicProcess` process by trying them both. 
 In both cases the information will be available in the `doExecute` method of your service class.
 
 In order to solve this exercise, you should have solved the first exercise and read the topics on
@@ -19,8 +19,8 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 
 ## Exercise Tasks
 1. Add a new boolean variable to the `TutorialConfig` class. It will enable/disable logging and have its value injected from an environment variable. Add the annotation and specify the default value as `false`. You may freely choose a name for your environment variable here. Just make sure you follow the naming convention explained earlier.
-2. Modify the constructor of the `HelloDic` class to use the newly created variable. Don't forget to change the `HelloDic` bean in `TutorialConfig`.
-3. Use the value of the environment variable in the `HelloDic` class to decide whether the log message from exercise 1 should be printed.
+2. Modify the constructor of the `DicTask` class to use the newly created variable. Don't forget to change the `DicTask` bean in `TutorialConfig`.
+3. Use the value of the environment variable in the `DicTask` class to decide whether the log message from exercise 1 should be printed.
 4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
 5. Create a new [CodeSystem](basic-concepts-and-guides.md#codesystem) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
    <details>
@@ -48,21 +48,21 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    `tutorial-process/src/main/resources/fhir/ValueSet`.
    </details>
 
-7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile.
+7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-start-dic-process.xml` [Task](http://hl7.org/fhir/R4/task.html) profile.
    <details>
    <summary>Don't how to add a new input parameter?</summary>
 
    Check out [this guide](basic-concepts-and-guides.md#adding-task-input-parameters-to-task-profiles).
    </details>
 
-8. `task-hello-dic` and by extension the process `dsfdev_helloDic` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](basic-concepts-and-guides.md#codesystem) and [ValueSet](basic-concepts-and-guides.md#valueset) resources for the `dsfdev_helloDic` process.
-9. Read the new input parameter in the `HelloDic` class from the start [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
+8. `task-start-dic-process` and by extension the process `dsfdev_dicProcess` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](basic-concepts-and-guides.md#codesystem) and [ValueSet](basic-concepts-and-guides.md#valueset) resources for the `dsfdev_dicProcess` process.
+9. Read the new input parameter in the `DicTask` class from the start [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
    <details>
    <summary>Don't know how to get the input parameter?</summary>
    
    The `TaskHelper` instance will prove useful here. Use it in conjunction with `variables` to get the right Task resource from the BPMN process execution.
    </details>
-10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](basic-concepts-and-guides.md#using-curl) or `Task/task-hello-dic.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
+10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](basic-concepts-and-guides.md#using-curl) or `Task/task-start-dic-process.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
 
 ## Solution Verification
 ### Maven Build and Automated Tests
@@ -75,7 +75,7 @@ mvn clean install -Pexercise-2
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `dsfdev_helloDic` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
+To verify the `dsfdev_dicProcess` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 
 1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
@@ -87,13 +87,13 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
    ```
    docker-compose up dic-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `dsfdev_helloDic` process.
+   Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess` process.
 
-3. Start the `dsfdev_helloDic` process by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.
+3. Start the `dsfdev_dicProcess` process by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.
 
-   Verify that the `dsfdev_helloDic` process was executed by the DSF BPE server. The BPE server should:
+   Verify that the `dsfdev_dicProcess` process was executed by the DSF BPE server. The BPE server should:
     * Print a message showing that the process was started.
-    * If logging is enabled - print the log message and the value of the input parameter you added to the `HelloDic`
+    * If logging is enabled - print the log message and the value of the input parameter you added to the `DicTask`
       implementation.
     * Print a message showing that the process finished.
     
