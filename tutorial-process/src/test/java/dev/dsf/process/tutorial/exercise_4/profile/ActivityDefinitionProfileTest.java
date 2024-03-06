@@ -59,10 +59,10 @@ public class ActivityDefinitionProfileTest
 	private final ProcessAuthorizationHelper processAuthorizationHelper = new ProcessAuthorizationHelperImpl();
 
 	@Test
-	public void testHelloDicValid() throws Exception
+	public void testDicProcessValid() throws Exception
 	{
 		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-dic.xml"));
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/dic-process.xml"));
 
 		ValidationResult result = resourceValidator.validate(ad);
 		ValidationSupportRule.logValidationMessages(logger, result);
@@ -75,10 +75,10 @@ public class ActivityDefinitionProfileTest
 	}
 
 	@Test
-	public void testHelloCosValid() throws Exception
+	public void testCosProcessValid() throws Exception
 	{
 		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-cos.xml"));
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/cos-process.xml"));
 
 		ValidationResult result = resourceValidator.validate(ad);
 		ValidationSupportRule.logValidationMessages(logger, result);
@@ -91,10 +91,10 @@ public class ActivityDefinitionProfileTest
 	}
 
 	@Test
-	public void testHelloDicRequester() throws Exception
+	public void testDicProcessRequester() throws Exception
 	{
 		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-dic.xml"));
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/dic-process.xml"));
 
 		Extension processAuthorization = ad
 				.getExtensionByUrl("http://dsf.dev/fhir/StructureDefinition/extension-process-authorization");

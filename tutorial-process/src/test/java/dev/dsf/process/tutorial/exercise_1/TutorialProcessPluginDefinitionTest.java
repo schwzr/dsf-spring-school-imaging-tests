@@ -22,15 +22,15 @@ import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
-import dev.dsf.process.tutorial.service.HelloDic;
+import dev.dsf.process.tutorial.service.DicTask;
 
 public class TutorialProcessPluginDefinitionTest
 {
 	@Test
-	public void testHelloDicBpmnProcessFile() throws Exception
+	public void testDicProcessBpmnProcessFile() throws Exception
 	{
-		String filename = "bpe/hello-dic.bpmn";
-		String processId = "dsfdev_helloDic";
+		String filename = "bpe/dic-process.bpmn";
+		String processId = "dsfdev_dicProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -41,15 +41,15 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, processes.size());
 
 		String errorServiceTask = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a ServiceTask with java implementation class '" + HelloDic.class.getName() + "'";
+				+ "' is missing a ServiceTask with java implementation class '" + DicTask.class.getName() + "'";
 		assertTrue(errorServiceTask, processes.get(0).getChildElementsByType(ServiceTask.class).stream()
-				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(HelloDic.class.getName()::equals));
+				.filter(Objects::nonNull).map(ServiceTask::getCamundaClass).anyMatch(DicTask.class.getName()::equals));
 	}
 
 	@Test
-	public void testHelloDicResources() throws Exception
+	public void testDicProcessResources() throws Exception
 	{
-		String draftTaskFile = "fhir/Task/task-hello-dic.xml";
+		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
@@ -57,8 +57,8 @@ public class TutorialProcessPluginDefinitionTest
 				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertEquals(true, initialized);
 
-		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
-				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
+		List<Resource> dicProcessResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+				ConstantsTutorial.PROCESS_NAME_FULL_DIC, definition.getResourceVersion()));
 
 
 		int numExpectedResources = 2;
@@ -67,10 +67,10 @@ public class TutorialProcessPluginDefinitionTest
 		{
 			numExpectedResources = 3;
 			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task).count());
+			assertEquals(errorDraftTask, 1, dicProcessResources.stream().filter(r -> r instanceof Task).count());
 		}
 
-		assertEquals(numExpectedResources, helloDicResources.size());
+		assertEquals(numExpectedResources, dicProcessResources.size());
 	}
 
 	private boolean draftTaskExists(String draftTaskFile)
