@@ -30,7 +30,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/dic-process.bpmn";
-		String processId = "dsfdev_helloDic";
+		String processId = "dsfdev_dicProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -57,7 +57,7 @@ public class TutorialProcessPluginDefinitionTest
 				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertEquals(true, initialized);
 
-		List<Resource> helloDicResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+		List<Resource> dicProcessResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
 				ConstantsTutorial.PROCESS_NAME_FULL_HELLO_DIC, definition.getResourceVersion()));
 
 
@@ -67,10 +67,10 @@ public class TutorialProcessPluginDefinitionTest
 		{
 			numExpectedResources = 3;
 			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, helloDicResources.stream().filter(r -> r instanceof Task).count());
+			assertEquals(errorDraftTask, 1, dicProcessResources.stream().filter(r -> r instanceof Task).count());
 		}
 
-		assertEquals(numExpectedResources, helloDicResources.size());
+		assertEquals(numExpectedResources, dicProcessResources.size());
 	}
 
 	private boolean draftTaskExists(String draftTaskFile)

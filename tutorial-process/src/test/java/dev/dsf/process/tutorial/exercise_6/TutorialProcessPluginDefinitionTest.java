@@ -139,7 +139,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(numExpectedResources, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -184,7 +184,7 @@ public class TutorialProcessPluginDefinitionTest
 		assumeNotNull(resources);
 
 		var aOpt = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloDic".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.findFirst();
 		assumeTrue(aOpt.isPresent());
@@ -232,7 +232,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/dic-process.bpmn";
-		String processId = "dsfdev_helloDic";
+		String processId = "dsfdev_dicProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));

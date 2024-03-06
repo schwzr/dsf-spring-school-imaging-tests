@@ -964,7 +964,7 @@ will create an XML element with the same name and the value according to [URLs](
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
 </Task>
 ```
 We can continue this process for all primitive elements like these. Just make sure you pay attention to use the correct
@@ -979,7 +979,7 @@ By now your [Task](basic-concepts-and-guides.md#task) resources should look some
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -997,7 +997,7 @@ We will start the same way we started with primitive elements, by adding the `re
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -1013,7 +1013,7 @@ Then, we will add primitive elements to `requester` like we did before for `Task
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -1030,7 +1030,7 @@ Next, we will add the `identifier` element and its primitive sub-elements just l
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -1058,7 +1058,7 @@ resource should look something like this:
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -1121,7 +1121,7 @@ All this means is that we effectively ignore the name of the slice as an element
                 <code value="message-name" />
             </coding>
         </type>
-        <valueString value="helloDic" />
+        <valueString value="dicProcess" />
     </input>
 </Task>
 ```
@@ -1136,7 +1136,7 @@ resource on your own. In the end, it should look something like this:
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/helloDic|1.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -1163,7 +1163,7 @@ resource on your own. In the end, it should look something like this:
                 <code value="message-name" />
             </coding>
         </type>
-        <valueString value="helloDic"/>
+        <valueString value="dicProcess"/>
     </input>
 </Task>
 ```
@@ -1184,7 +1184,7 @@ might have a list of fruits in a `FruitBasket` resource. Constraining that list 
 fruits of type `Apple`, `Banana` and `Orange` would be considered [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing).  
 This guide will not cover how slicing works in general, only for the case presented by the DSF FHIR resource
 context. Our goal will be to add a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters)
-of type `example-input` to the `task-hello-dic.xml` profile which will be used to submit `integer` values to our `helloDic` process.
+of type `example-input` to the `task-hello-dic.xml` profile which will be used to submit `integer` values to our `dicProcess` process.
 
 Let us start out by adding a slice to `task-hello-dic.xml`. Since there is already a slicing defined
 on `Task.input` by `task-hello-dic.xml`'s `baseDefinition`, we have to check out this resource first.
