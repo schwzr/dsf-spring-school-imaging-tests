@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.process.tutorial.service.HelloDic;
+import dev.dsf.process.tutorial.service.DicTask;
 
 @Configuration
 public class TutorialConfig
@@ -17,9 +17,9 @@ public class TutorialConfig
 
 	@Bean
 	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public HelloDic helloDic()
+	public DicTask dicTask()
 	{
-		return new HelloDic(api);
+		return new DicTask(api);
 	}
 
 }

@@ -10,7 +10,8 @@ import dev.dsf.bpe.v1.variables.Variables;
 
 public class DicTask extends AbstractServiceDelegate
 {
-	private static final Logger logger = LoggerFactory.getLogger(HelloDic.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(DicTask.class);
 
 	public DicTask(ProcessPluginApi api)
 	{
