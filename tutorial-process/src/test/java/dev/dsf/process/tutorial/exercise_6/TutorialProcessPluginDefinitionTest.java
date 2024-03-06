@@ -2,7 +2,7 @@ package dev.dsf.process.tutorial.exercise_6;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -338,10 +338,10 @@ public class TutorialProcessPluginDefinitionTest
 
 		String errorMessageEndEventInputUri = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent field injection with name 'instantiatesCanonical' and value '"
-				+ PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "|#{version}'";
+				+ PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI + "|#{version}'";
 		assertTrue(errorMessageEndEventInputUri,
 				camundaFields.stream().anyMatch(i -> "instantiatesCanonical".equals(i.getCamundaName())
-						&& (PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
+						&& (PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI + "|#{version}").equals(i.getTextContent())));
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent field injection with name 'messageName' and value '"
