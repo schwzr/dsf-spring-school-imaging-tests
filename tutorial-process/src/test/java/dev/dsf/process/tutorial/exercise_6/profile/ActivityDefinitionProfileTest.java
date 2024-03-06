@@ -80,7 +80,7 @@ public class ActivityDefinitionProfileTest
 	public void testCosProcessValid() throws Exception
 	{
 		ActivityDefinition ad = validationRule
-				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/hello-cos.xml"));
+				.readActivityDefinition(Paths.get("src/main/resources/fhir/ActivityDefinition/cos-process.xml"));
 
 		ValidationResult result = resourceValidator.validate(ad);
 		ValidationSupportRule.logValidationMessages(logger, result);

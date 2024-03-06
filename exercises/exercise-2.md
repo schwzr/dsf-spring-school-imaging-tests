@@ -48,21 +48,21 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    `tutorial-process/src/main/resources/fhir/ValueSet`.
    </details>
 
-7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-hello-dic.xml` [Task](http://hl7.org/fhir/R4/task.html) profile.
+7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-start-dic-process.xml` [Task](http://hl7.org/fhir/R4/task.html) profile.
    <details>
    <summary>Don't how to add a new input parameter?</summary>
 
    Check out [this guide](basic-concepts-and-guides.md#adding-task-input-parameters-to-task-profiles).
    </details>
 
-8. `task-hello-dic` and by extension the process `dsfdev_dicProcess` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](basic-concepts-and-guides.md#codesystem) and [ValueSet](basic-concepts-and-guides.md#valueset) resources for the `dsfdev_dicProcess` process.
+8. `task-start-dic-process` and by extension the process `dsfdev_dicProcess` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](basic-concepts-and-guides.md#codesystem) and [ValueSet](basic-concepts-and-guides.md#valueset) resources for the `dsfdev_dicProcess` process.
 9. Read the new input parameter in the `DicTask` class from the start [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
    <details>
    <summary>Don't know how to get the input parameter?</summary>
    
    The `TaskHelper` instance will prove useful here. Use it in conjunction with `variables` to get the right Task resource from the BPMN process execution.
    </details>
-10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](basic-concepts-and-guides.md#using-curl) or `Task/task-hello-dic.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
+10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](basic-concepts-and-guides.md#using-curl) or `Task/task-start-dic-process.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
 
 ## Solution Verification
 ### Maven Build and Automated Tests

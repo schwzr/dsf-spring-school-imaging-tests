@@ -159,7 +159,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		long t2Count = resources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-dic".equals(c.getUrl())
+				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-start-dic-process".equals(c.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t2Count);
@@ -204,7 +204,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(4, resources.size());
 
 		long aCount = resources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/helloHrp".equals(a.getUrl())
+				.filter(a -> "http://dsf.dev/bpe/Process/hrpProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -362,7 +362,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHrpProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hrp-process.bpmn";
-		String processId = "dsfdev_helloHrp";
+		String processId = "dsfdev_hrpProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));

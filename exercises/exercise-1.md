@@ -51,7 +51,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     to use cURL or the DSF FHIR server's web interface for starting processes you can do one of the following
     assignments (although we invite you to do both):
    * Create a [Task](basic-concepts-and-guides.md#task) resource in `tutorial-process/src/main/resources/fhir/example-task.xml` based on the [Task](basic-concepts-and-guides.md#task)
-     profile `tutorial-process/src/main/resources/fhir/StructureDefinition/task-hello-dic.xml`.  
+     profile `tutorial-process/src/main/resources/fhir/StructureDefinition/task-start-dic-process.xml`.  
      You will need it to start your process via cURL.
    
         <details>
@@ -91,7 +91,7 @@ To verify the `dsfdev_dicProcess` process can be executed successfully, we need 
 	docker-compose up dic-bpe
 	```
 	Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess` process. 
-    The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to `https://dic/fhir/ActivityDefinition` to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to `https://dic/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-dic` to check if the expected [FHIR Task](http://hl7.org/fhir/R4/task.html) profile was created.
+    The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to `https://dic/fhir/ActivityDefinition` to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to `https://dic/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-start-dic-process` to check if the expected [FHIR Task](http://hl7.org/fhir/R4/task.html) profile was created.
 
 3. Start the `dsfdev_dicProcess` process by posting an appropriate [FHIR Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.  
 	

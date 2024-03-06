@@ -9,7 +9,7 @@ public interface ConstantsTutorial
 	String PROCESS_NAME_HELLO_DIC = "dicProcess";
 	String PROCESS_NAME_FULL_HELLO_DIC = "dsfdev_" + PROCESS_NAME_HELLO_DIC;
 
-	String PROFILE_TUTORIAL_TASK_HELLO_DIC = "http://dsf.dev/fhir/StructureDefinition/task-hello-dic";
+	String PROFILE_TUTORIAL_TASK_HELLO_DIC = "http://dsf.dev/fhir/StructureDefinition/task-start-dic-process";
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_DIC + "|"
 			+ RESOURCE_VERSION;
 	String PROFILE_TUTORIAL_TASK_HELLO_DIC_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HELLO_DIC;
@@ -37,7 +37,7 @@ public interface ConstantsTutorial
 	String TUTORIAL_COS_ORGANIZATION_IDENTIFIER = "Test_COS";
 
 	// The HELLO_HRP constants are only needed for exercise 6 and above
-	String PROCESS_NAME_HELLO_HRP = "helloHrp";
+	String PROCESS_NAME_HELLO_HRP = "hrpProcess";
 	String PROCESS_NAME_FULL_HELLO_HRP = "dsfdev_" + PROCESS_NAME_HELLO_HRP;
 
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP = "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp";
@@ -46,7 +46,7 @@ public interface ConstantsTutorial
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HELLO_HRP;
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_HELLO_HRP_PROCESS_URI + "|"
 			+ RESOURCE_VERSION;
-	String PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME = "helloHrp";
+	String PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME = "hrpProcess";
 
 	String TUTORIAL_HRP_ORGANIZATION_IDENTIFIER = "Test_HRP";
 }

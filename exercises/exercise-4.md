@@ -29,7 +29,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
     <details>
    <summary>Don't know how to get started?</summary>
    
-   You can base this [Task](http://hl7.org/fhir/R4/task.html) profile off the `StructureDefinition/task-hello-dic.xml` resource. Then look for elements that need to be added, changed or can be omitted.
+   You can base this [Task](http://hl7.org/fhir/R4/task.html) profile off the `StructureDefinition/task-start-dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
     </details>
 1. Create a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource for the `dsfdev_helloCos` process and configure the authorization extension to allow the `Test_DIC` organization as the requester and the `Test_COS` organization as the recipient.
    <details>

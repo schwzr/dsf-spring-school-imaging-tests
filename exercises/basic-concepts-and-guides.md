@@ -908,10 +908,10 @@ resources for use in [Starting A Process Via Task Resources](basic-concepts-and-
 We will employ the use of the free version of [Forge](https://simplifier.net/forge?utm_source=firely-forge) to help 
 with visualization. You are invited to create a free account and follow along, but remember that the free 
 version of Forge [must not be used commercially](https://simplifier.net/pricing).  
-As an example, we will create a [Task](basic-concepts-and-guides.md#task) resource from the `task-hello-dic.xml` profile.
+As an example, we will create a [Task](basic-concepts-and-guides.md#task) resource from the `task-start-dic-process.xml` profile.
 
 #### 1st Step: Removing Placeholders
-`task-hello-dic.xml` includes placeholders for the `version` and `date` elements. For the duration of this guide, 
+`task-start-dic-process.xml` includes placeholders for the `version` and `date` elements. For the duration of this guide, 
 you can either remove or comment these elements, so Forge does not try to perform type checking on them, which
 would result in an error and Forge will not load the file.
 
@@ -919,12 +919,12 @@ would result in an error and Forge will not load the file.
 If the resource profile is only available as a [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot), like in our
 case, we will want to aggregate the changes made to the base resource (in this case [Task](basic-concepts-and-guides.md#task)) by all profiles to make
 it more readable.
-To do this, we first need all the profiles involved. We already have `task-hello-dic.xml` in our `StructureDefinition` folder.
+To do this, we first need all the profiles involved. We already have `task-start-dic-process.xml` in our `StructureDefinition` folder.
 It lists a resource called `task-base` in its `baseDefinition` element. This resource is part of the DSF and can be
 found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
 Put it into the `StructureDefinition` folder. Since `task-base` has the original FHIR Task as its `baseDefinition`
 element, we are done with this chain.
-In forge, you should now be able to open the `StructureDefinition` folder and select the `task-hello-dic.xml` profile.
+In forge, you should now be able to open the `StructureDefinition` folder and select the `task-start-dic-process.xml` profile.
 It should look something like this:  
 
 ![Forge overview](figures/forge_overview.png)
@@ -952,7 +952,7 @@ it in the element tree. It should look like this:
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
 </Task>
 ```
@@ -962,7 +962,7 @@ will create an XML element with the same name and the value according to [URLs](
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
 </Task>
@@ -977,7 +977,7 @@ By now your [Task](basic-concepts-and-guides.md#task) resources should look some
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
@@ -995,7 +995,7 @@ We will start the same way we started with primitive elements, by adding the `re
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
@@ -1011,7 +1011,7 @@ Then, we will add primitive elements to `requester` like we did before for `Task
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
@@ -1028,7 +1028,7 @@ Next, we will add the `identifier` element and its primitive sub-elements just l
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
@@ -1056,7 +1056,7 @@ resource should look something like this:
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
@@ -1134,7 +1134,7 @@ resource on your own. In the end, it should look something like this:
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-hello-dic|1.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
@@ -1169,7 +1169,7 @@ resource on your own. In the end, it should look something like this:
 ```
 </details>
 
-**Do not forget to restore the version and date placeholders in `task-hello-dic.xml`!**
+**Do not forget to restore the version and date placeholders in `task-start-dic-process.xml`!**
 
 ***
 
@@ -1184,10 +1184,10 @@ might have a list of fruits in a `FruitBasket` resource. Constraining that list 
 fruits of type `Apple`, `Banana` and `Orange` would be considered [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing).  
 This guide will not cover how slicing works in general, only for the case presented by the DSF FHIR resource
 context. Our goal will be to add a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters)
-of type `example-input` to the `task-hello-dic.xml` profile which will be used to submit `integer` values to our `dicProcess` process.
+of type `example-input` to the `task-start-dic-process.xml` profile which will be used to submit `integer` values to our `dicProcess` process.
 
-Let us start out by adding a slice to `task-hello-dic.xml`. Since there is already a slicing defined
-on `Task.input` by `task-hello-dic.xml`'s `baseDefinition`, we have to check out this resource first.
+Let us start out by adding a slice to `task-start-dic-process.xml`. Since there is already a slicing defined
+on `Task.input` by `task-start-dic-process.xml`'s `baseDefinition`, we have to check out this resource first.
 You can look at it [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml). As a part of the [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot) statement, slicing also uses [Element Definitions](https://www.hl7.org/fhir/R4/elementdefinition.html). 
 The slicing for `Task.input` is defined in this part of the `baseDefinition`:  
 ```xml
@@ -1217,7 +1217,7 @@ slice this element belongs to. The discriminator type `value` implies that `type
 have to be present in all slices and need to have a fixed value. 
 You can learn more about discriminators [here](https://www.hl7.org/fhir/R4/profiling.html#discriminator).
 
-Let us revisit `task-hello-dic.xml` and start adding a slice called `example-input` to it:  
+Let us revisit `task-start-dic-process.xml` and start adding a slice called `example-input` to it:  
 ```xml
 <StructureDefinition xmlns="http://hl7.org/fhir">
     ...
