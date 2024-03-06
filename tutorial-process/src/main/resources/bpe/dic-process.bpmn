@@ -22,7 +22,7 @@
     <bpmn:sequenceFlow id="Flow_1bkdzfo" sourceRef="startDicProcess" targetRef="dicProcess" />
     <bpmn:sequenceFlow id="Flow_124g92x" sourceRef="dicProcess" targetRef="EndEvent_0xd0x8k" />
   </bpmn:process>
-  <bpmn:message id="Message_1nn2wdw" name="dicProcess" />
+  <bpmn:message id="Message_1nn2wdw" name="startDicProcess" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_dicProcess">
       <bpmndi:BPMNShape id="EndEvent_0xd0x8k_di" bpmnElement="EndEvent_0xd0x8k">
