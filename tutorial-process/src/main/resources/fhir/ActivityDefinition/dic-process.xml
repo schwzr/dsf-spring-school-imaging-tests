@@ -7,42 +7,48 @@
 	</meta>
 	<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
 		<extension url="message-name">
-			<valueString value="helloHrp" />
+			<valueString value="startDicProcess" />
 		</extension>
 		<extension url="task-profile">
-			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-hello-hrp|#{version}" />
+			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|#{version}" />
+		</extension>
+		<extension url="requester">
+			<valueCoding>
+				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner">
+					<valueCoding>
+						<system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
+						<code value="DSF_ADMIN"/>
+					</valueCoding>
+				</extension>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+				<code value="LOCAL_ALL_PRACTITIONER" />
+			</valueCoding>
 		</extension>
 		<extension url="requester">
 			<valueCoding>
 				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
 					<valueIdentifier>
-						<system value="http://dsf.dev/sid/organization-identifier" />
-						<value value="Test_COS" />
+						<system value="http://dsf.dev/sid/organization-identifier"/>
+						<value value="Test_DIC"/>
 					</valueIdentifier>
 				</extension>
-				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
-				<code value="REMOTE_ORGANIZATION" />
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization"/>
+				<code value="LOCAL_ORGANIZATION"/>
 			</valueCoding>
 		</extension>
 		<extension url="recipient">
 			<valueCoding>
-				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
-					<valueIdentifier>
-						<system value="http://dsf.dev/sid/organization-identifier" />
-						<value value="Test_HRP" />
-					</valueIdentifier>
-				</extension>
 				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
-				<code value="LOCAL_ORGANIZATION" />
+				<code value="LOCAL_ALL" />
 			</valueCoding>
 		</extension>
 	</extension>
-	<url value="http://dsf.dev/bpe/Process/helloHrp" />
+	<url value="http://dsf.dev/bpe/Process/dicProcess" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
-	<name value="HelloHrp" />
-	<title value="Hello HRP" />
-	<subtitle value="Hello HRP process for the DSF process implementation tutorial" />
+	<name value="DicProcess" />
+	<title value="DIC Process" />
+	<subtitle value="DIC process for the DSF process implementation tutorial" />
 	<!-- status managed by bpe -->
 	<status value="unknown" />
 	<experimental value="false" />

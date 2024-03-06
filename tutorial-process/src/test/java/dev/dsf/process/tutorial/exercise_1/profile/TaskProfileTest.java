@@ -1,8 +1,8 @@
 package dev.dsf.process.tutorial.exercise_1.profile;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_INSTANTIATES_CANONICAL;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static org.junit.Assert.assertEquals;
@@ -34,7 +34,7 @@ public class TaskProfileTest
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
-			Arrays.asList("dsf-task-base-1.0.0.xml", "task-hello-dic.xml"),
+			Arrays.asList("dsf-task-base-1.0.0.xml", "task-start-dic-process.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml"));
 
@@ -42,9 +42,9 @@ public class TaskProfileTest
 			validationRule.getValidationSupport());
 
 	@Test
-	public void testTaskHelloDicValid()
+	public void testTaskStartDicProcessValid()
 	{
-		Task task = createValidTaskHelloDic();
+		Task task = createValidTaskStartDicProcess();
 
 		ValidationResult result = resourceValidator.validate(task);
 		ValidationSupportRule.logValidationMessages(logger, result);
@@ -53,11 +53,11 @@ public class TaskProfileTest
 				|| ResultSeverityEnum.FATAL.equals(m.getSeverity())).count());
 	}
 
-	private Task createValidTaskHelloDic()
+	private Task createValidTaskStartDicProcess()
 	{
 		Task task = new Task();
-		task.getMeta().addProfile(PROFILE_TUTORIAL_TASK_HELLO_DIC);
-		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_HELLO_DIC_INSTANTIATES_CANONICAL);
+		task.getMeta().addProfile(PROFILE_TUTORIAL_TASK_DIC_PROCESS);
+		task.setInstantiatesCanonical(PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL);
 		task.setStatus(TaskStatus.REQUESTED);
 		task.setIntent(TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
@@ -66,7 +66,7 @@ public class TaskProfileTest
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("Test_DIC");
 
-		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_DIC_MESSAGE_NAME)).getType().addCoding()
+		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME)).getType().addCoding()
 				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());
 
 		return task;

@@ -8,7 +8,7 @@
     <bpmn:endEvent id="endGoodbyeDic">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="instantiatesUri">http://dsf.dev/bpe/Process/helloDic/#{version}</camunda:inputParameter>
+          <camunda:inputParameter name="instantiatesCanonical">http://dsf.dev/bpe/Process/dicProcess/#{version}</camunda:inputParameter>
           <camunda:inputParameter name="profile">http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:inputParameter>
           <camunda:inputParameter name="messageName">goodbyeDic</camunda:inputParameter>
         </camunda:inputOutput>
@@ -32,7 +32,7 @@
     <bpmn:sequenceFlow id="Flow_0uum1dq" sourceRef="Gateway_0qeqwwo" targetRef="Event_1wvmkv4">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!sendResponse}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="HelloHrp" name="Hello Hrp" camunda:class="dev.dsf.process.tutorial.service.HelloHrp">
+    <bpmn:serviceTask id="HelloHrp" name="Hrp Task" camunda:class="dev.dsf.process.tutorial.service.HrpTask">
       <bpmn:incoming>Flow_11zt459</bpmn:incoming>
       <bpmn:outgoing>Flow_1end5mr</bpmn:outgoing>
     </bpmn:serviceTask>

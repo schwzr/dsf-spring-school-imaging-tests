@@ -11,7 +11,7 @@ This is part of the DSF's access control using the role configuration mechanism.
 exact rules for accessing the FHIR REST API and starting processes for certain users. Either by providing
 thumbprints of their client certificates or by using [OpenID Connect](https://openid.net/developers/how-connect-works/).  
 For this exercise, we will use OpenID Connect claims to create ourselves a user with sufficient
-access to the FHIR REST API and who is allowed to start our `helloDic` process.  
+access to the FHIR REST API and who is allowed to start our `dicProcess` process.  
 The tutorial project provides a Keycloak instance for this purpose with the administration console accessible under https://keycloak:8443.
 Credentials for administrator access are `username: admin` and `password: admin`.
 
@@ -32,7 +32,7 @@ and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
    This will be your credentials to access all DSF FHIR server instances. Make sure you set a **non-temporary** password in the `Credentials` tab.
 3. Add a new role to the `DEV_DSF_FHIR_SERVER_ROLECONFIG` for all FHIR server instances in [docker-compose.yml](../dev-setup/docker-compose.yml). It should match any user with `token-role` equal to
    `tutorial` and have `dsf-roles` `CREATE`, `READ`, `UPDATE`, `DELETE`, `SEARCH` and `HISTORY`. Finally, the role should also have the practitioner role `DSF_ADMIN`.
-4. Change the `requester` element in the ActivityDefinition `hello-dic.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `helloDic` messages.
+4. Change the `requester` element in the ActivityDefinition `hello-dic.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
@@ -40,8 +40,8 @@ and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
    You can also check out the [guide on creating ActivityDefinitions](basic-concepts-and-guides.md#creating-an-activitydefinition).
    </details>
 
-5. We just made it so you will not be able to start the `helloDic` process using the client certificate utilized in earlier exercises.
-   Add another `requester` to the ActivityDefinition `hello-dic.xml` which allows local clients from the `Test_DIC` organization to request `helloDic` messages,
+5. We just made it so you will not be able to start the `dicProcess` process using the client certificate utilized in earlier exercises.
+   Add another `requester` to the ActivityDefinition `hello-dic.xml` which allows local clients from the `Test_DIC` organization to request `dicProcess` messages,
    in case you still want to use the client certificate to start the process.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
@@ -63,7 +63,7 @@ mvn clean install -Pexercise-3
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `dsfdev_helloDic` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
+To verify the `dsfdev_dicProcess` process can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 
 1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
@@ -75,10 +75,10 @@ To verify the `dsfdev_helloDic` process can be executed successfully, we need to
    ```
    docker-compose up dic-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `dsfdev_helloDic` process.
+   Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess` process.
 
 3. Visit https://dic/fhir. First, use the client certificate to log into the DSF FHIR server and make sure you are 
-   still able to start a `dsfdev_helloDic` process via the [web interface](basic-concepts-and-guides.md#using-the-dsf-fhir-servers-web-interface).
+   still able to start a `dsfdev_dicProcess` process via the [web interface](basic-concepts-and-guides.md#using-the-dsf-fhir-servers-web-interface).
 4. Now try doing it again, but this time use the user you created earlier. For this, you might have to clear your browser's
    SSL state because it keeps using the client certificate from before. Afterward, you can visit https://dic/fhir again but refuse to send a 
    client certificate when asked. This should forward you to the Keycloak login page.
