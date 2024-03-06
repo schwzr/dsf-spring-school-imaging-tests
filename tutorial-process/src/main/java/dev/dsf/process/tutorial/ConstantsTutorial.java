@@ -37,13 +37,13 @@ public interface ConstantsTutorial
 	String TUTORIAL_COS_ORGANIZATION_IDENTIFIER = "Test_COS";
 
 	// The HELLO_HRP constants are only needed for exercise 6 and above
-	String PROCESS_NAME_HELLO_HRP = "hrpProcess";
-	String PROCESS_NAME_FULL_HELLO_HRP = "dsfdev_" + PROCESS_NAME_HELLO_HRP;
+	String PROCESS_NAME_HRP = "hrpProcess";
+	String PROCESS_NAME_FULL_HRP = "dsfdev_" + PROCESS_NAME_HRP;
 
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP = "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp";
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_HRP + "|"
 			+ RESOURCE_VERSION;
-	String PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HELLO_HRP;
+	String PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HRP;
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI + "|"
 			+ RESOURCE_VERSION;
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME = "helloHrp";
