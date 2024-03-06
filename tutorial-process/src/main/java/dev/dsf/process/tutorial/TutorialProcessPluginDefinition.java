@@ -43,7 +43,7 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 
 		String aDicProcess = "fhir/ActivityDefinition/dic-process.xml";
 		String sTaskDicProcess = "fhir/StructureDefinition/task-start-dic-process.xml";
-		String tTaskDicPrcess = "fhir/Task/task-start-dic-process.xml";
+		String tTaskDicProcess = "fhir/Task/task-start-dic-process.xml";
 		String sTaskGoodbyeDic = "fhir/StructureDefinition/task-goodbye-dic.xml";
 
 		String cTutorial = "fhir/CodeSystem/tutorial.xml";
@@ -56,7 +56,7 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 		String sTaskHelloHrp = "fhir/StructureDefinition/task-hello-hrp.xml";
 
 		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_DIC,
-				List.of(aDicProcess, sTaskDicProcess, tTaskDicPrcess, sTaskGoodbyeDic, cTutorial, vTutorial),
+				List.of(aDicProcess, sTaskDicProcess, tTaskDicProcess, sTaskGoodbyeDic, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_COS, List.of(aCosProcess, sTaskHelloCos, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_HRP, List.of(aHrpProcess, sTaskHelloHrp, cTutorial, vTutorial));
 	}
