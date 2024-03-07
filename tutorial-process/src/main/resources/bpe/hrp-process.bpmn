@@ -6,15 +6,21 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_1wapcah" messageRef="Message_094gydj" />
     </bpmn:startEvent>
     <bpmn:endEvent id="endGoodbyeDic">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="instantiatesCanonical">http://dsf.dev/bpe/Process/dicProcess/#{version}</camunda:inputParameter>
-          <camunda:inputParameter name="profile">http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:inputParameter>
-          <camunda:inputParameter name="messageName">goodbyeDic</camunda:inputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1nlpchb</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0raq415" messageRef="Message_000lvyx" camunda:class="dev.dsf.process.tutorial.message.GoodbyeDicMessage" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0raq415" messageRef="Message_000lvyx" camunda:class="dev.dsf.process.tutorial.message.GoodbyeDicMessage">
+        <bpmn:extensionElements>
+          <camunda:field name="instantiatesCanonical">
+            <camunda:string>http://dsf.dev/bpe/Process/dicProcess/#{version}</camunda:string>
+          </camunda:field>
+          <camunda:field name="profile">
+            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:string>
+          </camunda:field>
+          <camunda:field name="messageName">
+            <camunda:string>goodbyeDic</camunda:string>
+          </camunda:field>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_11zt459" sourceRef="startHelloHrp" targetRef="HrpTask" />
     <bpmn:sequenceFlow id="Flow_1end5mr" sourceRef="HrpTask" targetRef="Gateway_0qeqwwo" />
