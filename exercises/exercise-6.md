@@ -30,7 +30,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-6`.
       <details>
       <summary>Don't know which values to choose for roles?</summary>
    
-      Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/release/1.4.0/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml) CodeSystem.
+      Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml) CodeSystem.
       </details>
 
 ## Solution Verification
