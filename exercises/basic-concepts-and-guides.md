@@ -1184,7 +1184,7 @@ might have a list of fruits in a `FruitBasket` resource. Constraining that list 
 fruits of type `Apple`, `Banana` and `Orange` would be considered [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing).  
 This guide will not cover how slicing works in general, only for the case presented by the DSF FHIR resource
 context. Our goal will be to add a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters)
-of type `example-input` to the `task-start-dic-process.xml` profile which will be used to submit `integer` values to our `dicProcess` process.
+of type `example-input` to the `task-start-dic-process.xml` profile which will be used to submit `integer` values to our `dicProcess`.
 
 Let us start out by adding a slice to `task-start-dic-process.xml`. Since there is already a slicing defined
 on `Task.input` by `task-start-dic-process.xml`'s `baseDefinition`, we have to check out this resource first.
