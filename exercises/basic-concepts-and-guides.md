@@ -404,7 +404,7 @@ The `requester` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner">
             <valueCoding>
                 <system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
-                <code value="DSF_ADMIN"/>
+                <code value="DSF_ADMIN"/>   <!-- example, replace appropriately -->
             </valueCoding>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -420,7 +420,7 @@ The `requester` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
             <valueIdentifier>
                 <system value="http://dsf.dev/sid/organization-identifier"/>
-                <value value="My_Organization"/>
+                <value value="My_Organization"/>    <!-- example, replace appropriately -->
             </valueIdentifier>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -437,13 +437,13 @@ The `requester` element uses one of the following Codings:
             <extension url="organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Organization"/>
+                    <value value="My_Organization"/>    <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="practitioner-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
-                    <code value="DSF_ADMIN"/>
+                    <code value="DSF_ADMIN"/>   <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -461,13 +461,13 @@ The `requester` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -485,19 +485,19 @@ The `requester` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
             <extension url="practitioner-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
-                    <code value="DSF_ADMIN"/>
+                    <code value="DSF_ADMIN"/>       <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -524,7 +524,7 @@ The `requester` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
             <valueIdentifier>
                 <system value="http://dsf.dev/sid/organization-identifier"/>
-                <value value="My_Organization"/>
+                <value value="My_Organization"/>    <!-- example, replace appropriately -->
             </valueIdentifier>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -541,13 +541,13 @@ The `requester` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -582,7 +582,7 @@ The `recipeint` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
             <valueIdentifier>
                 <system value="http://dsf.dev/sid/organization-identifier"/>
-                <value value="My_Organization"/>
+                <value value="My_Organization"/>    <!-- example, replace appropriately -->
             </valueIdentifier>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -599,13 +599,13 @@ The `recipeint` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
