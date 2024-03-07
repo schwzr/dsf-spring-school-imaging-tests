@@ -404,7 +404,7 @@ The `requester` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner">
             <valueCoding>
                 <system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
-                <code value="DSF_ADMIN"/>
+                <code value="DSF_ADMIN"/>   <!-- example, replace appropriately -->
             </valueCoding>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -420,7 +420,7 @@ The `requester` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
             <valueIdentifier>
                 <system value="http://dsf.dev/sid/organization-identifier"/>
-                <value value="My_Organization"/>
+                <value value="My_Organization"/>    <!-- example, replace appropriately -->
             </valueIdentifier>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -437,13 +437,13 @@ The `requester` element uses one of the following Codings:
             <extension url="organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Organization"/>
+                    <value value="My_Organization"/>    <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="practitioner-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
-                    <code value="DSF_ADMIN"/>
+                    <code value="DSF_ADMIN"/>   <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -461,13 +461,13 @@ The `requester` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -485,19 +485,19 @@ The `requester` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
             <extension url="practitioner-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
-                    <code value="DSF_ADMIN"/>
+                    <code value="DSF_ADMIN"/>       <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -524,7 +524,7 @@ The `requester` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
             <valueIdentifier>
                 <system value="http://dsf.dev/sid/organization-identifier"/>
-                <value value="My_Organization"/>
+                <value value="My_Organization"/>    <!-- example, replace appropriately -->
             </valueIdentifier>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -541,13 +541,13 @@ The `requester` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -582,7 +582,7 @@ The `recipeint` element uses one of the following Codings:
         <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
             <valueIdentifier>
                 <system value="http://dsf.dev/sid/organization-identifier"/>
-                <value value="My_Organization"/>
+                <value value="My_Organization"/>    <!-- example, replace appropriately -->
             </valueIdentifier>
         </extension>
         <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
@@ -599,13 +599,13 @@ The `recipeint` element uses one of the following Codings:
             <extension url="parent-organization">
                 <valueIdentifier>
                     <system value="http://dsf.dev/sid/organization-identifier"/>
-                    <value value="My_Parent_Organization"/>
+                    <value value="My_Parent_Organization"/>     <!-- example, replace appropriately -->
                 </valueIdentifier>
             </extension>
             <extension url="organization-role">
                 <valueCoding>
                     <system value="http://dsf.dev/fhir/CodeSystem/organization-role"/>
-                    <code value="DIC"/>
+                    <code value="DIC"/>     <!-- example, replace appropriately -->
                 </valueCoding>
             </extension>
         </extension>
@@ -704,7 +704,14 @@ This includes for example the `Variables` class, which provides access to the [B
 #### Process Plugin Api
 When creating [Service Delegates](basic-concepts-and-guides.md#service-delegates) or [MessageDelegates](basic-concepts-and-guides.md#message-delegates) you will 
 notice that you need to provide a constructor which expects a `ProcessPluginApi` object and forward it to the superclasses' constructor.
-This API instance provides a variety of utility classes. We will explicitly explore some on them in the tutorial.
+This API instance provides a variety of utility classes: 
+- `ProxyConfig`**:** forward proxy configuration
+- `EndpointProvider`**:** access to Endpoint resources
+- `FhirContext`**:** HAPI FHIR Context for parsing/serializing
+- `FhirWebserviceClientProvider`**:** Webservice client to access DSF FHIR server
+- `MailService`**:** for sending automatic E-Mails (if configured)
+- `OrganizationProvider`**:** access to Organization resources
+- `Variables`**:** access to BPMN execution variables
 
 ***
 
@@ -906,14 +913,14 @@ Take a look at [the Process Plugin Definition](basic-concepts-and-guides.md#the-
 This short guide should help you understand how you can create [Task](basic-concepts-and-guides.md#task)
 resources for use in [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources).
 We will employ the use of the free version of [Forge](https://simplifier.net/forge?utm_source=firely-forge) to help 
-with visualization. You are invited to create a free account and follow along, but remember that the free 
-version of Forge [must not be used commercially](https://simplifier.net/pricing).  
+with visualization. You are invited to create a free account and follow along, but we will include screenshots of relevant
+views either way. Remember that the free version of Forge [must not be used commercially](https://simplifier.net/pricing).  
 As an example, we will create a [Task](basic-concepts-and-guides.md#task) resource from the `task-start-dic-process.xml` profile.
 
 #### 1st Step: Removing Placeholders
 `task-start-dic-process.xml` includes placeholders for the `version` and `date` elements. For the duration of this guide, 
 you can either remove or comment these elements, so Forge does not try to perform type checking on them, which
-would result in an error and Forge will not load the file.
+would result in an error and Forge not loading the file.
 
 #### 2nd Step: Differential Chain
 If the resource profile is only available as a [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot), like in our
@@ -929,15 +936,12 @@ It should look something like this:
 
 ![Forge overview](figures/forge_overview.png)
 
-You can also calculate the [snapshot](https://www.hl7.org/fhir/R4/profiling.html#snapshot) instead and forego using Forge altogether
-by reading the XML. If you know how to do this, you probably have no need for this guide.
-
 #### 3rd Step: Building the Task Resource
 We will now go through each element one by one and include it into our [Task](basic-concepts-and-guides.md#task)
-resource, if it is mandatory (cardinality at least `1..1`) according to the profile. It is important 
+resource, provided it is mandatory (cardinality at least `1..1`) according to the profile. It is important 
 that you not use any placeholders like `#{version}` for resources not read by the DSF BPE server. This is the case
 if we want a [Task](basic-concepts-and-guides.md#task) resource for use with [cURL](basic-concepts-and-guides.md#using-curl).
-But, placeholders have to be used in [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources) instead of actual values whenever possible, 
+But, placeholders should be used in [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources) instead of actual values wherever possible, 
 since those are read by the DSF BPE server. This guide will create a [Task](basic-concepts-and-guides.md#task) resource without placeholders.  
 We will start out with the base element for all [Task](basic-concepts-and-guides.md#task) resources:  
 ```xml
@@ -946,7 +950,7 @@ We will start out with the base element for all [Task](basic-concepts-and-guides
 </Task>
 ```
 
-Before we start any elements listed in Forge's element tree, we have to include the `Task.meta.profile` element.
+Before we start adding any elements listed in Forge's element tree, we have to include the `Task.meta.profile` element.
 Its requirement cannot be seen here which is why we mention it specifically. This is the only instance you will not see
 it in the element tree. It should look like this:  
 ```xml
@@ -1187,8 +1191,8 @@ context. Our goal will be to add a new [Input Parameter](basic-concepts-and-guid
 of type `example-input` to the `task-start-dic-process.xml` profile which will be used to submit `integer` values to our `dicProcess`.
 
 Let us start out by adding a slice to `task-start-dic-process.xml`. Since there is already a slicing defined
-on `Task.input` by `task-start-dic-process.xml`'s `baseDefinition`, we have to check out this resource first.
-You can look at it [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml). As a part of the [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot) statement, slicing also uses [Element Definitions](https://www.hl7.org/fhir/R4/elementdefinition.html). 
+on `Task.input` by `task-start-dic-process.xml`'s `baseDefinition`, we have to check out this resource first. 
+As a part of the [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot) statement, slicing also uses [Element Definitions](https://www.hl7.org/fhir/R4/elementdefinition.html). 
 The slicing for `Task.input` is defined in this part of the `baseDefinition`:  
 ```xml
 <element id="Task.input">
@@ -1210,6 +1214,8 @@ The slicing for `Task.input` is defined in this part of the `baseDefinition`:
     <min value="1" />
 </element>
 ```
+*The resource can be found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml)*
+
 We will only need to take a look at the `discrimitator` tag for now.
 Discriminators define the elements a FHIR processor needs to distinguish slices by. In our case, a processor
 would look at the values for `type.coding.system` and `type.coding.code` to determine which
@@ -1266,7 +1272,7 @@ the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) re
 ```
 As you can see, we referenced a [ValueSet](basic-concepts-and-guides.md#valueset) in this binding. 
 When adding an actual slice for your use case, you will have to reference an existing [ValueSet](basic-concepts-and-guides.md#valueset) resource or create a new 
-a new one. A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-valuesets-for-dsf-processes).
+one. A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-valuesets-for-dsf-processes).
 
 Since the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires 
 `Task.input.coding.code` and `Task.input.coding.system` to be present, we will make `Task.input.coding` mandatory as well:  
