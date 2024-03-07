@@ -24,8 +24,8 @@ Solutions to this exercise are found on the branch `solutions/exercise-6`.
         1. An [Intermediate Message Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-intermediate-catching-event) to catch the `goodbyDic` message from the `dsfdev_hrpProcess`.
         1. An [Intermediate Timer Catch Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/timer-events/#timer-intermediate-catching-event) to end the process if no message is sent by the `dsfdev_hrpProcess` after two minutes.
         Make sure both cases finish with a process [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/).
-    * Add a new process authorization extension element to the ActivityDefinition for `dsfdev_dicProcess` using [scenario 3](basic-concepts-and-guides.md#scenario-3) where
-   only organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
+    * Add a new process authorization extension element to the ActivityDefinition for `dsfdev_dicProcess` using the [parent organization role coding](basic-concepts-and-guides.md#examples-for-requester-and-recipient-elements) where
+   only remote organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
    organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
       <details>
       <summary>Don't know which values to choose for roles?</summary>
