@@ -929,15 +929,12 @@ It should look something like this:
 
 ![Forge overview](figures/forge_overview.png)
 
-You can also calculate the [snapshot](https://www.hl7.org/fhir/R4/profiling.html#snapshot) instead and forego using Forge altogether
-by reading the XML. If you know how to do this, you probably have no need for this guide.
-
 #### 3rd Step: Building the Task Resource
 We will now go through each element one by one and include it into our [Task](basic-concepts-and-guides.md#task)
-resource, if it is mandatory (cardinality at least `1..1`) according to the profile. It is important 
+resource, provided it is mandatory (cardinality at least `1..1`) according to the profile. It is important 
 that you not use any placeholders like `#{version}` for resources not read by the DSF BPE server. This is the case
 if we want a [Task](basic-concepts-and-guides.md#task) resource for use with [cURL](basic-concepts-and-guides.md#using-curl).
-But, placeholders have to be used in [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources) instead of actual values whenever possible, 
+But, placeholders should be used in [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources) instead of actual values wherever possible, 
 since those are read by the DSF BPE server. This guide will create a [Task](basic-concepts-and-guides.md#task) resource without placeholders.  
 We will start out with the base element for all [Task](basic-concepts-and-guides.md#task) resources:  
 ```xml
@@ -946,7 +943,7 @@ We will start out with the base element for all [Task](basic-concepts-and-guides
 </Task>
 ```
 
-Before we start any elements listed in Forge's element tree, we have to include the `Task.meta.profile` element.
+Before we start adding any elements listed in Forge's element tree, we have to include the `Task.meta.profile` element.
 Its requirement cannot be seen here which is why we mention it specifically. This is the only instance you will not see
 it in the element tree. It should look like this:  
 ```xml
@@ -1187,8 +1184,8 @@ context. Our goal will be to add a new [Input Parameter](basic-concepts-and-guid
 of type `example-input` to the `task-start-dic-process.xml` profile which will be used to submit `integer` values to our `dicProcess`.
 
 Let us start out by adding a slice to `task-start-dic-process.xml`. Since there is already a slicing defined
-on `Task.input` by `task-start-dic-process.xml`'s `baseDefinition`, we have to check out this resource first.
-You can look at it [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml). As a part of the [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot) statement, slicing also uses [Element Definitions](https://www.hl7.org/fhir/R4/elementdefinition.html). 
+on `Task.input` by `task-start-dic-process.xml`'s `baseDefinition`, we have to check out this resource first. 
+As a part of the [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot) statement, slicing also uses [Element Definitions](https://www.hl7.org/fhir/R4/elementdefinition.html). 
 The slicing for `Task.input` is defined in this part of the `baseDefinition`:  
 ```xml
 <element id="Task.input">
@@ -1210,6 +1207,8 @@ The slicing for `Task.input` is defined in this part of the `baseDefinition`:
     <min value="1" />
 </element>
 ```
+*The resource can be found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml)*
+
 We will only need to take a look at the `discrimitator` tag for now.
 Discriminators define the elements a FHIR processor needs to distinguish slices by. In our case, a processor
 would look at the values for `type.coding.system` and `type.coding.code` to determine which
@@ -1266,7 +1265,7 @@ the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) re
 ```
 As you can see, we referenced a [ValueSet](basic-concepts-and-guides.md#valueset) in this binding. 
 When adding an actual slice for your use case, you will have to reference an existing [ValueSet](basic-concepts-and-guides.md#valueset) resource or create a new 
-a new one. A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-valuesets-for-dsf-processes).
+one. A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-valuesets-for-dsf-processes).
 
 Since the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires 
 `Task.input.coding.code` and `Task.input.coding.system` to be present, we will make `Task.input.coding` mandatory as well:  
