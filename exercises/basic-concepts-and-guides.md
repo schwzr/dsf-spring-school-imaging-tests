@@ -906,14 +906,14 @@ Take a look at [the Process Plugin Definition](basic-concepts-and-guides.md#the-
 This short guide should help you understand how you can create [Task](basic-concepts-and-guides.md#task)
 resources for use in [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources).
 We will employ the use of the free version of [Forge](https://simplifier.net/forge?utm_source=firely-forge) to help 
-with visualization. You are invited to create a free account and follow along, but remember that the free 
-version of Forge [must not be used commercially](https://simplifier.net/pricing).  
+with visualization. You are invited to create a free account and follow along, but we will include screenshots of relevant
+views either way. Remember that the free version of Forge [must not be used commercially](https://simplifier.net/pricing).  
 As an example, we will create a [Task](basic-concepts-and-guides.md#task) resource from the `task-start-dic-process.xml` profile.
 
 #### 1st Step: Removing Placeholders
 `task-start-dic-process.xml` includes placeholders for the `version` and `date` elements. For the duration of this guide, 
 you can either remove or comment these elements, so Forge does not try to perform type checking on them, which
-would result in an error and Forge will not load the file.
+would result in an error and Forge not loading the file.
 
 #### 2nd Step: Differential Chain
 If the resource profile is only available as a [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot), like in our
