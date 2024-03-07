@@ -45,7 +45,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     </details>
 
 2. Register the `DicTask` class as a prototype bean in the `TutorialConfig` class.
-3. Set the `DicTask` class as the service implementation of the appropriate service task within the `hello-dic.bpmn` process model.
+3. Set the `DicTask` class as the service implementation of the appropriate service task within the `dic-process.bpmn` process model.
 4. In order to start your process you need to either create a regular [Task](basic-concepts-and-guides.md#task) resource
     or a [Draft Task Resource](basic-concepts-and-guides.md#draft-task-resources). Based on whether you would like
     to use cURL or the DSF FHIR server's web interface for starting processes you can do one of the following

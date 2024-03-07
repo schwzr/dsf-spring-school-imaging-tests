@@ -32,7 +32,7 @@ and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
    This will be your credentials to access all DSF FHIR server instances. Make sure you set a **non-temporary** password in the `Credentials` tab.
 3. Add a new role to the `DEV_DSF_FHIR_SERVER_ROLECONFIG` for all FHIR server instances in [docker-compose.yml](../dev-setup/docker-compose.yml). It should match any user with `token-role` equal to
    `tutorial` and have `dsf-roles` `CREATE`, `READ`, `UPDATE`, `DELETE`, `SEARCH` and `HISTORY`. Finally, the role should also have the practitioner role `DSF_ADMIN`.
-4. Change the `requester` element in the ActivityDefinition `hello-dic.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
+4. Change the `requester` element in the ActivityDefinition `dic-process.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
@@ -41,7 +41,7 @@ and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
    </details>
 
 5. We just made it so you will not be able to start the `dicProcess` using the client certificate utilized in earlier exercises.
-   Add another `requester` to the ActivityDefinition `hello-dic.xml` which allows local clients from the `Test_DIC` organization to request `dicProcess` messages,
+   Add another `requester` to the ActivityDefinition `dic-process.xml` which allows local clients from the `Test_DIC` organization to request `dicProcess` messages,
    in case you still want to use the client certificate to start the process.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
