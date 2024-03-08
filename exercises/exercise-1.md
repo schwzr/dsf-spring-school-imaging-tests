@@ -7,9 +7,6 @@ to [FHIR Tasks](https://www.hl7.org/fhir/R4/task.html) and `Service Task` always
 The first exercise focuses on setting up the development environment used in this tutorial and shows how to implement and execute a simple
 BPMN process.
 
-With this exercise we will take a look at the general setup of the tutorial code base, modify a service class and execute 
-the service within a simple demo process.  
-
 We recommend you take a quick glance at all the topics in [Basic Concepts and Guides](basic-concepts-and-guides.md) to get a 
 feel for the scope of this Tutorial.  
 In order to solve this exercise, you need to have read the topics on [FHIR](basic-concepts-and-guides.md#fhir), 
