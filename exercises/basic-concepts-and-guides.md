@@ -650,7 +650,9 @@ org.package.myClass
 ```
 All that is left is for your Java class to extend `AbstractServiceDelegate` and override the `doExecute` method. 
 This is the place where you can put your actual business logic. The method will be called when the [BPMN process execution](basic-concepts-and-guides.md#bpmn-process-execution)
-arrives at the [Service Task](basic-concepts-and-guides.md#service-tasks) your Service Delegate is linked to.
+arrives at the [Service Task](basic-concepts-and-guides.md#service-tasks) your Service Delegate is linked to.  
+The constructor of your delegate class should also forward a `ProcessPluginApi` instance to its superclass constructor.
+You can learn more about the `ProcessPluginApi` [here](basic-concepts-and-guides.md#process-plugin-api).
 
 ***
 
@@ -675,7 +677,9 @@ aggregate the information you processed in earlier steps and attach it to a mess
 `getAdditionalInputParamters` method. The DSF translates BPMN messages 
 into FHIR [Task](basic-concepts-and-guides.md#task) resources to execute the communication modeled by your BPMN diagrams. The information
 you are sending to another BPMN process is specified in the Task.input elements a.k.a. [Input Parameters](basic-concepts-and-guides.md#task-input-parameters),
-hence the name of the method.
+hence the name of the method.  
+The constructor of your delegate class should also forward a `ProcessPluginApi` instance to its superclass constructor.
+You can learn more about the `ProcessPluginApi` [here](basic-concepts-and-guides.md#process-plugin-api).
 
 ***
 
