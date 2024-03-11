@@ -8,11 +8,11 @@ The goal of this exercise is to enhance the `dsfdev_dicProcess` by trying them b
 In both cases the information will be available in the `doExecute` method of your service class.
 
 In order to solve this exercise, you should have solved the first exercise and read the topics on
-[Environment Variables](basic-concepts-and-guides.md#environment-variables), 
-[Task Input Parameters](basic-concepts-and-guides.md#task-input-parameters),
-[Accessing Task Resources During Execution](basic-concepts-and-guides.md#accessing-task-resources-during-execution),
-[Placeholders](basic-concepts-and-guides.md#placeholders) and
-[Read Access Tag](basic-concepts-and-guides.md#read-access-tag).
+[Environment Variables](../learning/concepts/dsf/environment-variables.md), 
+[Task Input Parameters](../learning/concepts/fhir/task.md#task-input-parameters),
+[Accessing Task Resources During Execution](../learning/guides/accessing-task-resources-during-execution.md),
+[Placeholders](../learning/concepts/dsf/about-version-placeholders-and-urls.md#placeholders) and
+[Read Access Tag](../learning/concepts/dsf/read-access-tag.md).
 
 Solutions to this exercise are found on the branch `solutions/exercise-2`.
 
@@ -22,11 +22,11 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 2. Modify the constructor of the `DicTask` class to use the newly created variable. Don't forget to change the `DicTask` bean in `TutorialConfig`.
 3. Use the value of the environment variable in the `DicTask` class to decide whether the log message from exercise 1 should be printed.
 4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
-5. Create a new [CodeSystem](basic-concepts-and-guides.md#codesystem) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
+5. Create a new [CodeSystem](../learning/concepts/fhir/codesystem.md) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't how to create a CodeSystem?</summary>
 
-   Check out [this guide](basic-concepts-and-guides.md#creating-codesystems-for-the-dsf-processes).
+   Check out [this guide](../learning/guides/creating-codesystems-for-dsf-processes.md).
    </details>
 
    <details>
@@ -35,11 +35,11 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    `tutorial-process/src/main/resources/fhir/CodeSystem`.
    </details>
 
-6. Create a new [ValueSet](basic-concepts-and-guides.md#valueset) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](basic-concepts-and-guides.md#codesystem). Don't forget to add the `read-access-tag`.
+6. Create a new [ValueSet](../learning/concepts/fhir/valueset.md) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](../learning/concepts/fhir/codesystem). Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't how to create a ValueSet?</summary>
 
-   Check out [this guide](basic-concepts-and-guides.md#creating-valuesets-for-dsf-processes).
+   Check out [this guide](../learning/guides/creating-valuesets-for-dsf-processes.md).
    </details>
 
    <details>
@@ -48,21 +48,21 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    `tutorial-process/src/main/resources/fhir/ValueSet`.
    </details>
 
-7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-start-dic-process.xml` [Task](http://hl7.org/fhir/R4/task.html) profile.
+7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-start-dic-process.xml` [Task](../learning/concepts/fhir/task.md) profile.
    <details>
    <summary>Don't how to add a new input parameter?</summary>
 
-   Check out [this guide](basic-concepts-and-guides.md#adding-task-input-parameters-to-task-profiles).
+   Check out [this guide](../learning/guides/adding-task-input-parameters-to-task-profiles.md).
    </details>
 
-8. `task-start-dic-process` and by extension the process `dsfdev_dicProcess` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](basic-concepts-and-guides.md#codesystem) and [ValueSet](basic-concepts-and-guides.md#valueset) resources for the `dsfdev_dicProcess`.
-9. Read the new input parameter in the `DicTask` class from the start [Task](http://hl7.org/fhir/R4/task.html) and add the value to the log message from exercise 1.
+8. `task-start-dic-process` and by extension the process `dsfdev_dicProcess` now require additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](../learning/concepts/fhir/codesystem.md) and [ValueSet](../learning/concepts/fhir/valueset.md) resources for the `dsfdev_dicProcess`.
+9. Read the new input parameter in the `DicTask` class from the start [Task](../learning/concepts/fhir/task.md) and add the value to the log message from exercise 1.
    <details>
    <summary>Don't know how to get the input parameter?</summary>
    
    The `TaskHelper` instance will prove useful here. Use it in conjunction with `variables` to get the right Task resource from the BPMN process execution.
    </details>
-10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](basic-concepts-and-guides.md#using-curl) or `Task/task-start-dic-process.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
+10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](../learning/guides/starting-a-process-via-task-resources.md#using-curl) or `Task/task-start-dic-process.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
 
 ## Solution Verification
 ### Maven Build and Automated Tests
@@ -89,7 +89,7 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess`.
 
-3. Start the `dsfdev_dicProcess` by posting an appropriate FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.
+3. Start the `dsfdev_dicProcess` by posting an appropriate FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
 
    Verify that the `dsfdev_dicProcess` was executed by the DSF BPE server. The BPE server should:
     * Print a message showing that the process was started.
@@ -100,7 +100,7 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
   Check that you can disable logging of your message by modifying the `docker-compose.yml` file and configuring your environment variable with the value `"false"` or removing the environment variable.  
   _Note: Changes to environment variable require recreating the docker container._
   
-  Also check that modification to the [Task](http://hl7.org/fhir/R4/task.html) input parameter specified in the `TutorialExampleStarter` class, have the appropriate effect on your log message.
+  Also check that modification to the [Task](../learning/concepts/fhir/task.md) input parameter specified in the `TutorialExampleStarter` class, have the appropriate effect on your log message.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • **Exercise 2** • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
