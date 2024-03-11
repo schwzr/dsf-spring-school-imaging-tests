@@ -10,19 +10,19 @@ It is divided into steps for each of the main components of ActivityDefinitions:
 *Regular elements* are all elements not part of the first 3 main components.
 
 *We will assume you know how to translate [ElementDefinitions](https://www.hl7.org/fhir/R4/elementdefinition.html) to actual elements in a FHIR resource.
-If you do not, you might want to check out the guide on [creating Task resources](basic-concepts-and-guides.md#creating-task-resources-based-on-a-definition) first.*
+If you do not, you might want to check out the guide on [creating Task resources](../guides/creating-task-resources-based-on-a-definition.md) first.*
 
 #### 1. Read Access Tag
-Let us start out with an empty [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition):
+Let us start out with an empty [ActivityDefinition](../concepts/fhir/activitydefinition.md):
 ```xml
 <ActivityDefinition xmlns="http://hl7.org/fhir">
     
 </ActivityDefinition>
 ```
 
-The first element in DSF FHIR resources is always the [Read Access Tag](basic-concepts-and-guides.md#read-access-tag). It describes who is
+The first element in DSF FHIR resources is always the [Read Access Tag](../concepts/dsf/read-access-tag.md). It describes who is
 allowed to read this resource through the DSF FHIR server's REST API. You can learn more complex configurations of the
-[Read Access Tag](basic-concepts-and-guides.md#read-access-tag) in [this guide](basic-concepts-and-guides.md#configuring-the-read-access-tag). In this case, we will allow read access to everyone:
+[Read Access Tag](../concepts/dsf/read-access-tag.md) in [this guide](../concepts/dsf/read-access-tag.md). In this case, we will allow read access to everyone:
 
 ```xml
 <ActivityDefinition xmlns="http://hl7.org/fhir">
@@ -36,8 +36,8 @@ allowed to read this resource through the DSF FHIR server's REST API. You can le
 ```
 
 #### 2. Extension: Process Authorization
-This part of your ActivityDefinition will tell the DSF who is allowed to request and receive messages ([Task](basic-concepts-and-guides.md#task) resources)
-for your BPMN process. If your plugin contains more than one BPMN process, you will have to create one [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition)
+This part of your ActivityDefinition will tell the DSF who is allowed to request and receive messages ([Task](../concepts/fhir/task.md) resources)
+for your BPMN process. If your plugin contains more than one BPMN process, you will have to create one [ActivityDefinition](../concepts/fhir/activitydefinition.md)
 for each BPMN process. It is important to note that you need to include authorization rules for **ALL** messages received in your BPMN process.
 This includes the message starting your BPMN process initially.   
 You can find the extension [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
@@ -112,19 +112,19 @@ After these initial element definitions come the elements relevant for your proc
 </StructureDefinition>
 ```
 
-This section tells us that we need to include exactly one extension element from the `message-name` slice in our [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition).
+This section tells us that we need to include exactly one extension element from the `message-name` slice in our [ActivityDefinition](../concepts/fhir/activitydefinition.md).
 The extension element will have a URL value of `message-name`. If you remember the `discriminator` configuration, this URL value identifies the element to belong to the `message-name` slice on `Extension.extension`.
 Lastly, the extension element includes a `valueString` element. In case you are wondering how `value[x]` turned into `valueString`,
 FHIR does not allow using `value[x]` as actual element. The value in `value[x]` is always strictly bound to some kind of type.
 FHIR uses the `value[x].type.code` value to determine this type and replaces `[x]` with an uppercase version of `element.type.code`.  
-This results in the following extension element we will add to our [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition):
+This results in the following extension element we will add to our [ActivityDefinition](../concepts/fhir/activitydefinition.md):
 ```xml
 <extension url="message-name">
     <valueString value="myMessage"/>
 </extension>
 ```
 
-For your use case, you have to replace `myMessage` with the name of the [BPMN message event](basic-concepts-and-guides.md#messaging) that is expecting this message.
+For your use case, you have to replace `myMessage` with the name of the [BPMN message event](../concepts/bpmn/messaging.md) that is expecting this message.
 
 <details>
 <summary>This is how your ActivityDefinition should look like so far</summary>
@@ -176,9 +176,9 @@ The next slice is called `task-profile`:
 
 This section has almost the same structure as `message-name`. The only difference is the value for `value[x].type.code`.
 This means that instead of `valueString`, we will have to use a `valueCanonical` element for `task-profile.value[x]`.
-Canonical values referring to [Task](basic-concepts-and-guides.md#task) profiles in ActivityDefinitions have to conform
-to the rules outlined by the documentation on [URLs](basic-concepts-and-guides.md#urls).  
-From the definition above, we will create the following extension element and add it to our [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition):
+Canonical values referring to [Task](../concepts/fhir/task.md) profiles in ActivityDefinitions have to conform
+to the rules outlined by the documentation on [URLs](../concepts/dsf/about-version-placeholders-and-urls.md#urls).  
+From the definition above, we will create the following extension element and add it to our [ActivityDefinition](../concepts/fhir/activitydefinition.md):
 ```xml
 <extension url="task-profile">
     <valueCanonical value="http://dsf.dev/fhir/StructureDefinition/my-task|#{version}"/>
@@ -249,7 +249,7 @@ The next slice is `requester`:
 ```
 Instead of a `string` or `canonical` type for `value[x]` we now have a `Coding` type. See the [FHIR documentation on Codings](https://www.hl7.org/fhir/R4/datatypes.html#Coding)
 for more in-depth information. `Codings` are elements which contain, among other things, a `code` and the `system` the code belongs to. In the same way we transformed `value[x]` into `valueString` or `valueCanonical` before, we will also
-have to turn `value[x]` into `valueCoding`. To use `Codings` in `valueCoding` elements, they are usually bound to the element through a [ValueSet](basic-concepts-and-guides.md#valueset). This is the
+have to turn `value[x]` into `valueCoding`. To use `Codings` in `valueCoding` elements, they are usually bound to the element through a [ValueSet](../concepts/fhir/valueset.md). This is the
 responsibility of the `binding` element. You can also see that `value[x].type.profile` lists a number of profiles. Instead of defining the
 elements in the same file, they were defined in different files for better readability. Depending on your use case, you have to pick one of the profiles.
 Here is what they mean:
@@ -263,9 +263,9 @@ Here is what they mean:
 
 As you can see, there are no `practitioner` versions of `remote` authorization rules. From the perspective of the receiving DSF instance,
 remote requests are always issued by an organization. They do not hold any information about the local user management of the requesting organization.  
-You can also find examples of all Codings from above [here](basic-concepts-and-guides.md#examples-for-requester-and-recipient-elements).
+You can also find examples of all Codings from above [here](../concepts/dsf/examples-for-requester-and-recipient-elements.md).
 
-It is also good to keep in mind that you are allowed to add any number of `requester` elements into your [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition).  
+It is also good to keep in mind that you are allowed to add any number of `requester` elements into your [ActivityDefinition](../concepts/fhir/activitydefinition.md).  
 Let us start out by adding a `requester` element like we did for previous elements:
 
 ```xml
@@ -398,7 +398,7 @@ Let us look at its `differential` element in the extension file to see how we ne
 
 This extension does not reference any other files. This means we reached the "deepest" level. So now we can start working our way back up again from here, by translating this
 definition into actual extension elements, then inserting it into the Coding we selected, translating the rest of the element
-definitions from the Coding resource and adding everything to our [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition).
+definitions from the Coding resource and adding everything to our [ActivityDefinition](../concepts/fhir/activitydefinition.md).
 
 We will start with the `Extension.url` element, since the `Extension` element is the parent element for all slices on the `Extension.extension` elements:
 ```xml
@@ -488,7 +488,7 @@ Our next elements to be added are `Coding.system` and `Coding.code`:
     </valueCoding>
 </extension>
 ```
-Now we are finished with the `requester` extension and can add it to our [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition) under
+Now we are finished with the `requester` extension and can add it to our [ActivityDefinition](../concepts/fhir/activitydefinition.md) under
 the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
 
 <details>
@@ -637,12 +637,12 @@ is `Extension.url`. But since we added this element at the very beginning of the
 
 #### 3. BPE Managed Elements
 
-Some elements of [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition) are managed by the DSF BPE and replaced with certain values
+Some elements of [ActivityDefinitions](../concepts/fhir/activitydefinition.md) are managed by the DSF BPE and replaced with certain values
 at appropriate times.
 
 The following elements are managed by the DSF BPE:
-- `ActivityDefinition.version` should use the [placeholder](basic-concepts-and-guides.md#placeholders) `#{version}`
-- `ActivityDefinition.date` is not required, but should you decide to include it, use the [placeholder](basic-concepts-and-guides.md#placeholders) `#{date}`
+- `ActivityDefinition.version` should use the [placeholder](../concepts/dsf/about-version-placeholders-and-urls.md#placeholders) `#{version}`
+- `ActivityDefinition.date` is not required, but should you decide to include it, use the [placeholder](../concepts/dsf/about-version-placeholders-and-urls.md#placeholders) `#{date}`
 - `ActivityDefinition.status` must have a value of `unknown`
 
 <details>
@@ -709,7 +709,7 @@ The following elements are managed by the DSF BPE:
 #### 4. Regular Elements
 
 The only required elements in this set are `ActivityDefinition.url` and `ActivityDefinition.kind`.
-Check out the documentation on [URLs](basic-concepts-and-guides.md#urls) on how to choose the correct value for `ActivityDefinition.url`. `ActivityDefinition.kind`
+Check out the documentation on [URLs](../concepts/dsf/about-version-placeholders-and-urls.md#urls) on how to choose the correct value for `ActivityDefinition.url`. `ActivityDefinition.kind`
 must have the value `Task`.
 All other elements can technically be omitted. Still, we recommend you include the following elements:
 - `AcitivityDefinition.name`

@@ -5,7 +5,7 @@ Whenever a BPMN process instance communicates with a different process instance,
 based on parameters you set in the BPMN model and during execution. It will then
 automatically send the Task resource to the recipient to start or continue whatever process the Task resource referred to.
 All Task resources used in the DSF derive from the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
-This profile includes a splicing for `Task.input` with three additional [Input Parameters](basic-concepts-and-guides.md#task-input-parameters):
+This profile includes a splicing for `Task.input` with three additional [Input Parameters](../../concepts/fhir/task.md#task-input-parameters):
 - `message-name`
 - `business-key`
 - `correlation-key`
@@ -14,9 +14,9 @@ When creating your own plugin, you will want to create your own profiles based o
 
 #### Task Input Parameters
 
-Task Input Parameters allow you to add additional information to [Task](basic-concepts-and-guides.md#task) resources.
+Task Input Parameters allow you to add additional information to [Task](task.md#task) resources.
 For example, if your particular data exchange requires additional medical data, you would add a slice to your Task profile in the same
-way the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml) adds slices to the original [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource. Notice that this also requires creating a [CodeSystem](basic-concepts-and-guides.md#codesystem) and
-including it in a [ValueSet](basic-concepts-and-guides.md#valueset) to be able to use it in the Task resource.
+way the [dsf-task-base](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml) adds slices to the original [FHIR Task](https://www.hl7.org/fhir/R4/task.html) resource. Notice that this also requires creating a [CodeSystem](../../concepts/fhir/codesystem.md) and
+including it in a [ValueSet](../../concepts/fhir/valueset.md) to be able to use it in the Task resource.
 
-If these instructions are insufficient you can check out the guide on [how to add Task Input Parameters](basic-concepts-and-guides.md#adding-task-input-parameters-to-task-profiles).
+If these instructions are insufficient you can check out the guide on [how to add Task Input Parameters](../../guides/adding-task-input-parameters-to-task-profiles.md).

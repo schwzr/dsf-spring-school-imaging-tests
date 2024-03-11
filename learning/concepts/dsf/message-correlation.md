@@ -8,6 +8,6 @@ This identifier is called the `business-key`. The `business-key` will get attach
 
 It is possible that the `business-key` is insufficient to map messages to the correct process instance. This happens
 when you use subprocesses in your BPMN model which all expect messages to be sent to them, not the parent process.
-To solve this issue, [Task](basic-concepts-and-guides.md#task) resources also come with an [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) called `correlation-key`.
+To solve this issue, [Task](../../concepts/fhir/task.md) resources also come with an [Input Parameter](../../concepts/fhir/task.md#task-input-parameters) called `correlation-key`.
 This is a secondary identifier you can attach to all messages if you need them to arrive at a specific subprocess.
 You can learn more about how `correlation-keys` are used by studying the [Ping-Pong Process](https://github.com/datasharingframework/dsf-process-ping-pong).

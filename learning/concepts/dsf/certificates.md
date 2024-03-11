@@ -7,7 +7,7 @@ Certificates will be created by the `test-data-generator` project through Maven 
 You can also invoke the generation of certificates separately by running the Maven build of `test-data-generator` until (and including) the `package` phase.   
 Since this tutorial comes with three preconfigured DSF instances, the only time you will need to interact with certificates
 is when you want to make requests to the DSF FHIR server. Either for access to the web frontend under https://instance-host-name/fhir/,
-or when [starting your process plugin](basic-concepts-and-guides.md#starting-a-process-via-task-resources).  
+or when [starting your process plugin](../../guides/starting-a-process-via-task-resources.md).  
 In case of the web frontend, you will need to add the CA certificate and client certificate of the DSF instance you want to access to your browser.
 Certificates can be found in `test-data-generator/cert`.
 

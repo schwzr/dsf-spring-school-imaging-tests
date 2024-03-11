@@ -1,6 +1,6 @@
 ### Configuring the Read Access Tag
 
-To start off, you want to take a look at the [CodeSystem](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-read-access-tag-1.0.0.xml) defined for the [Read Access Tag](basic-concepts-and-guides.md#read-access-tag)
+To start off, you want to take a look at the [CodeSystem](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-read-access-tag-1.0.0.xml) defined for the [Read Access Tag](../concepts/dsf/read-access-tag.md)
 and choose one of the codes from it:
 ```xml
 <CodeSystem xmlns="http://hl7.org/fhir">
@@ -30,7 +30,7 @@ and choose one of the codes from it:
 </CodeSystem> 
 ```
 
-The codes `LOCAL` and `ALL` are trivial. Their [Read Access Tag](basic-concepts-and-guides.md#read-access-tag) would look like this:
+The codes `LOCAL` and `ALL` are trivial. Their [Read Access Tag](../concepts/dsf/read-access-tag.md) would look like this:
 ```xml
 <meta>
     <tag>
@@ -130,7 +130,7 @@ The most important part of it is the `differential` statement. It uses [element 
 </StructureDefinition>
 ```
 
-All extensions for the [Read Access Tag](basic-concepts-and-guides.md#read-access-tag) CodeSystem are defined on the `meta.tag.extension` element through
+All extensions for the [Read Access Tag](../concepts/dsf/read-access-tag.md) CodeSystem are defined on the `meta.tag.extension` element through
 the extension's `context` element:
 ```xml
 <context>
@@ -355,7 +355,7 @@ Instead of `Identifier`, the `value[x]` element is now defined as a `Coding` typ
 </meta>
 ```
 
-A `Coding` has to belong to some [CodeSystem](basic-concepts-and-guides.md#codesystem). The DSF has a CodeSystem called [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml).
+A `Coding` has to belong to some [CodeSystem](../concepts/fhir/codesystem.md). The DSF has a CodeSystem called [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml).
 Before creating your own CodeSystem, it is worth taking a look at it to see if an appropriate role already exists for your organization.
 For demonstration purposes, we will be using the `DIC` role:
 ```xml

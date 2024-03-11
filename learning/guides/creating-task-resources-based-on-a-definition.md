@@ -1,11 +1,11 @@
 ### Creating Task Resources Based on a Definition
 
-This short guide should help you understand how you can create [Task](basic-concepts-and-guides.md#task)
-resources for use in [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources).
+This short guide should help you understand how you can create [Task](../concepts/fhir/task.md)
+resources for use in [Starting A Process Via Task Resources](../guides/starting-a-process-via-task-resources.md).
 We will employ the use of the free version of [Forge](https://simplifier.net/forge?utm_source=firely-forge) to help
 with visualization. You are invited to create a free account and follow along, but we will include screenshots of relevant
 views either way. Remember that the free version of Forge [must not be used commercially](https://simplifier.net/pricing).  
-As an example, we will create a [Task](basic-concepts-and-guides.md#task) resource from the `task-start-dic-process.xml` profile.
+As an example, we will create a [Task](../concepts/fhir/task.md) resource from the `task-start-dic-process.xml` profile.
 
 #### 1st Step: Removing Placeholders
 `task-start-dic-process.xml` includes placeholders for the `version` and `date` elements. For the duration of this guide,
@@ -14,7 +14,7 @@ would result in an error and Forge not loading the file.
 
 #### 2nd Step: Differential Chain
 If the resource profile is only available as a [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot), like in our
-case, we will want to aggregate the changes made to the base resource (in this case [Task](basic-concepts-and-guides.md#task)) by all profiles to make
+case, we will want to aggregate the changes made to the base resource (in this case [Task](../concepts/fhir/task.md)) by all profiles to make
 it more readable.
 To do this, we first need all the profiles involved. We already have `task-start-dic-process.xml` in our `StructureDefinition` folder.
 It lists a resource called `task-base` in its `baseDefinition` element. This resource is part of the DSF and can be
@@ -24,16 +24,16 @@ element, we are done with this chain.
 In forge, you should now be able to open the `StructureDefinition` folder and select the `task-start-dic-process.xml` profile.
 It should look something like this:
 
-![Forge overview](figures/forge_overview.png)
+![Forge overview](../../exercises/figures/forge_overview.png)
 
 #### 3rd Step: Building the Task Resource
-We will now go through each element one by one and include it into our [Task](basic-concepts-and-guides.md#task)
+We will now go through each element one by one and include it into our [Task](../concepts/fhir/task.md)
 resource, provided it is mandatory (cardinality at least `1..1`) according to the profile. It is important
 that you not use any placeholders like `#{version}` for resources not read by the DSF BPE server. This is the case
-if we want a [Task](basic-concepts-and-guides.md#task) resource for use with [cURL](basic-concepts-and-guides.md#using-curl).
-But, placeholders should be used in [Draft Task Resources](basic-concepts-and-guides.md#draft-task-resources) instead of actual values wherever possible,
-since those are read by the DSF BPE server. This guide will create a [Task](basic-concepts-and-guides.md#task) resource without placeholders.  
-We will start out with the base element for all [Task](basic-concepts-and-guides.md#task) resources:
+if we want a [Task](../concepts/fhir/task.md) resource for use with [cURL](../guides/starting-a-process-via-task-resources.md#using-curl).
+But, placeholders should be used in [Draft Task Resources](../concepts/dsf/draft-task-resources.md) instead of actual values wherever possible,
+since those are read by the DSF BPE server. This guide will create a [Task](../concepts/fhir/task.md) resource without placeholders.  
+We will start out with the base element for all [Task](../concepts/fhir/task.md) resources:
 ```xml
 <Task xmlns="http://hl7.org/fhir">
 
@@ -52,7 +52,7 @@ it in the element tree. It should look like this:
 ```
 
 The first element which can be found in the element tree is the `instantiatesCanonical` element. To add it, we
-will create an XML element with the same name and the value according to [URLs](basic-concepts-and-guides.md#urls):
+will create an XML element with the same name and the value according to [URLs](../concepts/dsf/about-version-placeholders-and-urls.md#urls):
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
@@ -64,7 +64,7 @@ will create an XML element with the same name and the value according to [URLs](
 We can continue this process for all primitive elements like these. Just make sure you pay attention to use the correct
 data type (e.g. proper coding value for elements with `coding` type).
 
-By now your [Task](basic-concepts-and-guides.md#task) resources should look something like this:
+By now your [Task](../concepts/fhir/task.md) resources should look something like this:
 <details>
 <summary>Suggested solution</summary>
 
@@ -83,7 +83,7 @@ By now your [Task](basic-concepts-and-guides.md#task) resources should look some
 
 Let us look at a more complex element like the `requester` element:
 
-![Forge requester view](figures/forge_requester_view.png)
+![Forge requester view](../../exercises/figures/forge_requester_view.png)
 
 We will start the same way we started with primitive elements, by adding the `requester` element:
 ```xml
@@ -141,8 +141,8 @@ Next, we will add the `identifier` element and its primitive sub-elements just l
 to be by clicking on the `system` element in Forge or looking at the XML for the right Task profile. The right side will have all information about that element, including
 the actual value for `Fixed value`.*
 
-You should now be able to fill out all elements in your [Task](basic-concepts-and-guides.md#task) resource until you reach
-the [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing) for `Task.input`. Your [Task](basic-concepts-and-guides.md#task)
+You should now be able to fill out all elements in your [Task](../concepts/fhir/task.md) resource until you reach
+the [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing) for `Task.input`. Your [Task](../concepts/fhir/task.md)
 resource should look something like this:
 <details>
 <summary>Suggested solution</summary>
@@ -180,9 +180,9 @@ resource should look something like this:
 [Slicings](https://www.hl7.org/fhir/R4/profiling.html#slicing) are a bit different from regular elements. Let us look at the
 slice `message-name`:
 
-![Forge slice message name](figures/forge_slice_message_name.png)
+![Forge slice message name](../../exercises/figures/forge_slice_message_name.png)
 
-If we were to continue including slices to the [Task](basic-concepts-and-guides.md#task) resource like we did so far,
+If we were to continue including slices to the [Task](../concepts/fhir/task.md) resource like we did so far,
 we would add a `message-name` element to our XML like this:
 
 ```xml
@@ -197,7 +197,7 @@ we would add a `message-name` element to our XML like this:
 ```
 
 This approach however, would not work. FHIR processors do not use the name of the slice to map entries in
-your [Task](basic-concepts-and-guides.md#task) resource to the correct slice. They use [discriminators](https://www.hl7.org/fhir/R4/profiling.html#discriminator).
+your [Task](../concepts/fhir/task.md) resource to the correct slice. They use [discriminators](https://www.hl7.org/fhir/R4/profiling.html#discriminator).
 Discriminators define the elements a processor needs to distinguish slices by. You can see
 how the discriminator is configured by selecting the `input` element in Forge. In our case, a processor
 would look at the values for `input.type.coding.system` and `input.type.coding.code` to determine which
@@ -220,7 +220,7 @@ All this means is that we effectively ignore the name of the slice as an element
 </Task>
 ```
 
-Now you should be able to add all remaining mandatory elements to your [Task](basic-concepts-and-guides.md#task)
+Now you should be able to add all remaining mandatory elements to your [Task](../concepts/fhir/task.md)
 resource on your own. In the end, it should look something like this:
 <details>
 <summary>Suggested solution</summary>

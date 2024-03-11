@@ -1,6 +1,6 @@
 ### Adding Task Input Parameters to Task Profiles
 
-When adding a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) to a [Task](basic-concepts-and-guides.md#task)
+When adding a new [Input Parameter](../concepts/fhir/task.md#task-input-parameters) to a [Task](../concepts/fhir/task.md)
 profile, you are essentially adding a new slice to `Task.input`. [Slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing) is part
 of [profiling](https://www.hl7.org/fhir/R4/profiling.html) in FHIR. Profiling lets you create your own
 FHIR definitions based on pre-existing FHIR definitions. A slicing defines constraints on element lists
@@ -8,7 +8,7 @@ like `Task.input` e.g. by only allowing the elements to be of certain types. For
 might have a list of fruits in a `FruitBasket` resource. Constraining that list to only include
 fruits of type `Apple`, `Banana` and `Orange` would be considered [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing).  
 This guide will not cover how slicing works in general, only for the case presented by the DSF FHIR resource
-context. Our goal will be to add a new [Input Parameter](basic-concepts-and-guides.md#task-input-parameters)
+context. Our goal will be to add a new [Input Parameter](../concepts/fhir/task.md#task-input-parameters)
 of type `example-input` to the `task-start-dic-process.xml` profile which will be used to submit `integer` values to our `dicProcess`.
 
 Let us start out by adding a slice to `task-start-dic-process.xml`. Since there is already a slicing defined
@@ -68,7 +68,7 @@ values for these elements. Cardinality is also part of the [element definition](
 hierarchy (see [ElementDefinition.min](https://www.hl7.org/fhir/R4/elementdefinition-definitions.html#ElementDefinition.min) and [ElementDefinition.max](https://www.hl7.org/fhir/R4/elementdefinition-definitions.html#ElementDefinition.max)).
 
 Next up, we need to define the binding for `Task.input:example-input.type`. Because `Task.input.type`
-is a `CodeableConcept` which uses codings from a [ValueSet](basic-concepts-and-guides.md#valueset),
+is a `CodeableConcept` which uses codings from a [ValueSet](../concepts/fhir/valueset.md),
 the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires us to use `required` as the binding strength:
 ```xml
 <StructureDefinition xmlns="http://hl7.org/fhir">
@@ -91,9 +91,9 @@ the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) re
     </differential>
 </StructureDefinition>
 ```
-As you can see, we referenced a [ValueSet](basic-concepts-and-guides.md#valueset) in this binding.
-When adding an actual slice for your use case, you will have to reference an existing [ValueSet](basic-concepts-and-guides.md#valueset) resource or create a new
-one. A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-valuesets-for-dsf-processes).
+As you can see, we referenced a [ValueSet](../concepts/fhir/valueset.md) in this binding.
+When adding an actual slice for your use case, you will have to reference an existing [ValueSet](../concepts/fhir/valueset.md) resource or create a new
+one. A guide on how to create them can be found [here](../guides/creating-valuesets-for-dsf-processes.md).
 
 Since the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires
 `Task.input.coding.code` and `Task.input.coding.system` to be present, we will make `Task.input.coding` mandatory as well:
@@ -163,11 +163,11 @@ have to use fixed values. Here is how we accomplish this:
 ```
 *Notice that we also made the two elements mandatory because they are required by the discriminator.*
 
-For the `type.coding.system` element we referenced a [CodeSystem](basic-concepts-and-guides.md#codesystem).
-The `type.coding.code` element uses a code from this [CodeSystem](basic-concepts-and-guides.md#codesystem) called `example-input`.
-This is the mechanism by which you actually "name" your [Input Parameter](basic-concepts-and-guides.md#task-input-parameters). The
-`type.coding.code` value will identify your [Input Parameter](basic-concepts-and-guides.md#task-input-parameters) when you use
-it in an actual [Task](basic-concepts-and-guides.md#task) resource. Here is how this would look like:
+For the `type.coding.system` element we referenced a [CodeSystem](../concepts/fhir/codesystem.md).
+The `type.coding.code` element uses a code from this [CodeSystem](../concepts/fhir/codesystem.md) called `example-input`.
+This is the mechanism by which you actually "name" your [Input Parameter](../concepts/fhir/task.md#task-input-parameters). The
+`type.coding.code` value will identify your [Input Parameter](../concepts/fhir/task.md#task-input-parameters) when you use
+it in an actual [Task](../concepts/fhir/task.md#task-input-parameters) resource. Here is how this would look like:
 
 ```xml
 <Task xmlns="http://hl7.org/fhir">
@@ -184,8 +184,8 @@ it in an actual [Task](basic-concepts-and-guides.md#task) resource. Here is how 
 </Task>
 ```
 
-When adding an actual slice for your use case, you will also need to reference an existing [CodeSystem](basic-concepts-and-guides.md#codesystem) resource or create a new one to reference.
-A guide on how to create them can be found [here](basic-concepts-and-guides.md#creating-codesystems-for-the-dsf-processes).
+When adding an actual slice for your use case, you will also need to reference an existing [CodeSystem](../concepts/fhir/codesystem.md) resource or create a new one to reference.
+A guide on how to create them can be found [here](../guides/creating-codesystems-for-dsf-processes.md).
 
 `Task.input.value[x]` is the actual value you will submit using your Input Parameter. You can make it
 any of [these](https://www.hl7.org/fhir/R4/datatypes.html#open) data types. This is because `Type.input.value[x]`  

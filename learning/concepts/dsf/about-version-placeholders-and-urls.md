@@ -13,8 +13,8 @@ the 4th number is reserved for bug-fixes and the 3rd number includes all other n
 
 #### Placeholders
 
-To avoid the need to specify the version and release date for each [ActivityDefinition](basic-concepts-and-guides.md#activitydefinition), [CodeSystem](basic-concepts-and-guides.md#codesystem),
-[Task](basic-concepts-and-guides.md#task) profile and [ValueSet](basic-concepts-and-guides.md#valueset) resource,
+To avoid the need to specify the version and release date for each [ActivityDefinition](../../concepts/fhir/activitydefinition.md), [CodeSystem](../../concepts/fhir/codesystem.md),
+[Task](../../concepts/fhir/task.md) profile and [ValueSet](../../concepts/fhir/valueset.md) resource,
 the placeholders `#{version}` and `#{date}` can be used when creating FHIR resources or even in BPMN models.
 They are replaced with the values returned by the methods `ProcessPluginDefinition#getResourceVersion`
 and `ProcessPluginDefinition#getReleaseDate` respectively during deployment of a process plugin by the DSF BPE server.
@@ -25,7 +25,7 @@ BPMN models have an ID we call process definition key. The BPMN process definiti
 ```
 ^[-a-zA-Z0-9]+_[-a-zA-Z0-9]+$   Example: domainorg_processKey
 ```
-In addition, the BPMN model needs to specify a version. You should be using the ``#{version}`` [placeholder](basic-concepts-and-guides.md#placeholders)
+In addition, the BPMN model needs to specify a version. You should be using the ``#{version}`` [placeholder](../../concepts/dsf/about-version-placeholders-and-urls.md#placeholders)
 for this as well. The DSF will use the process definition key and the version specified in the BPMN model to create a
 URL to refer to this specific process. Like this:
 ```
@@ -33,15 +33,15 @@ http://domain.org/bpe/Process/processKey|1.0
 ```
 
 As you can see, the version in the URL ``|1.0`` only uses the resource version and omits the code base version.
-As mentioned in [Version Pattern](basic-concepts-and-guides.md#version-pattern), this means that only changes to the first two
+As mentioned in [Version Pattern](about-version-placeholders-and-urls.md#version-pattern), this means that only changes to the first two
 version numbers are significant to signal compatibility when communicating with other process plugin instances.
 
-You will use the above URL as your instantiatesCanonical value for [Task](basic-concepts-and-guides.md#task) profile definitions as well as references
-to [Task](basic-concepts-and-guides.md#task) profiles in other resources.
-You will also use it as the URL value for your [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition). In this case though, you
+You will use the above URL as your instantiatesCanonical value for [Task](../../concepts/fhir/task.md) profile definitions as well as references
+to [Task](../../concepts/fhir/task.md) profiles in other resources.
+You will also use it as the URL value for your [ActivityDefinitions](../../concepts/fhir/activitydefinition.md). In this case though, you
 have to split up the URL into two parts. You will separate the version (``|1.0``) from the URL and use it as a value for the
 `ActivityDefinition.version` element. Since it refers to the plugin's resource version, you should also use the `#{version}`
-[placeholder](basic-concepts-and-guides.md#placeholders) here instead. Going by the example from above, you will be left with a URL that looks
+[placeholder](about-version-placeholders-and-urls.md#placeholders) here instead. Going by the example from above, you will be left with a URL that looks
 like this:
 ```
 http://domain.org/bpe/Process/processKey

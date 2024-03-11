@@ -5,8 +5,8 @@ ___
 Different execution paths in a process based on the state of process variables can be achieved using Exclusive Gateways. In Exercise 5 we will examine how this can be implemented by modifying the `dsfdev_dicProcess`.
 
 In order to solve this exercise, you should have solved Exercise 4 and read the topics on
-[Exclusive Gateways](basic-concepts-and-guides.md#exclusive-gateways)
-and [Conditions](basic-concepts-and-guides.md#conditions).
+[Exclusive Gateways](../learning/concepts/bpmn/gateways.md)
+and [Conditions](../learning/concepts/bpmn/conditions.md).
 
 Solutions to this exercise are found on the branch `solutions/exercise-5`.
 
@@ -53,7 +53,7 @@ To verify the `dsfdev_dicProcess` and `dsfdev_cosProcess`es can be executed succ
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_cosProcess`. 
 
-5. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.
+5. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
 
    Verify that the `dsfdev_dicProcess` was executed successfully by the `Test_DIC` DSF BPE server and possibly the `dsfdev_cosProcess` by the `Test_COS` DSF BPE server, depending on whether decision of your algorithm based on the input parameter allowed to start the `dsfdev_dicProcess`.
 

@@ -9,6 +9,6 @@ In your message event implementation (the class extending `AbstractTaskMessageSe
 add your targets and then call the super-method.
 #### 2. Adding the target in a service  task right before the message event
 This is the preferred method of this tutorial but both methods will work perfectly fine. For our use cases, we usually prefer this one
-since there is enough complexity to warrant putting it into a separate BPMN [Service Task](https://docs.camunda.org/manual/7.17/reference/bpmn20/tasks/service-task/).
+since there is enough complexity to warrant putting it into a separate BPMN [Service Task](../concepts/bpmn/service-tasks.md).
 
 In both cases you can access methods to create and set `targets` through the `Variables` instance.

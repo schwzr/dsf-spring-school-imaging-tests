@@ -25,7 +25,7 @@ are used to send messages during process execution.
 
 #### Message Intermediate Catching Event
 [Message Intermediate Catching Events](https://docs.camunda.org/manual/7.20/reference/bpmn20/events/message-events/#message-intermediate-catching-event) serve as
-the counterpart to [Message Intermediate Throwing Events](basic-concepts-and-guides.md#message-intermediate-throwing-event).
+the counterpart to [Message Intermediate Throwing Events](messaging.md#message-intermediate-throwing-event).
 Use them whenever you expect to receive a message from another process or organization during execution.
 
 #### Message End Event
