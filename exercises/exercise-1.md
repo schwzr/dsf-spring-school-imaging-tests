@@ -65,7 +65,13 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
    * Create a [Task](../learning/concepts/fhir/task.md) resource in `tutorial-process/src/main/resources/fhir/example-task.xml` based on the [Task](../learning/concepts/fhir/task.md)
      profile `tutorial-process/src/main/resources/fhir/StructureDefinition/task-start-dic-process.xml`.  
      You will need it to start your process via cURL.
-   
+
+        <details>
+        <summary>Don't where to get values for organization identifiers?</summary>
+
+        Take a look at the topic on [organization identifiers](../learning/concepts/dsf/organization-identifiers.md).
+        </details>   
+
         <details>
         <summary>Don't know how to create Task resources?</summary>
 
