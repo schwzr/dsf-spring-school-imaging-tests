@@ -7,36 +7,36 @@ Communication between organizations in BPMN processes is modeled using message f
 To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_dicProcess` and `dsfdev_cosProcess`. After that, the processes are to be executed at the organizations `Test_DIC` and `Test_COS` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `Test_DIC` to organization `Test_COS`.
 
 In order to solve this exercise, you should have solved exercise 2 and read the topics on
-[Messaging](basic-concepts-and-guides.md#messaging),
-[Message Delegates](basic-concepts-and-guides.md#message-delegates),
-[Version Pattern](basic-concepts-and-guides.md#version-pattern),
-[URLs](basic-concepts-and-guides.md#urls) 
-and [Setting Targets for Message Events](basic-concepts-and-guides.md#setting-targets-for-message-events).
+[Messaging](../learning/concepts/bpmn/messaging.md),
+[Message Delegates](../learning/concepts/dsf/message-delegates),
+[Version Pattern](../learning/concepts/dsf/about-version-placeholders-and-urls.md#version-pattern),
+[URLs](../learning/concepts/dsf/about-version-placeholders-and-urls.md#urls) 
+and [Setting Targets for Message Events](../learning/guides/setting-targets-for-message-events.md).
 
 Solutions to this exercise are found on the branch `solutions/exercise-4`.
 
 ## Exercise Tasks
-1. Replace the [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/#none-end-event) of the `dsfdev_dicProcess` in the `dic-process.bpmn` file with a [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event). Give the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) a name and an ID and set its implementation to the `HelloCosMessage` class.  
+1. Replace the [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/#none-end-event) of the `dsfdev_dicProcess` in the `dic-process.bpmn` file with a [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event). Give the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) a name and an ID and set its implementation to the `HelloCosMessage` class.  
    Configure field injections `instantiatesCanonical`, `profile` and `messageName` in the BPMN model for the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event).
     Use `http://dsf.dev/fhir/StructureDefinition/task-hello-cos|#{version}` as the profile and `cosProcess` as the message name. Figure out what the appropriate `instantiatesCanonical` value is, based on the name (process definition key) of the process to be triggered.
    <details>
    <summary>Can't remember how instantiatesCanonical is built?</summary>
 
-   Read the concept [here](basic-concepts-and-guides.md#urls) again.
+   Read the concept [here](../learning/concepts/dsf/about-version-placeholders-and-urls.md#urls) again.
     </details>
-1. Modify the `dsfdev_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-start-event) with the same value as the message name of the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event) in the `dsfdev_dicProcess`. 
-1. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](http://hl7.org/fhir/R4/task.html) profile for the `cosProcess` message.
+1. Modify the `dsfdev_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](../learning/concepts/bpmn/messaging.md#message-start-event) with the same value as the message name of the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) in the `dsfdev_dicProcess`. 
+1. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](../learning/concepts/fhir/task.md) profile for the `cosProcess` message.
     <details>
    <summary>Don't know how to get started?</summary>
    
-   You can base this [Task](http://hl7.org/fhir/R4/task.html) profile off the `StructureDefinition/task-start-dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
+   You can base this [Task](../learning/concepts/fhir/task.md) profile off the `StructureDefinition/task-start-dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
     </details>
-1. Create a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource for the `dsfdev_cosProcess` and configure the authorization extension to allow the `Test_DIC` organization as the requester and the `Test_COS` organization as the recipient.
+1. Create a new [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resource for the `dsfdev_cosProcess` and configure the authorization extension to allow the `Test_DIC` organization as the requester and the `Test_COS` organization as the recipient.
    <details>
    <summary>Don't know how to get started?</summary>
 
    You can base this ActivityDefinition off the `ActivityDefinition/dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
-   Or you can take a look at the [guide on creating ActivityDefinitions](basic-concepts-and-guides.md#creating-an-activitydefinition).
+   Or you can take a look at the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 1. Add the `dsfdev_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `cosProcess` as the key and a List of associated FHIR resources as the value.
 1. Modify `DicTask` service class to set the `target` process variable for the `Test_COS` organization.
@@ -78,12 +78,12 @@ in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_cert
    ```
    docker-compose up cos-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `dsfdev_cosProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resource. Go to https://cos/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain two [ActivityDefinition](http://hl7.org/fhir/R4/activitydefinition.html) resources. Also, go to https://cos/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-cos to check if the expected [Task](http://hl7.org/fhir/R4/task.html) profile was created.
+   Verify the DSF BPE server started successfully and deployed the `dsfdev_cosProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resource. Go to https://cos/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain two [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resources. Also, go to https://cos/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-cos to check if the expected [Task](../learning/concepts/fhir/task.md) profile was created.
 
-5. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](http://hl7.org/fhir/R4/task.html) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](basic-concepts-and-guides.md#starting-a-process-via-task-resources) again if you are unsure.
+5. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
 
-   Verify that the FHIR [Task](http://hl7.org/fhir/R4/task.html) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `Test_DIC` organization. The DSF BPE server of the `Test_DIC` organization should print a message showing that a [Task](http://hl7.org/fhir/R4/task.html) resource to start the `dsfdev_cosProcess` was send to the `Test_COS` organization.  
-   Verify that a FHIR [Task](http://hl7.org/fhir/R4/task.html) resource was created at the DSF FHIR server of the `Test_COS` organization and the `dsfdev_cosProcess` was then executed by the DSF BPE server of the `Test_COS` organization.
+   Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `Test_DIC` organization. The DSF BPE server of the `Test_DIC` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `Test_COS` organization.  
+   Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `Test_COS` organization and the `dsfdev_cosProcess` was then executed by the DSF BPE server of the `Test_COS` organization.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • **Exercise 4** • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
