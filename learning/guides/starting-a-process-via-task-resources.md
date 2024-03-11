@@ -16,7 +16,7 @@ gain more insight in how actual [Task](../concepts/fhir/task.md) resources look 
 your [Task](../concepts/fhir/task.md) profiles and [ActivityDefinitions](../concepts/fhir/activitydefinition.md). You will have to create
 an appropriate [Task](../concepts/fhir/task.md) resource for this.
 There already is a file called `example-task.xml` located in `tutorial-process/src/main/resources/fhir`.
-You can use this as your starting point. You can try to follow [this guide](../guides/starting-a-process-via-task-resources.md),
+You can use this as your starting point. You can try to follow [this guide](../guides/creating-task-resources-based-on-a-definition.md),
 or you can check the solution branches for this
 file if you need ideas on how to fill it out properly.
 
