@@ -16,7 +16,7 @@ The tutorial project provides a Keycloak instance for this purpose with the admi
 Credentials for administrator access are `username: admin` and `password: admin`.
 
 In order to solve this exercise, you need to have read the documentation on [Access Control](https://dsf.dev/stable/maintain/fhir/access-control.html) 
-and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
+and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition).
 
 ## Exercise Tasks
 
@@ -36,8 +36,8 @@ and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
-   There is a list of examples for the `requester` element [here](basic-concepts-and-guides.md#examples-for-requester-and-recipient-elements).
-   You can also check out the [guide on creating ActivityDefinitions](basic-concepts-and-guides.md#creating-an-activitydefinition).
+   There is a list of examples for the `requester` element [here](../learning/concepts/dsf/examples-for-requester-and-recipient-elements).
+   You can also check out the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 
 5. We just made it so you will not be able to start the `dicProcess` using the client certificate utilized in earlier exercises.
@@ -46,8 +46,8 @@ and [ActivityDefinitions](basic-concepts-and-guides.md#activitydefinition).
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
-   There is a list of examples for the `requester` element [here](basic-concepts-and-guides.md#examples-for-requester-and-recipient-elements).
-   You can also check out the [guide on creating ActivityDefinitions](basic-concepts-and-guides.md#creating-an-activitydefinition).
+   There is a list of examples for the `requester` element [here](../learning/concepts/dsf/examples-for-requester-and-recipient-elements).
+   You can also check out the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 
    
@@ -78,7 +78,7 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
    Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess`.
 
 3. Visit https://dic/fhir. First, use the client certificate to log into the DSF FHIR server and make sure you are 
-   still able to start a `dsfdev_dicProcess` via the [web interface](basic-concepts-and-guides.md#using-the-dsf-fhir-servers-web-interface).
+   still able to start a `dsfdev_dicProcess` via the [web interface](../learning/guides/starting-a-process-via-task-resources.md#using-the-dsf-fhir-servers-web-interface).
 4. Now try doing it again, but this time use the user you created earlier. For this, you might have to clear your browser's
    SSL state because it keeps using the client certificate from before. Afterward, you can visit https://dic/fhir again but refuse to send a 
    client certificate when asked. This should forward you to the Keycloak login page.
