@@ -118,7 +118,7 @@ Then, we will add primitive elements to `requester` like we did before for `Task
 ```
 *Important to note here that the value for the `status` will always be `requested` for Tasks being posted using cURL and the `type` element for `requester` and `recipient` will always have the value `Organization` in the DSF context.*
 
-Next, we will add the `identifier` element and its primitive sub-elements just like we started out doing it for the `requester` element:
+Next, we will add the `identifier` element and its primitive sub-elements just like we started out doing it for the `requester` element. The `identifier.value` in this case will be `Test_DIC`. To understand why, take a look at the topic on [organization identifiers](../concepts/dsf/organization-identifiers.md):
 ```xml
 <Task xmlns="http://hl7.org/fhir">
     <meta>
