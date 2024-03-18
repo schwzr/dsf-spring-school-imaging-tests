@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_14mbgex" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.20.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
+  <bpmn:collaboration id="Collaboration_0vixjmy">
+    <bpmn:participant id="Participant_0v4vqe4" name="Image receiver" processRef="dsfdev_receiveImage" />
+  </bpmn:collaboration>
+  <bpmn:process id="dsfdev_receiveImage" name="receiveImage" isExecutable="true" camunda:versionTag="#{version}" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="Event_1oa9n1w">
+      <bpmn:outgoing>Flow_1adrzvs</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1sa0es3" messageRef="Message_3e2m1r1" />
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_1bo3tpl" name="load ImagingStudy &#38; image metadata" camunda:class="dev.dsf.process.tutorial.service.LoadImagingDataService">
+      <bpmn:incoming>Flow_1adrzvs</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j4aazl</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0xoax2f" name="store ImagingStudy" camunda:class="dev.dsf.process.tutorial.service.StoreImagingStudyService">
+      <bpmn:incoming>Flow_0j4aazl</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j8epav</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0vzb9t0" name="process Image data" camunda:class="dev.dsf.process.tutorial.service.StoreImageDataService">
+      <bpmn:incoming>Flow_1j8epav</bpmn:incoming>
+      <bpmn:outgoing>Flow_19m8imf</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="Activity_193hq46" name="send service response" camunda:class="dev.dsf.process.tutorial.message.SendSuccessMessage">
+      <bpmn:extensionElements>
+        <camunda:field name="instantiatesCanonical">
+          <camunda:string>http://dsf.dev/bpe/Process/sendImage|#{version}</camunda:string>
+        </camunda:field>
+        <camunda:field name="messageName">
+          <camunda:string>sendImageSuccess</camunda:string>
+        </camunda:field>
+        <camunda:field name="profile">
+          <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-send-image-success|#{version}</camunda:string>
+        </camunda:field>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19m8imf</bpmn:incoming>
+      <bpmn:outgoing>Flow_026rdsm</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_0a56urj">
+      <bpmn:incoming>Flow_026rdsm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1adrzvs" sourceRef="Event_1oa9n1w" targetRef="Activity_1bo3tpl" />
+    <bpmn:sequenceFlow id="Flow_0j4aazl" sourceRef="Activity_1bo3tpl" targetRef="Activity_0xoax2f" />
+    <bpmn:sequenceFlow id="Flow_1j8epav" sourceRef="Activity_0xoax2f" targetRef="Activity_0vzb9t0" />
+    <bpmn:sequenceFlow id="Flow_19m8imf" sourceRef="Activity_0vzb9t0" targetRef="Activity_193hq46" />
+    <bpmn:sequenceFlow id="Flow_026rdsm" sourceRef="Activity_193hq46" targetRef="Event_0a56urj" />
+  </bpmn:process>
+  <bpmn:message id="Message_3e2m1r1" name="receiveImage" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0vixjmy">
+      <bpmndi:BPMNShape id="Participant_0v4vqe4_di" bpmnElement="Participant_0v4vqe4" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1150" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yut99a_di" bpmnElement="Event_1oa9n1w">
+        <dc:Bounds x="227" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17prqw9_di" bpmnElement="Activity_1bo3tpl">
+        <dc:Bounds x="315" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15fg7ux_di" bpmnElement="Activity_0xoax2f">
+        <dc:Bounds x="475" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wi8qn6_di" bpmnElement="Activity_0vzb9t0">
+        <dc:Bounds x="635" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sz0atj_di" bpmnElement="Activity_193hq46">
+        <dc:Bounds x="795" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0a56urj_di" bpmnElement="Event_0a56urj">
+        <dc:Bounds x="957" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1adrzvs_di" bpmnElement="Flow_1adrzvs">
+        <di:waypoint x="263" y="210" />
+        <di:waypoint x="315" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j4aazl_di" bpmnElement="Flow_0j4aazl">
+        <di:waypoint x="415" y="210" />
+        <di:waypoint x="475" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j8epav_di" bpmnElement="Flow_1j8epav">
+        <di:waypoint x="575" y="210" />
+        <di:waypoint x="635" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19m8imf_di" bpmnElement="Flow_19m8imf">
+        <di:waypoint x="735" y="210" />
+        <di:waypoint x="795" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_026rdsm_di" bpmnElement="Flow_026rdsm">
+        <di:waypoint x="895" y="210" />
+        <di:waypoint x="957" y="210" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

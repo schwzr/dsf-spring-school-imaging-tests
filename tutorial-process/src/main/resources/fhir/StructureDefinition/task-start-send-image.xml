@@ -1,0 +1,140 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <meta>
+    <tag>
+      <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
+      <code value="ALL" />
+    </tag>
+  </meta>
+  <url value="http://dsf.dev/fhir/StructureDefinition/task-start-send-image" />
+  <!-- version managed by bpe -->
+  <version value="#{version}" />
+  <name value="startDicProcess" />
+  <!-- status managed by bpe -->
+  <status value="unknown" />
+  <experimental value="false" />
+  <!-- date managed by bpe -->
+  <date value="#{date}" />
+  <fhirVersion value="4.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Task" />
+  <baseDefinition value="http://dsf.dev/fhir/StructureDefinition/task-base" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Task.instantiatesCanonical">
+      <path value="Task.instantiatesCanonical" />
+      <fixedCanonical value="http://dsf.dev/bpe/Process/sendImage|#{version}" />
+    </element>
+    <element id="Task.requester.type">
+      <path value="Task.requester.type"/>
+      <min value="1"/>
+    </element>
+    <element id="Task.restriction.recipient.type">
+      <path value="Task.restriction.recipient.type"/>
+      <min value="1" />
+    </element>
+    <element id="Task.input">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Parameter" />
+      </extension>
+      <path value="Task.input" />
+      <min value="2" />
+      <max value="3" />
+    </element>
+    <element id="Task.input:message-name">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Parameter" />
+      </extension>
+      <path value="Task.input" />
+      <sliceName value="message-name" />
+    </element>
+    <element id="Task.input:message-name.value[x]">
+      <path value="Task.input.value[x]" />
+      <fixedString value="startSendImage" />
+    </element>
+    <element id="Task.input:business-key">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Parameter" />
+      </extension>
+      <path value="Task.input" />
+      <sliceName value="business-key" />
+      <max value="1" />
+    </element>
+    <element id="Task.input:correlation-key">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Parameter" />
+      </extension>
+      <path value="Task.input" />
+      <sliceName value="correlation-key" />
+      <max value="0" />
+    </element>
+    <element id="Task.input:imaging-study-url">
+      <path value="Task.input" />
+      <sliceName value="imaging-study-url" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Task.input:imaging-study-url.type">
+      <path value="Task.input.type" />
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://dsf.dev/fhir/ValueSet/tutorial" />
+      </binding>
+    </element>
+    <element id="Task.input:imaging-study-url.type.coding">
+      <path value="Task.input.type.coding" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Task.input:imaging-study-url.type.coding.system">
+      <path value="Task.input.type.coding.system" />
+      <min value="1" />
+      <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+    </element>
+    <element id="Task.input:imaging-study-url.type.coding.code">
+      <path value="Task.input.type.coding.code" />
+      <min value="1" />
+      <fixedCode value="source" />
+    </element>
+    <element id="Task.input:imaging-study-url.value[x]">
+      <path value="Task.input.value[x]" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+    <element id="Task.output:outputUrl">
+      <path value="Task.output" />
+      <sliceName value="encryptedBundleResourcesCount" />
+      <min value="0" />
+      <max value="1" />
+    </element>
+    <element id="Task.output:outputUrl.type">
+      <path value="Task.output.type" />
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://dsf.dev/fhir/ValueSet/tutorial" />
+      </binding>
+    </element>
+    <element id="Task.output:outputUrl.type.coding">
+      <path value="Task.output.type.coding" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Task.output:outputUrl.type.coding.system">
+      <path value="Task.output.type.coding.system" />
+      <min value="1" />
+      <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+    </element>
+    <element id="Task.output:outputUrl.type.coding.code">
+      <path value="Task.output.type.coding.code" />
+      <min value="1" />
+      <fixedCode value="output-url" />
+    </element>
+    <element id="Task.output:outputUrl.value[x]">
+      <path value="Task.output.value[x]" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

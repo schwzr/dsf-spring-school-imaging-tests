@@ -2,6 +2,8 @@ package dev.dsf.process.tutorial.spring.config;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_DIC;
 
+import dev.dsf.process.tutorial.message.*;
+import dev.dsf.process.tutorial.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -11,18 +13,102 @@ import org.springframework.context.annotation.Scope;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
-import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
-import dev.dsf.process.tutorial.message.HelloCosMessage;
-import dev.dsf.process.tutorial.message.HelloHrpMessage;
-import dev.dsf.process.tutorial.service.CosTask;
-import dev.dsf.process.tutorial.service.DicTask;
-import dev.dsf.process.tutorial.service.HrpTask;
 
 @Configuration
 public class TutorialConfig
 {
 	@Autowired
 	private ProcessPluginApi api;
+
+	// send dicom specific
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public SendReceiveDataMessage sendReceiveDataMessage()
+	{
+		return new SendReceiveDataMessage(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public ExtractImagingStudyService extractImagingStudyService()
+	{
+		return new ExtractImagingStudyService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public LoadImageDataService loadImageDataService()
+	{
+		return new LoadImageDataService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public LoadImagingStudyService loadImagingStudyService()
+	{
+		return new LoadImagingStudyService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public LogSuccessService logSuccessService()
+	{
+		return new LogSuccessService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public LogTimeoutService logTimeoutService()
+	{
+		return new LogTimeoutService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public StoreDataService storeDataService()
+	{
+		return new StoreDataService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public LoadImagingDataService loadImagingDataService()
+	{
+		return new LoadImagingDataService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public StoreImagingStudyService storeImagingStudyService()
+	{
+		return new StoreImagingStudyService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public StoreImageDataService storeImageDataService()
+	{
+		return new StoreImageDataService(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public SendSuccessMessage sendSuccessMessage()
+	{
+		return new SendSuccessMessage(api);
+	}
+
+	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public DeleteTemporaryDataService deleteTemporaryDataService()
+	{
+		return new DeleteTemporaryDataService(api);
+	}
+
+
+
+	// tutorial beans, not relevant anymore
 
 	@Value("${dev.dsf.process.tutorial.loggingEnabled:false}")
 	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_DIC)
@@ -69,4 +155,8 @@ public class TutorialConfig
 	{
 		return new GoodbyeDicMessage(api);
 	}
+
+	// end tutorial beans, not relevent anymore
+
+
 }

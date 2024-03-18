@@ -1,0 +1,61 @@
+<ActivityDefinition xmlns="http://hl7.org/fhir">
+	<meta>
+		<tag>
+			<system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
+			<code value="ALL" />
+		</tag>
+	</meta>
+	<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
+		<extension url="message-name">
+			<valueString value="receiveImage" />
+		</extension>
+		<extension url="task-profile">
+			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-receive-image|#{version}" />
+		</extension>
+		<extension url="requester">
+			<valueCoding>
+				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
+					<valueIdentifier>
+						<system value="http://dsf.dev/sid/organization-identifier" />
+						<value value="Test_DIC" />
+					</valueIdentifier>
+				</extension>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+				<code value="REMOTE_ORGANIZATION" />
+			</valueCoding>
+		</extension>
+		<extension url="recipient">
+			<valueCoding>
+				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
+					<valueIdentifier>
+						<system value="http://dsf.dev/sid/organization-identifier" />
+						<value value="Test_COS" />
+					</valueIdentifier>
+				</extension>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+				<code value="LOCAL_ORGANIZATION" />
+			</valueCoding>
+		</extension>
+	</extension>
+	<url value="http://dsf.dev/bpe/Process/receiveImage" />
+	<!-- version managed by bpe -->
+	<version value="#{version}" />
+	<name value="receiveImage" />
+	<title value="receiveImage" />
+	<subtitle value="receives the DICOM Image" />
+	<!-- status managed by bpe -->
+	<status value="unknown" />
+	<experimental value="false" />
+	<!-- date managed by bpe -->
+	<date value="#{date}" />
+	<publisher value="DSF" />
+	<contact>
+		<name value="DSF" />
+		<telecom>
+			<system value="email" />
+			<value value="pmo@dsf.dev" />
+		</telecom>
+	</contact>
+	<description value="This implementation contains the basic elements that a minimal process must contain in order to be executable." />
+	<kind value="Task" />
+</ActivityDefinition>

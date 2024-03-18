@@ -1,0 +1,94 @@
+<ActivityDefinition xmlns="http://hl7.org/fhir">
+	<meta>
+		<tag>
+			<system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
+			<code value="ALL" />
+		</tag>
+	</meta>
+	<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
+		<extension url="message-name">
+			<valueString value="startSendImage" />
+		</extension>
+		<extension url="task-profile">
+			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-start-send-image|#{version}" />
+		</extension>
+		<extension url="requester">
+			<valueCoding>
+				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-practitioner">
+					<valueCoding>
+						<system value="http://dsf.dev/fhir/CodeSystem/practitioner-role"/>
+						<code value="DSF_ADMIN"/>
+					</valueCoding>
+				</extension>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+				<code value="LOCAL_ALL_PRACTITIONER" />
+			</valueCoding>
+		</extension>
+		<extension url="requester">
+			<valueCoding>
+				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
+					<valueIdentifier>
+						<system value="http://dsf.dev/sid/organization-identifier"/>
+						<value value="Test_DIC"/>
+					</valueIdentifier>
+				</extension>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization"/>
+				<code value="LOCAL_ORGANIZATION"/>
+			</valueCoding>
+		</extension>
+		<extension url="recipient">
+			<valueCoding>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+				<code value="LOCAL_ALL" />
+			</valueCoding>
+		</extension>
+	</extension>
+	<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">
+		<extension url="message-name">
+			<valueString value="sendImageSuccess" />
+		</extension>
+		<extension url="task-profile">
+			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-send-image-success|#{version}" />
+		</extension>
+		<extension url="requester">
+			<valueCoding>
+				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
+					<valueIdentifier>
+						<system value="http://dsf.dev/sid/organization-identifier"/>
+						<value value="Test_COS"/>
+					</valueIdentifier>
+				</extension>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization"/>
+				<code value="REMOTE_ORGANIZATION"/>
+			</valueCoding>
+		</extension>
+		<extension url="recipient">
+			<valueCoding>
+				<system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+				<code value="LOCAL_ALL" />
+			</valueCoding>
+		</extension>
+	</extension>
+
+	<url value="http://dsf.dev/bpe/Process/sendImage" />
+	<!-- version managed by bpe -->
+	<version value="#{version}" />
+	<name value="sendImage" />
+	<title value="sendImage" />
+	<subtitle value="sendImage" />
+	<!-- status managed by bpe -->
+	<status value="unknown" />
+	<experimental value="false" />
+	<!-- date managed by bpe -->
+	<date value="#{date}" />
+	<publisher value="DSF" />
+	<contact>
+		<name value="DSF" />
+		<telecom>
+			<system value="email" />
+			<value value="pmo@dsf.dev" />
+		</telecom>
+	</contact>
+	<description value="This implementation contains the basic elements that a minimal process must contain in order to be executable." />
+	<kind value="Task" />
+</ActivityDefinition>

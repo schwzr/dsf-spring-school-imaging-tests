@@ -26,4 +26,24 @@
 		<display value="Tutorial Input" />
 		<definition value="Input parameter used for the helloDic DSF tutorial process" />
 	</concept>
+	<concept>
+		<code value="source" />
+		<display value="source url" />
+		<definition value="Input parameter used for the helloDic DSF tutorial process" />
+	</concept>
+	<concept>
+		<code value="dicom-data-reference" />
+		<display value="DICOM Data reference" />
+		<definition value="dicom data reference" />
+	</concept>
+	<concept>
+		<code value="output-data-reference" />
+		<display value="Output Data reference" />
+		<definition value="output data reference" />
+	</concept>
+	<concept>
+		<code value="output-url" />
+		<display value="Output Url" />
+		<definition value="output url" />
+	</concept>
 </CodeSystem> 

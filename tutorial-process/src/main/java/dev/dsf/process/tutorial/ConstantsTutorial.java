@@ -7,7 +7,13 @@ public interface ConstantsTutorial
 	String PROCESS_VERSION = VERSION.substring(4, 7);
 	String RESOURCE_VERSION = VERSION.substring(0, 3);
 	String PROCESS_NAME_DIC = "dicProcess";
+	String PROCESS_NAME_SEND_IMAGE = "sendImage";
+	String PROCESS_NAME_RECEIVE_IMAGE = "receiveImage";
+
 	String PROCESS_NAME_FULL_DIC = "dsfdev_" + PROCESS_NAME_DIC;
+
+	String PROCESS_NAME_FULL_SEND_IMAGE = "dsfdev_" + PROCESS_NAME_SEND_IMAGE;
+	String PROCESS_NAME_FULL_RECEIVE_IMAGE = "dsfdev_" + PROCESS_NAME_RECEIVE_IMAGE;
 
 	String PROFILE_TUTORIAL_TASK_DIC_PROCESS = "http://dsf.dev/fhir/StructureDefinition/task-start-dic-process";
 	String PROFILE_TUTORIAL_TASK_DIC_PROCESS_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_DIC_PROCESS + "|"
@@ -50,6 +56,24 @@ public interface ConstantsTutorial
 
 	String CODESYSTEM_TUTORIAL = "http://dsf.dev/fhir/CodeSystem/tutorial";
 	String CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT = "tutorial-input";
+	String CODESYSTEM_TUTORIAL_VALUE_SOURCE = "source";
+
+	String DICOM_DATA_REFERENCE = "dicom-data-reference";
+	String OUTPUT_DATA_REFERENCE = "output-data-reference";
+
+
+	String CODESYSTEM_TUTORIAL_VALUE_DICOM_DATA_REFERENCE = DICOM_DATA_REFERENCE;
+	String CODESYSTEM_TUTORIAL_VALUE_OUTPUT_DATA_REFERENCE = OUTPUT_DATA_REFERENCE;
+	String CODESYSTEM_TUTORIAL_VALUE_OUTPUT_URL = "output-url";
+
+
+
+
+
 
 	String TUTORIAL_HRP_ORGANIZATION_IDENTIFIER = "Test_HRP";
+
+	int DSF_CLIENT_RETRY_6_TIMES = 6;
+	long DSF_CLIENT_RETRY_INTERVAL_10SEC = 10000;
+	long DSF_CLIENT_RETRY_INTERVAL_5MIN = 300000;
 }
